@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Plugin fixture manifest",
+  "type": "object",
+  "required": ["plugin", "slug", "version", "minecraft", "scenario", "scenarioSha", "recordedAt", "paths", "expected"],
+  "additionalProperties": false,
+  "properties": {
+    "plugin": { "type": "string", "description": "Plugin name as declared in plugin.yml" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$", "description": "Lowercase slug used in tags and file names" },
+    "version": { "type": "string", "description": "The plugin release that recorded this fixture" },
+    "minecraft": { "type": "string", "description": "Server version the fixture was recorded on" },
+    "scenario": { "type": "string", "description": "Path of the scenario script in this repository" },
+    "scenarioSha": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+    "recordedAt": { "type": "string", "format": "date-time" },
+    "paths": {
+      "type": "array", "minItems": 1, "items": { "type": "string" },
+      "description": "Paths inside the server directory that the archive contains (data folder, database files)"
+    },
+    "expected": {
+      "type": "object", "minProperties": 1,
+      "additionalProperties": { "type": "integer", "minimum": 0 },
+      "description": "Count per persisted entity type that a reload must find"
+    }
+  }
+}
