@@ -1,0 +1,25 @@
+{
+  "plugin": "MedievalFactions",
+  "slug": "medieval-factions",
+  "version": "5.8.1",
+  "minecraft": "26.2",
+  "kind": "real-world",
+  "scenario": "scenarios/medieval-factions-real.md",
+  "scenarioSha": "f23074eebdcdbb6626999614aca4854d06788a3b",
+  "description": "real-world (anonymised Viridian Gulf, 2025-09→2026-06)",
+  "recordedAt": "2026-09-19T19:20:30Z",
+  "paths": [
+    "plugins/MedievalFactions",
+    "medieval_factions_db.mv.db"
+  ],
+  "expected": {
+    "players": 38,
+    "factions": 14,
+    "faction relationships": 69,
+    "claims": 2628,
+    "locked blocks": 11,
+    "gates": 1,
+    "duels": 0,
+    "duel invites": 1
+  }
+}
