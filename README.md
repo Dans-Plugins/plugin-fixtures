@@ -81,7 +81,7 @@ A scenario must:
 4. expose one **write** step that can run after a restart, so a candidate's own writer is exercised against a folder its reader just loaded;
 5. use console commands wherever a non-player sender is accepted, and a mineflayer bot only where a `Player` is required.
 
-The Medieval Factions bot harness (mineflayer + RCON) is the reference for the bot side; its hard-won constraints — the bot must genuinely aim, continuous-use items are undecidable, read state back over RCON rather than trusting the client, a stalled server is indistinguishable from "nothing happened" — apply to every scenario.
+The Medieval Factions bot harness (mineflayer + RCON) is the reference for the bot side; its hard-won constraints — the bot must genuinely aim, continuous-use items are undecidable, read state back over RCON rather than trusting the client, a stalled server is indistinguishable from "nothing happened" — apply to every scenario. [`scenarios/medieval-factions.js`](scenarios/medieval-factions.js) is the first scenario written to them; [scenarios/README.md](scenarios/README.md) has the command line every scenario shares and how the release-gates workflow runs one.
 
 ## What this does not prove
 
