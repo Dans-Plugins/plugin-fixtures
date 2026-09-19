@@ -9,8 +9,13 @@
     "slug": { "type": "string", "pattern": "^[a-z0-9-]+$", "description": "Lowercase slug used in tags and file names" },
     "version": { "type": "string", "description": "The plugin release that recorded this fixture" },
     "minecraft": { "type": "string", "description": "Server version the fixture was recorded on" },
-    "scenario": { "type": "string", "description": "Path of the scenario script in this repository" },
+    "kind": {
+      "type": "string", "enum": ["recorded", "real-world"], "default": "recorded",
+      "description": "recorded: produced by running the scenario and re-recorded on promotion. real-world: an anonymised capture from a live server, pinned until a newer capture replaces it"
+    },
+    "scenario": { "type": "string", "description": "Path of the scenario script in this repository — or, for a real-world fixture, of the note describing its provenance and anonymisation" },
     "scenarioSha": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+    "description": { "type": "string", "description": "One line on what the fixture is, for people" },
     "recordedAt": { "type": "string", "format": "date-time" },
     "paths": {
       "type": "array", "minItems": 1, "items": { "type": "string" },

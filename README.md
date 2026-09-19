@@ -11,7 +11,8 @@ This repository holds no plugin code and no secrets. Fixtures are produced on a 
 ```
 scenarios/<plugin-slug>.js      the script that produces the fixture (console commands over RCON,
                                 and a mineflayer bot where a real player is required)
-fixtures/                       nothing committed here — recorded fixtures are release assets (below)
+fixtures/<slug>-<version>/      the manifest of each published fixture, for review — the archives
+                                themselves are release assets (below)
 schema/manifest.schema.json     the manifest format every fixture asset must carry
 ```
 
@@ -45,6 +46,30 @@ A manifest:
 `expected` lists a count per persisted entity type — every type, not only the root one. A release that reports a type as empty when the manifest says otherwise has a read-side defect, even if nothing threw.
 
 `minecraft` pins the server version the fixture was recorded on. Testing a fixture on a different server version conflates a plugin upgrade with a server upgrade; bumping the server version is its own event and its own re-record.
+
+## Real-world fixtures
+
+A scripted scenario proves the shapes it was written to create. A **real-world fixture**
+is a database or data folder taken from a live server, anonymised, and published under the
+tag `<plugin-slug>/<plugin-version>-real` with the same two assets. Its manifest carries
+`"kind": "real-world"`, and its `scenario` points at a note in `scenarios/` that records
+where the data came from, what was scrubbed and how, and the row counts before and after.
+It is not re-recorded on promotion; it stays pinned until a newer capture replaces it.
+
+A real-world fixture must contain no player identity: every player UUID replaced by a
+deterministic fake, every name by `Player<n>`, every free-text field (descriptions,
+prefixes, laws, chat) by a same-length placeholder — and the published files searched for
+every original value before release. Structure (factions, members and roles, claims,
+relationships, locks, gates, power) is kept intact and row counts must be unchanged.
+
+The manifest of each published fixture is committed under `fixtures/<slug>-<version>/` so
+it can be reviewed; the archive itself is only ever a release asset.
+
+Current real-world fixtures:
+
+| Tag | Note | What it holds |
+|---|---|---|
+| `medieval-factions/5.8.1-real` | [scenarios/medieval-factions-real.md](scenarios/medieval-factions-real.md) | nine months of a live Medieval Factions server: 38 players, 14 factions, 2,628 claims, 69 relationships, 11 locks, 1 gate |
 
 ## Writing a scenario
 
