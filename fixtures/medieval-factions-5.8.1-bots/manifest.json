@@ -1,0 +1,25 @@
+{
+  "plugin": "MedievalFactions",
+  "slug": "medieval-factions",
+  "version": "5.8.1-bots",
+  "minecraft": "26.1",
+  "kind": "recorded",
+  "scenario": "scenarios/medieval-factions.js",
+  "scenarioSha": "67966a3bfc77e3ac6418fc15e8b1d553c8003c10",
+  "description": "recorded by scenarios/medieval-factions.js: two bots, factions Alpha and Bravo, 5 claims, a mutual alliance, a locked chest, a lever-triggered gate",
+  "recordedAt": "2026-09-19T20:04:16Z",
+  "paths": [
+    "medieval_factions_db.mv.db",
+    "plugins/MedievalFactions"
+  ],
+  "expected": {
+    "factions": 2,
+    "claims": 5,
+    "faction relationships": 2,
+    "locked blocks": 1,
+    "gates": 1,
+    "players": 2,
+    "duels": 0,
+    "duel invites": 0
+  }
+}

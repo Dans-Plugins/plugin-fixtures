@@ -83,6 +83,12 @@ A scenario must:
 
 The Medieval Factions bot harness (mineflayer + RCON) is the reference for the bot side; its hard-won constraints — the bot must genuinely aim, continuous-use items are undecidable, read state back over RCON rather than trusting the client, a stalled server is indistinguishable from "nothing happened" — apply to every scenario. [`scenarios/medieval-factions.js`](scenarios/medieval-factions.js) is the first scenario written to them; [scenarios/README.md](scenarios/README.md) has the command line every scenario shares and how the release-gates workflow runs one.
 
+Current recorded fixtures:
+
+| Tag | Scenario | What it holds |
+|---|---|---|
+| `medieval-factions/5.8.1-bots` | [scenarios/medieval-factions.js](scenarios/medieval-factions.js) | 2 players, 2 factions, 5 claims, 2 relationship rows (a mutual alliance), 1 locked block, 1 gate — recorded on Spigot **26.1**, because the published mineflayer stack cannot join 26.2 yet (see the manifest) |
+
 ## What this does not prove
 
 - Data written by features the scenario does not exercise.
