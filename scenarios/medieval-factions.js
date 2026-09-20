@@ -336,6 +336,10 @@ async function main () {
 
   await step('join', async () => {
     alice = await makeBot('Alice')
+    // Both bots arrive from one address. Spigot's connection-throttle (bukkit.yml, 4000 ms by
+    // default) kicks a second join from the same IP inside that window with "Connection
+    // throttled! Please wait before reconnecting." — so the second bot waits it out.
+    await sleep(5000)
     bob = await makeBot('Bob')
     await sleep(1500)
     const r = await rcon.cmd('list')
