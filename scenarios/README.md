@@ -1,5 +1,9 @@
 One scenario per plugin, named `<plugin-slug>.js`. See the repository README for what a scenario must do.
 
+A real-world fixture has no script; its manifest's `scenario` points at a note here named
+`<plugin-slug>-real.md` instead (for example [`medieval-factions-real.md`](medieval-factions-real.md)),
+which records where the data came from and how it was anonymised.
+
 | Script | Plugin | What it creates |
 |---|---|---|
 | [`medieval-factions.js`](medieval-factions.js) | Medieval Factions | two bots: factions Alpha and Bravo, 3 + 2 claims made by walking, a mutual alliance, both descriptions, a chest Alice places and locks (Bob is refused at it), a lever-triggered gate that is opened and closed |
