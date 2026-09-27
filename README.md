@@ -11,6 +11,8 @@ This repository holds no plugin code and no secrets. Fixtures are produced on a 
 ```
 scenarios/<plugin-slug>.js      the script that produces the fixture (console commands over RCON,
                                 and a mineflayer bot where a real player is required)
+scenarios/<plugin-slug>-real.md the provenance and anonymisation note of a real-world fixture
+                                (below), which takes the place of a script
 fixtures/<slug>-<version>/      the manifest of each published fixture, for review — the archives
                                 themselves are release assets (below)
 schema/manifest.schema.json     the manifest format every fixture asset must carry
@@ -87,7 +89,7 @@ Current recorded fixtures:
 
 | Tag | Scenario | What it holds |
 |---|---|---|
-| `medieval-factions/5.8.1-bots` | [scenarios/medieval-factions.js](scenarios/medieval-factions.js) | 2 players, 2 factions, 5 claims, 2 relationship rows (a mutual alliance), 1 locked block, 1 gate — recorded on Spigot **26.1**, because the published mineflayer stack cannot join 26.2 yet (see the manifest) |
+| `medieval-factions/5.8.1-bots` | [scenarios/medieval-factions.js](scenarios/medieval-factions.js) | 2 players, 2 factions, 5 claims, 2 relationship rows (a mutual alliance), 1 locked block, 1 gate — recorded on Spigot **26.1**, because the published mineflayer stack cannot join 26.2 yet (the scenario's `server-version` step reports this) |
 
 ## What this does not prove
 
