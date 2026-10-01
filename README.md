@@ -71,7 +71,7 @@ Current real-world fixtures:
 
 | Tag | Note | What it holds |
 |---|---|---|
-| `medieval-factions/5.8.1-real` | [scenarios/medieval-factions-real.md](scenarios/medieval-factions-real.md) | nine months of a live Medieval Factions server: 38 players, 14 factions, 2,628 claims, 69 relationships, 11 locks, 1 gate |
+| `medieval-factions/5.8.1-real` | [scenarios/medieval-factions-real.md](scenarios/medieval-factions-real.md) | nine months of a live Medieval Factions server: 38 players, 14 factions, 2,628 claims, 69 relationships, 11 locks, 1 gate, 1 duel invite, no duels |
 
 ## Writing a scenario
 
@@ -89,7 +89,7 @@ Current recorded fixtures:
 
 | Tag | Scenario | What it holds |
 |---|---|---|
-| `medieval-factions/5.8.1-bots` | [scenarios/medieval-factions.js](scenarios/medieval-factions.js) | 2 players, 2 factions, 5 claims, 2 relationship rows (a mutual alliance), 1 locked block, 1 gate — recorded on Spigot **26.1**, because the published mineflayer stack cannot join 26.2 yet (the scenario's `server-version` step reports this) |
+| `medieval-factions/5.8.1-bots` | [scenarios/medieval-factions.js](scenarios/medieval-factions.js) | 2 players, 2 factions, 5 claims, 2 relationship rows (a mutual alliance), 1 locked block, 1 gate, no duels or duel invites — recorded on Spigot **26.1**, because the published mineflayer stack cannot join 26.2 yet (the scenario's `server-version` step reports this) |
 
 ## What this does not prove
 

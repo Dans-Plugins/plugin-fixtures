@@ -26,10 +26,18 @@ node scenarios/<slug>.js --host localhost --port 25565 --rcon-port 25575 \
   operators — the scenario proves what a player can do with the plugin's default permissions.
 - Exit code 0 means every step verified; anything else means a step failed, and the output
   says which and what was received instead.
-- The last stdout line is `SCENARIO_EXPECTED {json}`: the count per persisted entity type,
-  keyed by the label the plugin prints in its `<n> <label> loaded` startup lines. That object
-  is what goes into the fixture manifest's `expected`, and the workflow asserts the plugin's
-  next boot reports the same numbers.
+- When every step verified, the last stdout line is `SCENARIO_EXPECTED {json}`: the count per
+  persisted entity type, keyed by the label the plugin prints in its `<n> <label> loaded`
+  startup lines. That object is what goes into the fixture manifest's `expected`, and the
+  workflow asserts the plugin's next boot reports the same numbers. A failed run prints no
+  `SCENARIO_EXPECTED` line.
+- `--json-out <file>` writes the run as JSON (`passed`, every step with its result and detail,
+  `expected` — `null` on failure — and the mineflayer version), whether the run passed or not.
+- `--server-log docker:<container>|<file>` adds a final `server-log` step: every chat command
+  a bot sent must appear in the server log as `<bot> issued server command: <command>`, and
+  the log must have no plugin `ERROR`/`SEVERE` lines. Without it the step passes as
+  "not checked".
+- `--help` prints the script's header comment and exits.
 - `--mc-version` defaults to auto-detection. A server whose protocol the installed mineflayer
   does not know is reported in one line (`server-version` step) instead of failing inside the
   handshake.
