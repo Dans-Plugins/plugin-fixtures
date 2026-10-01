@@ -37,7 +37,7 @@ node scenarios/<slug>.js --host localhost --port 25565 --rcon-port 25575 \
   a bot sent must appear in the server log as `<bot> issued server command: <command>`, and
   the log must have no plugin `ERROR`/`SEVERE` lines. Without it the step passes as
   "not checked".
-- `--help` prints the script's header comment and exits.
+- `--help` prints the script's top-level `//` comment lines, starting with its header, and exits.
 - `--mc-version` defaults to auto-detection. A server whose protocol the installed mineflayer
   does not know is reported in one line (`server-version` step) instead of failing inside the
   handshake.
