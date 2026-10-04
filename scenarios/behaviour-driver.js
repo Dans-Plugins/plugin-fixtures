@@ -170,6 +170,18 @@ function makeBot (args, username) {
   })
 }
 
+async function joinWithRetry (args, username) {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await makeBot(args, username)
+    } catch (e) {
+      if (attempt >= 4 || !/throttled/i.test(e.message)) throw e
+      console.log(`    ${username}: connection throttled, retrying in ${5 * attempt}s`)
+      await sleep(5000 * attempt)
+    }
+  }
+}
+
 const mark = (bot) => bot.log.length
 const since = (bot, m) => bot.log.slice(m)
 
@@ -461,9 +473,11 @@ async function main () {
   for (const a of Object.values(arenas)) await buildArena(rcon, a)
 
   const bots = {}
+  // Spigot's default bukkit.yml `connection-throttle` (4000 ms) kicks a second login from the same
+  // address inside the window, so bots join 4.5 s apart and a throttled join is retried.
   for (const [role, username] of Object.entries(setup.roles)) {
-    bots[role] = await alive(await makeBot(args, username))
-    await sleep(500)
+    bots[role] = await alive(await joinWithRetry(args, username))
+    await sleep(4500)
   }
   const ctx = { rcon, bots, arenas, lang, say, tp, Y, targetPoint, sleep }
   await setup.setup(ctx)
