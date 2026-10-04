@@ -28,6 +28,7 @@ node scenarios/behaviour-driver.js --rows scenarios/medieval-factions-behaviour.
 node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit 1 when a row changed
 ```
 
+- `dataPaths` (server-root-relative globs) names the plugin's data, which the release-gates behaviour gate deletes before every pass so each jar starts fresh. Medieval Factions keeps its H2 database at the server root, outside its plugin folder.
 - The driver never restarts the server. The harness applies a row group's `configGroups` entry
   to `config.yml` and restarts between groups.
 - Every row is paired with a control: the same action by the owner in their own claim. When the
