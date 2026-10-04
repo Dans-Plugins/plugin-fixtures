@@ -228,8 +228,12 @@ function loadLang (file) {
   for (const line of fs.readFileSync(file, 'latin1').split('\n')) {
     const m = line.match(/^([A-Za-z0-9_.]+)=(.*)$/)
     if (!m || !m[2].trim()) continue
-    const esc = m[2].trim().replace(/''/g, "'").replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\\\{\d+\\\}/g, '.*')
-    out.push({ key: m[1], re: new RegExp('^' + esc + '$'), len: m[2].length })
+    // Properties files write non-Latin-1 characters as \\uXXXX escapes (e.g. \\u26a0 in a warning).
+    const value = m[2].trim().replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
+    // A value that is only placeholders ("{0}") would match any line; it cannot identify a message.
+    if (value.replace(/\{\d+\}/g, '').replace(/[^A-Za-z]/g, '').length < 4) continue
+    const esc = value.replace(/''/g, "'").replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\\\{\d+\\\}/g, '.*')
+    out.push({ key: m[1], re: new RegExp('^' + esc + '$'), len: value.length })
   }
   return out.sort((a, b) => b.len - a.len) // most specific first
 }
