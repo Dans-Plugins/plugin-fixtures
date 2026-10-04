@@ -8,6 +8,37 @@ which records where the data came from and how it was anonymised.
 |---|---|---|
 | [`medieval-factions.js`](medieval-factions.js) | Medieval Factions | two bots: factions Alpha and Bravo, 3 + 2 claims made by walking, a mutual alliance, both descriptions, a chest Alice places and locks (Bob is refused at it), a lever-triggered gate that is opened and closed |
 
+## Behaviour tables (T4, Stephenson-Software RFC 0017)
+
+A behaviour table is a matrix of rows: who (a role) does what (an action with an item) to which
+target, where (an arena), under which config group. `behaviour-driver.js` plays a table on a
+running server and writes one outcome per row, read back from the world. It is run on the current
+stable jar and on a candidate, each on fresh plugin data, and `--compare` reports every row whose
+outcome changed. No expected values are needed.
+
+| Table | Setup | Rows |
+|---|---|---|
+| [`medieval-factions-behaviour.json`](medieval-factions-behaviour.json) | [`medieval-factions-behaviour-setup.js`](medieval-factions-behaviour-setup.js) | 47: core actions for six roles in the owner's claim, world-changing and throw-type items, entities, doors, and wilderness, across three config groups |
+
+```
+node scenarios/behaviour-driver.js --rows scenarios/medieval-factions-behaviour.json \
+     --setup scenarios/medieval-factions-behaviour-setup.js --group default \
+     --port 25565 --rcon-port 25575 --rcon-password <pw> [--lang lang_en_US.properties] \
+     --label stable --json-out stable.json
+node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit 1 when a row changed
+```
+
+- The driver never restarts the server. The harness applies a row group's `configGroups` entry
+  to `config.yml` and restarts between groups.
+- Every row is paired with a control: the same action by the owner in their own claim. When the
+  control does not change the world either, the bot cannot decide the row and it is recorded as
+  `not-checked`, as is a row whose bot was not aiming at the target, did not reach its position,
+  did not hold the item server-side, or whose server stopped answering. A `not-checked` row is
+  never compared.
+- Outcomes are booleans or sets (never counts, which vary between identical runs), and refusal
+  messages are mapped to lang keys with `--lang`, so a reworded message is reported as
+  `message-changed` rather than `changed`.
+
 ## Running a scenario
 
 Every scenario is a single Node file with the same command line, so the
