@@ -260,7 +260,9 @@ async function resetArena (rcon, arena, { verbose = false } = {}) {
 
 async function serverHolds (rcon, username, item) {
   for (let i = 0; i < 20; i++) {
-    const r = await rcon.cmd(`execute if entity @a[name=${username},nbt={SelectedItem:{id:"minecraft:${item}"}}]`, { quiet: true })
+    // `execute if items` (1.20.5+) rather than player NBT: the `SelectedItem` field is not stable
+    // across Minecraft versions, and this gate runs on 26.x as well as 1.21.
+    const r = await rcon.cmd(`execute if items entity @a[name=${username},limit=1] weapon.mainhand minecraft:${item}`, { quiet: true })
     if (/passed/i.test(r)) return true
     await sleep(150)
   }
