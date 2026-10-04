@@ -255,6 +255,9 @@ function targetPoint (arena) { const b = arenaBox(arena); return new Vec3(b.x0 +
 async function buildArena (rcon, arena) {
   const b = arenaBox(arena)
   await rcon.cmd(`forceload add ${b.x0} ${b.z0} ${b.x1} ${b.z1}`)
+  // A generated (not flat) world spawns bats, squid and the like near the arena on its own, and the
+  // bot sees them; the first CI run (release-gates run 37231448917) reported them as changes.
+  for (const rule of ['doMobSpawning false', 'randomTickSpeed 0', 'doFireTick false', 'doDaylightCycle false', 'doWeatherCycle false']) await rcon.cmd(`gamerule ${rule}`, { quiet: true })
   await sleep(500)
   await resetArena(rcon, arena, { verbose: true })
 }
@@ -371,7 +374,11 @@ async function attempt (ctx, row, roleName, arenaName) {
   let plantsBefore = 0
   if (t.floor === 'grass_patch') plantsBefore = await countPlants(rcon, t.pos)
   const spawned = new Set()
-  const onSpawn = (e) => { const n = e.name || ''; if (n && !['item', 'experience_orb', 'player'].includes(n)) spawned.add(n) }
+  // Only entities that appear at the target count: anything further away was not made by the row.
+  const onSpawn = (e) => {
+    const n = e.name || ''
+    if (n && !['item', 'experience_orb', 'player'].includes(n) && e.position && e.position.distanceTo(T) <= 8) spawned.add(n)
+  }
   let windows = 0
   const onWin = () => { windows++; try { bot.closeWindow(bot.currentWindow) } catch (e) {} }
   bot.on('entitySpawn', onSpawn)
