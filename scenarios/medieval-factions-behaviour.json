@@ -20,6 +20,13 @@
     140
    ],
    "owner": null
+  },
+  "lockArena": {
+   "chunk": [
+    141,
+    140
+   ],
+   "owner": "Alpha"
   }
  },
  "configGroups": {
@@ -1014,6 +1021,97 @@
     "fireAdjacent"
    ],
    "item": "flint_and_steel"
+  },
+  {
+   "id": "open-lockedchest-member",
+   "group": "default",
+   "role": "member",
+   "arena": "lockArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "open-lockedchest-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "lockArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "open-lockedchest-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "lockArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "open-lockedchest-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "lockArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "open-lockedchest-bypass",
+   "group": "default",
+   "role": "bypass",
+   "arena": "lockArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "break-lockedchest-member",
+   "group": "default",
+   "role": "member",
+   "arena": "lockArena",
+   "action": "breakBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "break-lockedchest-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "lockArena",
+   "action": "breakBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "targetChanged"
+   ]
   }
  ]
 }

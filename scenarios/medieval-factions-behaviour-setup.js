@@ -11,6 +11,11 @@
 //   stranger    Sam    in no faction
 //   bypass      Ben    server operator with /f bypass enabled
 //
+// The lockArena (a second Alpha chunk) holds a chest Alice locks, with Bob (the ally) added as
+// an accessor. The lock record is kept by position, so the driver re-placing the chest for each
+// row leaves it locked; no row may break that chest as a player who is allowed to, which would
+// delete the lock.
+//
 // Only Ben is an operator: every other role proves what a player can do with the plugin's
 // default permissions.
 
@@ -52,10 +57,40 @@ async function setup (ctx) {
 
   await say(bots.owner, '/f declarewar Whiskey', /at war/i)
 
+  if (arenas.lockArena) {
+    const { Vec3 } = require('vec3')
+    const L = targetPoint(arenas.lockArena)
+    if (!(await tp(rcon, bots.owner, L.x + 0.5, Y, L.z - 3.5))) throw new Error('owner could not reach the lock arena')
+    await say(bots.owner, '/f claim', /Claimed|aren't any claimable|already/i)
+    const lockOwner = await say(bots.owner, '/f claim check', /Alpha|Wilderness|claim/i)
+    if (!/Alpha/.test(lockOwner)) throw new Error(`lockArena is not Alpha's: ${lockOwner}`)
+    await rcon.cmd(`setblock ${L.x} ${L.y} ${L.z} minecraft:chest`, { quiet: true })
+    if (!(await tp(rcon, bots.owner, L.x + 2.5, Y, L.z + 0.5, 90))) throw new Error('owner could not reach the chest')
+    await sleep(600)
+    await say(bots.owner, '/lock', /select the block|already/i)
+    await bots.owner.lookAt(new Vec3(L.x + 0.5, L.y + 0.5, L.z + 0.5), true)
+    await sleep(300)
+    const m = bots.owner.log.length
+    bots.owner.activateBlock(bots.owner.blockAt(new Vec3(L.x, L.y, L.z))).catch(() => {})
+    const locked = await waitReply(bots.owner, m, /Block locked|already locked/i, 15000)
+    await say(bots.owner, '/lock cancel', /Cancelled locking|not attempting/i)
+    if (!locked) throw new Error('the lock arena chest could not be locked')
+    await say(bots.owner, `/accessors add ${L.x} ${L.y} ${L.z} ${roles.ally}`, /Allowed|already|access/i)
+  }
+
   // Bypass: read the toggle's reply and toggle again if it switched it off.
   const b = await say(bots.bypass, '/f bypass', /Bypass (enabled|disabled)/i)
   if (/disabled/i.test(b)) await say(bots.bypass, '/f bypass', /Bypass enabled/i)
   await sleep(500)
+}
+
+async function waitReply (bot, mark, re, ms) {
+  const deadline = Date.now() + ms
+  while (Date.now() < deadline) {
+    if (bot.log.slice(mark).some(l => re.test(l))) return true
+    await new Promise(r => setTimeout(r, 100))
+  }
+  return false
 }
 
 module.exports = { roles, setup, controlRole: 'owner', controlArena: 'ownerClaim' }
