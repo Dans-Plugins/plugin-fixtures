@@ -18,7 +18,7 @@ outcome changed. No expected values are needed.
 
 | Table | Setup | Rows |
 |---|---|---|
-| [`medieval-factions-behaviour.json`](medieval-factions-behaviour.json) | [`medieval-factions-behaviour-setup.js`](medieval-factions-behaviour-setup.js) | 47: core actions for six roles in the owner's claim, world-changing and throw-type items, entities, doors, and wilderness, across three config groups |
+| [`medieval-factions-behaviour.json`](medieval-factions-behaviour.json) | [`medieval-factions-behaviour-setup.js`](medieval-factions-behaviour-setup.js) | 69: core actions for six roles in the owner's claim, world-changing and throw-type items, entities, doors, ladders and wilderness; wartime allowances (at war and not), wilderness place/break prevention, the entity option, and fire at war, across seven config groups |
 
 ```
 node scenarios/behaviour-driver.js --rows scenarios/medieval-factions-behaviour.json \

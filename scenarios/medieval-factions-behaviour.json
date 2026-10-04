@@ -29,6 +29,34 @@
   },
   "wildernessLocked": {
    "wilderness.interaction.prevent": true
+  },
+  "wartime": {
+   "factions.wartimePlaceableBlocks": [
+    "COBBLESTONE",
+    "FLINT_AND_STEEL",
+    "BONE_MEAL",
+    "ARMOR_STAND"
+   ],
+   "factions.wartimeBreakableBlocks": [
+    "DIRT"
+   ],
+   "factions.wartimeInteractableBlocks": [
+    "CHEST",
+    "OAK_DOOR"
+   ]
+  },
+  "wildernessPlaceBreak": {
+   "wilderness.place.prevent": true,
+   "wilderness.break.prevent": true
+  },
+  "entitiesOpen": {
+   "factions.nonMembersCanInteractWithEntities": true
+  },
+  "wartimeFire": {
+   "factions.wartimePlaceableBlocks": [
+    "FLINT_AND_STEEL",
+    "FIRE"
+   ]
   }
  },
  "rows": [
@@ -686,6 +714,306 @@
    "observe": [
     "containerOpened"
    ]
+  },
+  {
+   "id": "place-stone-enemyAtWar-wartime",
+   "group": "wartime",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "fire-stone-enemyAtWar-wartime",
+   "group": "wartime",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel"
+  },
+  {
+   "id": "bonemeal-grass-enemyAtWar-wartime",
+   "group": "wartime",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "floor": "grass_patch"
+   },
+   "observe": [
+    "plantsGrown"
+   ],
+   "item": "bone_meal"
+  },
+  {
+   "id": "armorstand-place-enemyAtWar-wartime",
+   "group": "wartime",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "entitySpawned"
+   ],
+   "item": "armor_stand"
+  },
+  {
+   "id": "break-dirt-enemyAtWar-wartime",
+   "group": "wartime",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "open-chest-enemyAtWar-wartime",
+   "group": "wartime",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "door-enemyAtWar-wartime",
+   "group": "wartime",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "oak_door"
+   },
+   "observe": [
+    "doorOpened"
+   ]
+  },
+  {
+   "id": "place-stone-enemy-wartime",
+   "group": "wartime",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "fire-stone-enemy-wartime",
+   "group": "wartime",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel"
+  },
+  {
+   "id": "bonemeal-grass-enemy-wartime",
+   "group": "wartime",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "floor": "grass_patch"
+   },
+   "observe": [
+    "plantsGrown"
+   ],
+   "item": "bone_meal"
+  },
+  {
+   "id": "armorstand-place-enemy-wartime",
+   "group": "wartime",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "entitySpawned"
+   ],
+   "item": "armor_stand"
+  },
+  {
+   "id": "break-dirt-enemy-wartime",
+   "group": "wartime",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "open-chest-enemy-wartime",
+   "group": "wartime",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "door-enemy-wartime",
+   "group": "wartime",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "oak_door"
+   },
+   "observe": [
+    "doorOpened"
+   ]
+  },
+  {
+   "id": "place-stone-wilderness-stranger-prevented",
+   "group": "wildernessPlaceBreak",
+   "role": "stranger",
+   "arena": "wilderness",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "break-dirt-wilderness-stranger-prevented",
+   "group": "wildernessPlaceBreak",
+   "role": "stranger",
+   "arena": "wilderness",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "itemframe-insert-enemy-entitiesopen",
+   "group": "entitiesOpen",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnEntity",
+   "target": {
+    "entity": "item_frame"
+   },
+   "observe": [
+    "entityChanged"
+   ],
+   "item": "diamond"
+  },
+  {
+   "id": "armorstand-equip-enemy-entitiesopen",
+   "group": "entitiesOpen",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnEntity",
+   "target": {
+    "entity": "armor_stand"
+   },
+   "observe": [
+    "entityChanged"
+   ],
+   "item": "leather_helmet"
+  },
+  {
+   "id": "chestminecart-open-enemy-entitiesopen",
+   "group": "entitiesOpen",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnEntity",
+   "target": {
+    "entity": "chest_minecart"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "ladder-stone-enemyAtWar",
+   "group": "default",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "ladder"
+  },
+  {
+   "id": "ladder-stone-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "ladder"
+  },
+  {
+   "id": "fire-stone-enemyAtWar-wartimefire",
+   "group": "wartimeFire",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel"
   }
  ]
 }
