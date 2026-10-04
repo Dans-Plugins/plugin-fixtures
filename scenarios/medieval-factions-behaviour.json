@@ -468,7 +468,10 @@
    ],
    "item": "egg",
    "count": 4,
-   "alsoUseItem": true
+   "alsoUseItem": true,
+   "ignoreEntities": [
+    "chicken"
+   ]
   },
   {
    "id": "xpbottle-enemy",

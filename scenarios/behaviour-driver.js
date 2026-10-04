@@ -398,7 +398,9 @@ async function attempt (ctx, row, roleName, arenaName) {
     }
   }
   if (want.has('plantsGrown')) obs.plantsGrown = (await countPlants(rcon, t.pos)) > plantsBefore
-  if (want.has('entitySpawned')) obs.entitySpawned = [...spawned].sort()
+  // `ignoreEntities` lists by-products vanilla spawns at random (a thrown egg hatches a chicken one
+  // time in eight), which would otherwise differ between identical runs.
+  if (want.has('entitySpawned')) obs.entitySpawned = [...spawned].filter(n => !(row.ignoreEntities || []).includes(n)).sort()
   if (want.has('containerOpened')) obs.containerOpened = windows > 0
   if (want.has('entityChanged') && t.kind === 'entity') {
     const after = await entityData(rcon, t)
