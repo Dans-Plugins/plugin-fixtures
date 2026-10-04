@@ -1,0 +1,684 @@
+{
+ "plugin": "MedievalFactions",
+ "minecraftVersion": "26.1",
+ "_comment": "RFC 0017 behaviour table. Each row is played by its role and by the control (Alice in her own claim, same action); see behaviour-driver.js. Rows are compared stable vs candidate, never against expected values.",
+ "arenas": {
+  "ownerClaim": {
+   "chunk": [
+    140,
+    140
+   ],
+   "owner": "Alpha"
+  },
+  "wilderness": {
+   "chunk": [
+    143,
+    140
+   ],
+   "owner": null
+  }
+ },
+ "configGroups": {
+  "default": {},
+  "doorsOpen": {
+   "factions.nonMembersCanInteractWithDoors": true
+  },
+  "wildernessLocked": {
+   "wilderness.interaction.prevent": true
+  }
+ },
+ "rows": [
+  {
+   "id": "fire-stone-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel"
+  },
+  {
+   "id": "place-stone-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "break-dirt-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "open-chest-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "fire-stone-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel"
+  },
+  {
+   "id": "place-stone-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "break-dirt-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "open-chest-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "fire-stone-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel"
+  },
+  {
+   "id": "place-stone-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "break-dirt-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "open-chest-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "fire-stone-enemyAtWar",
+   "group": "default",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel"
+  },
+  {
+   "id": "place-stone-enemyAtWar",
+   "group": "default",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "break-dirt-enemyAtWar",
+   "group": "default",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "open-chest-enemyAtWar",
+   "group": "default",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "fire-stone-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel"
+  },
+  {
+   "id": "place-stone-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "break-dirt-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "open-chest-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "fire-stone-bypass",
+   "group": "default",
+   "role": "bypass",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel"
+  },
+  {
+   "id": "place-stone-bypass",
+   "group": "default",
+   "role": "bypass",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "break-dirt-bypass",
+   "group": "default",
+   "role": "bypass",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "open-chest-bypass",
+   "group": "default",
+   "role": "bypass",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "bonemeal-grass-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "floor": "grass_patch"
+   },
+   "observe": [
+    "plantsGrown"
+   ],
+   "item": "bone_meal"
+  },
+  {
+   "id": "itemframe-place-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "entitySpawned"
+   ],
+   "item": "item_frame"
+  },
+  {
+   "id": "armorstand-place-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "entitySpawned"
+   ],
+   "item": "armor_stand"
+  },
+  {
+   "id": "endcrystal-place-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "floor": "obsidian"
+   },
+   "observe": [
+    "entitySpawned"
+   ],
+   "item": "end_crystal"
+  },
+  {
+   "id": "waterbucket-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "water_bucket"
+  },
+  {
+   "id": "snowball-stack-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "entitySpawned"
+   ],
+   "item": "snowball",
+   "count": 4,
+   "alsoUseItem": true
+  },
+  {
+   "id": "snowball-last-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "entitySpawned"
+   ],
+   "item": "snowball",
+   "count": 1,
+   "alsoUseItem": true
+  },
+  {
+   "id": "egg-stack-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "entitySpawned"
+   ],
+   "item": "egg",
+   "count": 4,
+   "alsoUseItem": true
+  },
+  {
+   "id": "xpbottle-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "entitySpawned"
+   ],
+   "item": "experience_bottle",
+   "count": 4,
+   "alsoUseItem": true
+  },
+  {
+   "id": "splashpotion-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "entitySpawned"
+   ],
+   "item": "splash_potion",
+   "alsoUseItem": true
+  },
+  {
+   "id": "lingeringpotion-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "entitySpawned"
+   ],
+   "item": "lingering_potion",
+   "alsoUseItem": true
+  },
+  {
+   "id": "splashpotion-chest-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "entitySpawned",
+    "containerOpened"
+   ],
+   "item": "splash_potion",
+   "alsoUseItem": true
+  },
+  {
+   "id": "barehand-stone-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "door-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "oak_door"
+   },
+   "observe": [
+    "doorOpened"
+   ]
+  },
+  {
+   "id": "itemframe-insert-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnEntity",
+   "target": {
+    "entity": "item_frame"
+   },
+   "observe": [
+    "entityChanged"
+   ],
+   "item": "diamond"
+  },
+  {
+   "id": "armorstand-equip-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnEntity",
+   "target": {
+    "entity": "armor_stand"
+   },
+   "observe": [
+    "entityChanged"
+   ],
+   "item": "leather_helmet"
+  },
+  {
+   "id": "chestminecart-open-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnEntity",
+   "target": {
+    "entity": "chest_minecart"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "door-enemy-doorsopen",
+   "group": "doorsOpen",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "oak_door"
+   },
+   "observe": [
+    "doorOpened"
+   ]
+  },
+  {
+   "id": "fire-door-sneak-enemy-doorsopen",
+   "group": "doorsOpen",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "oak_door"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel",
+   "sneak": true
+  },
+  {
+   "id": "fire-stone-wilderness-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "wilderness",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel"
+  },
+  {
+   "id": "open-chest-wilderness-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "wilderness",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "fire-stone-wilderness-stranger-locked",
+   "group": "wildernessLocked",
+   "role": "stranger",
+   "arena": "wilderness",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel"
+  },
+  {
+   "id": "open-chest-wilderness-stranger-locked",
+   "group": "wildernessLocked",
+   "role": "stranger",
+   "arena": "wilderness",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  }
+ ]
+}
