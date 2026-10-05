@@ -1,0 +1,323 @@
+{
+ "plugin": "Fiefs",
+ "minecraftVersion": "26.1",
+ "dataPaths": [
+  "plugins/Fiefs",
+  "plugins/MedievalFactions",
+  "medieval_factions_db.*"
+ ],
+ "_comment": "RFC 0017 behaviour table for Fiefs, played on top of Medieval Factions (installed by the gate as a dependency). Each row is played by its role and by the control (Alice in her own fief's claim).",
+ "arenas": {
+  "fiefArena": {
+   "chunk": [
+    140,
+    140
+   ],
+   "owner": "Alpha"
+  },
+  "factionArena": {
+   "chunk": [
+    141,
+    140
+   ],
+   "owner": "Alpha"
+  }
+ },
+ "configGroups": {
+  "default": {}
+ },
+ "rows": [
+  {
+   "id": "break-dirt-fief-fiefMember",
+   "group": "default",
+   "role": "fiefMember",
+   "arena": "fiefArena",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "place-stone-fief-fiefMember",
+   "group": "default",
+   "role": "fiefMember",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "open-chest-fief-fiefMember",
+   "group": "default",
+   "role": "fiefMember",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "door-fief-fiefMember",
+   "group": "default",
+   "role": "fiefMember",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "oak_door"
+   },
+   "observe": [
+    "doorOpened"
+   ]
+  },
+  {
+   "id": "break-dirt-fief-factionMember",
+   "group": "default",
+   "role": "factionMember",
+   "arena": "fiefArena",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "place-stone-fief-factionMember",
+   "group": "default",
+   "role": "factionMember",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "open-chest-fief-factionMember",
+   "group": "default",
+   "role": "factionMember",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "door-fief-factionMember",
+   "group": "default",
+   "role": "factionMember",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "oak_door"
+   },
+   "observe": [
+    "doorOpened"
+   ]
+  },
+  {
+   "id": "break-dirt-fief-otherFief",
+   "group": "default",
+   "role": "otherFief",
+   "arena": "fiefArena",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "place-stone-fief-otherFief",
+   "group": "default",
+   "role": "otherFief",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "open-chest-fief-otherFief",
+   "group": "default",
+   "role": "otherFief",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "door-fief-otherFief",
+   "group": "default",
+   "role": "otherFief",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "oak_door"
+   },
+   "observe": [
+    "doorOpened"
+   ]
+  },
+  {
+   "id": "break-dirt-fief-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "fiefArena",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "place-stone-fief-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "open-chest-fief-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "door-fief-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "oak_door"
+   },
+   "observe": [
+    "doorOpened"
+   ]
+  },
+  {
+   "id": "break-dirt-faction-factionMember",
+   "group": "default",
+   "role": "factionMember",
+   "arena": "factionArena",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "open-chest-faction-factionMember",
+   "group": "default",
+   "role": "factionMember",
+   "arena": "factionArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "break-dirt-faction-otherFief",
+   "group": "default",
+   "role": "otherFief",
+   "arena": "factionArena",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "open-chest-faction-otherFief",
+   "group": "default",
+   "role": "otherFief",
+   "arena": "factionArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "itemframe-insert-fief-factionMember",
+   "group": "default",
+   "role": "factionMember",
+   "arena": "fiefArena",
+   "action": "useOnEntity",
+   "target": {
+    "entity": "item_frame"
+   },
+   "observe": [
+    "entityChanged"
+   ],
+   "item": "diamond"
+  },
+  {
+   "id": "armorstand-equip-fief-factionMember",
+   "group": "default",
+   "role": "factionMember",
+   "arena": "fiefArena",
+   "action": "useOnEntity",
+   "target": {
+    "entity": "armor_stand"
+   },
+   "observe": [
+    "entityChanged"
+   ],
+   "item": "leather_helmet"
+  }
+ ]
+}

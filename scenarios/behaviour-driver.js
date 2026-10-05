@@ -164,7 +164,8 @@ function makeBot (args, username) {
     bot.log = []
     bot.on('message', (m) => { bot.log.push(plain(m.toString())) })
     bot.on('error', (e) => reject(new Error(`${username}: ${e.message}`)))
-    bot.on('kicked', (r) => reject(new Error(`${username} kicked: ${JSON.stringify(r)}`)))
+    bot.on('kicked', (r) => { bot.kicked = String(r); reject(new Error(`${username} kicked: ${JSON.stringify(r)}`)) })
+    bot.on('end', () => { bot.ended = true })
     bot.once('spawn', () => resolve(bot))
     setTimeout(() => reject(new Error(`${username} did not spawn within 90s`)), 90000)
   })
@@ -209,6 +210,12 @@ async function tp (rcon, bot, x, y, z, yaw) {
 
 // Send a chat line and wait for any reply matching one of `expect`.
 async function say (bot, line, expect, timeoutMs = 30000) {
+  // Spigot counts commands toward its chat-spam limit (a burst of about 10, then about one a
+  // second) and kicks with "Kicked for spamming"; a setup that sends a dozen commands from one bot
+  // in a row was kicked mid-setup (Fiefs, 2026-10-04). Pace each bot's lines.
+  const wait = (bot.lastChatAt || 0) + 1100 - Date.now()
+  if (wait > 0) await sleep(wait)
+  bot.lastChatAt = Date.now()
   const m = mark(bot)
   bot.chat(line)
   const ok = await waitFor(() => since(bot, m).some(l => expect.test(l)), timeoutMs)
@@ -335,6 +342,9 @@ async function attempt (ctx, row, roleName, arenaName) {
   const { rcon, bots, arenas, lang } = ctx
   const bot = bots[roleName]
   const arena = arenas[arenaName]
+  // A bot that was kicked or disconnected after joining would make every later row read as
+  // "nothing happened"; stop the run instead.
+  if (bot.ended) throw new Error(`${bot.username} is no longer connected` + (bot.kicked ? ` (kicked: ${bot.kicked})` : ''))
   const checks = { aimed: false, inPlace: false, serverAlive: false }
   await resetArena(rcon, arena)
   const t = await placeTarget(rcon, arena, row.target)
@@ -502,7 +512,8 @@ async function main () {
       if (!controls.has(controlKey)) {
         const c = await attempt(ctx, row, setup.controlRole, setup.controlArena)
         controls.set(controlKey, c)
-        console.log(`  [control ${row.action}/${row.item || 'hand'}] ${JSON.stringify(c.outcome)}`)
+        const failed = Object.entries(c.checks).filter(([, v]) => !v).map(([k]) => k)
+        console.log(`  [control ${row.action}/${row.item || 'hand'}] ${JSON.stringify(c.outcome)}` + (failed.length ? `  (control checks failed: ${failed.join(',')})` : ''))
       }
       control = controls.get(controlKey)
     }
