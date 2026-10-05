@@ -609,7 +609,13 @@
    },
    "observe": [
     "doorOpened"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L345-L348",
+    "reviewed": true,
+    "note": "non-members cannot use doors by default"
+   }
   },
   {
    "id": "itemframe-insert-enemy",
@@ -623,7 +629,13 @@
    "observe": [
     "entityChanged"
    ],
-   "item": "diamond"
+   "item": "diamond",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L350-L353",
+    "reviewed": true,
+    "note": "entity interactions blocked by default"
+   }
   },
   {
    "id": "armorstand-equip-enemy",
@@ -637,7 +649,13 @@
    "observe": [
     "entityChanged"
    ],
-   "item": "leather_helmet"
+   "item": "leather_helmet",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L350-L353",
+    "reviewed": true,
+    "note": "entity interactions blocked by default"
+   }
   },
   {
    "id": "chestminecart-open-enemy",
@@ -650,7 +668,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L350-L353",
+    "reviewed": true,
+    "note": "entity interactions blocked by default"
+   }
   },
   {
    "id": "door-enemy-doorsopen",
@@ -663,7 +687,13 @@
    },
    "observe": [
     "doorOpened"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L345-L348",
+    "reviewed": true,
+    "note": "doors option on"
+   }
   },
   {
    "id": "fire-door-sneak-enemy-doorsopen",
@@ -719,7 +749,13 @@
    "observe": [
     "fireAdjacent"
    ],
-   "item": "flint_and_steel"
+   "item": "flint_and_steel",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L208-L211",
+    "reviewed": true,
+    "note": "items that act on a block are refused outright"
+   }
   },
   {
    "id": "open-chest-wilderness-stranger-locked",
@@ -732,7 +768,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L208-L211",
+    "reviewed": true,
+    "note": "wilderness block interactions prevented"
+   }
   },
   {
    "id": "place-stone-enemyAtWar-wartime",
@@ -746,7 +788,13 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "cobblestone"
+   "item": "cobblestone",
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L290-L293",
+    "reviewed": true,
+    "note": "COBBLESTONE listed"
+   }
   },
   {
    "id": "fire-stone-enemyAtWar-wartime",
@@ -760,7 +808,14 @@
    "observe": [
     "fireAdjacent"
    ],
-   "item": "flint_and_steel"
+   "item": "flint_and_steel",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L290-L293",
+    "reviewed": true,
+    "note": "FIRE must be listed as well as FLINT_AND_STEEL",
+    "refusal": "CannotPlaceBlockInFactionTerritory"
+   }
   },
   {
    "id": "bonemeal-grass-enemyAtWar-wartime",
@@ -774,7 +829,13 @@
    "observe": [
     "plantsGrown"
    ],
-   "item": "bone_meal"
+   "item": "bone_meal",
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L290-L293",
+    "reviewed": true,
+    "note": "BONE_MEAL listed"
+   }
   },
   {
    "id": "armorstand-place-enemyAtWar-wartime",
@@ -788,7 +849,13 @@
    "observe": [
     "entitySpawned"
    ],
-   "item": "armor_stand"
+   "item": "armor_stand",
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L290-L293",
+    "reviewed": true,
+    "note": "ARMOR_STAND listed"
+   }
   },
   {
    "id": "break-dirt-enemyAtWar-wartime",
@@ -801,7 +868,13 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L302-L305",
+    "reviewed": true,
+    "note": "DIRT listed"
+   }
   },
   {
    "id": "open-chest-enemyAtWar-wartime",
@@ -814,7 +887,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L313-L316",
+    "reviewed": true,
+    "note": "CHEST listed"
+   }
   },
   {
    "id": "door-enemyAtWar-wartime",
@@ -827,7 +906,13 @@
    },
    "observe": [
     "doorOpened"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L313-L316",
+    "reviewed": true,
+    "note": "OAK_DOOR listed"
+   }
   },
   {
    "id": "place-stone-enemy-wartime",
@@ -841,7 +926,13 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "cobblestone"
+   "item": "cobblestone",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L290-L293",
+    "reviewed": true,
+    "note": "the lists apply only at war"
+   }
   },
   {
    "id": "fire-stone-enemy-wartime",
@@ -855,7 +946,13 @@
    "observe": [
     "fireAdjacent"
    ],
-   "item": "flint_and_steel"
+   "item": "flint_and_steel",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L290-L293",
+    "reviewed": true,
+    "note": "the lists apply only at war"
+   }
   },
   {
    "id": "bonemeal-grass-enemy-wartime",
@@ -869,7 +966,13 @@
    "observe": [
     "plantsGrown"
    ],
-   "item": "bone_meal"
+   "item": "bone_meal",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L290-L293",
+    "reviewed": true,
+    "note": "the lists apply only at war"
+   }
   },
   {
    "id": "armorstand-place-enemy-wartime",
@@ -883,7 +986,13 @@
    "observe": [
     "entitySpawned"
    ],
-   "item": "armor_stand"
+   "item": "armor_stand",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L290-L293",
+    "reviewed": true,
+    "note": "the lists apply only at war"
+   }
   },
   {
    "id": "break-dirt-enemy-wartime",
@@ -896,7 +1005,13 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L302-L305",
+    "reviewed": true,
+    "note": "the lists apply only at war"
+   }
   },
   {
    "id": "open-chest-enemy-wartime",
@@ -909,7 +1024,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L313-L316",
+    "reviewed": true,
+    "note": "the lists apply only at war"
+   }
   },
   {
    "id": "door-enemy-wartime",
@@ -922,7 +1043,13 @@
    },
    "observe": [
     "doorOpened"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L313-L316",
+    "reviewed": true,
+    "note": "the lists apply only at war"
+   }
   },
   {
    "id": "place-stone-wilderness-stranger-prevented",
@@ -936,7 +1063,13 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "cobblestone"
+   "item": "cobblestone",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L218-L221",
+    "reviewed": true,
+    "note": "wilderness placing prevented"
+   }
   },
   {
    "id": "break-dirt-wilderness-stranger-prevented",
@@ -949,7 +1082,13 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L228-L231",
+    "reviewed": true,
+    "note": "wilderness breaking prevented"
+   }
   },
   {
    "id": "itemframe-insert-enemy-entitiesopen",
@@ -963,7 +1102,13 @@
    "observe": [
     "entityChanged"
    ],
-   "item": "diamond"
+   "item": "diamond",
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L350-L353",
+    "reviewed": true,
+    "note": "entity option on"
+   }
   },
   {
    "id": "armorstand-equip-enemy-entitiesopen",
@@ -977,7 +1122,13 @@
    "observe": [
     "entityChanged"
    ],
-   "item": "leather_helmet"
+   "item": "leather_helmet",
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L350-L353",
+    "reviewed": true,
+    "note": "entity option on"
+   }
   },
   {
    "id": "chestminecart-open-enemy-entitiesopen",
@@ -990,7 +1141,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L350-L353",
+    "reviewed": true,
+    "note": "entity option on"
+   }
   },
   {
    "id": "ladder-stone-enemyAtWar",
@@ -1004,7 +1161,13 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "ladder"
+   "item": "ladder",
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L285-L288",
+    "reviewed": true,
+    "note": "ladders placeable in enemy territory"
+   }
   },
   {
    "id": "ladder-stone-enemy",
@@ -1032,7 +1195,13 @@
    "observe": [
     "fireAdjacent"
    ],
-   "item": "flint_and_steel"
+   "item": "flint_and_steel",
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L290-L293",
+    "reviewed": true,
+    "note": "FLINT_AND_STEEL and FIRE listed"
+   }
   },
   {
    "id": "open-lockedchest-member",
@@ -1045,7 +1214,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L612",
+    "reviewed": true,
+    "note": "locks protect from other faction members"
+   }
   },
   {
    "id": "open-lockedchest-ally",
@@ -1071,7 +1246,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L612",
+    "reviewed": true,
+    "note": "locks protect from outsiders"
+   }
   },
   {
    "id": "open-lockedchest-stranger",
@@ -1084,7 +1265,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L612",
+    "reviewed": true,
+    "note": "locks protect from outsiders"
+   }
   },
   {
    "id": "open-lockedchest-bypass",
@@ -1110,7 +1297,13 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L612",
+    "reviewed": true,
+    "note": "locks protect from other faction members"
+   }
   },
   {
    "id": "break-lockedchest-enemy",
@@ -1123,7 +1316,13 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L612",
+    "reviewed": true,
+    "note": "locks protect from outsiders"
+   }
   },
   {
    "id": "pvp-member-hits-owner",
@@ -1138,6 +1337,12 @@
    "control": {
     "role": "enemyAtWar",
     "targetRole": "owner"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L252-L255",
+    "reviewed": true,
+    "note": "friendly fire is off by default"
    }
   },
   {
@@ -1153,6 +1358,12 @@
    "control": {
     "role": "enemyAtWar",
     "targetRole": "owner"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L247-L250",
+    "reviewed": true,
+    "note": "allies are different factions not at war"
    }
   },
   {
@@ -1168,6 +1379,12 @@
    "control": {
     "role": "enemyAtWar",
     "targetRole": "owner"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L247-L250",
+    "reviewed": true,
+    "note": "war is required between factions"
    }
   },
   {
@@ -1183,6 +1400,12 @@
    "control": {
     "role": "enemyAtWar",
     "targetRole": "owner"
+   },
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L247-L250",
+    "reviewed": true,
+    "note": "at war, members may damage each other"
    }
   },
   {
@@ -1198,6 +1421,12 @@
    "control": {
     "role": "enemyAtWar",
     "targetRole": "owner"
+   },
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L242-L245",
+    "reviewed": true,
+    "note": "factionless PvP is on by default"
    }
   },
   {
@@ -1213,6 +1442,12 @@
    "control": {
     "role": "enemyAtWar",
     "targetRole": "owner"
+   },
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L242-L245",
+    "reviewed": true,
+    "note": "factionless PvP is on by default"
    }
   },
   {
@@ -1228,6 +1463,12 @@
    "control": {
     "role": "enemyAtWar",
     "targetRole": "owner"
+   },
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L252-L255",
+    "reviewed": true,
+    "note": "friendly fire on"
    }
   },
   {
@@ -1243,6 +1484,12 @@
    "control": {
     "role": "enemyAtWar",
     "targetRole": "owner"
+   },
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L247-L250",
+    "reviewed": true,
+    "note": "war not required"
    }
   },
   {
@@ -1258,6 +1505,12 @@
    "control": {
     "role": "enemyAtWar",
     "targetRole": "owner"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L242-L245",
+    "reviewed": true,
+    "note": "factionless PvP off"
    }
   },
   {
@@ -1273,6 +1526,12 @@
    "control": {
     "role": "enemyAtWar",
     "targetRole": "owner"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L242-L245",
+    "reviewed": true,
+    "note": "factionless PvP off"
    }
   }
  ]
