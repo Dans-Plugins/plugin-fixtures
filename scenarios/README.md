@@ -31,6 +31,7 @@ node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit
 
 - `dataPaths` (server-root-relative globs) names the plugin's data, which the release-gates behaviour gate deletes before every pass so each jar starts fresh. Medieval Factions keeps its H2 database at the server root, outside its plugin folder.
 - Actions: `useOnBlock`, `breakBlock`, `useOnEntity`, and `attackPlayer` (the row's role hits `targetRole` once; outcome `damaged`, read from the victim's health over RCON; such a row must name a `control: {role, targetRole}` hit that lands, and the server must allow PvP).
+- `expect` (Stephenson-Software RFC 0019) records what the docs promise for a row: `{effect, refusal?, source, reviewed, note?}`, with `source` the doc line pinned to a commit (`Dans-Plugins/Medieval-Factions/CONFIG.md@<sha>#L<a>-L<b>`). The behaviour gate (release-gates v22+) checks every reviewed one on both jars. The driver ignores the field. A reviewed expectation needs a source; where the docs are silent, add the sentence to the docs first.
 - The driver never restarts the server. The harness applies a row group's `configGroups` entry
   to `config.yml` and restarts between groups.
 - Every row is paired with a control: the same action by the owner in their own claim. When the
