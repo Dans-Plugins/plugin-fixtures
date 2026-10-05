@@ -443,7 +443,10 @@ async function attempt (ctx, row, roleName, arenaName) {
   }
   const ignore = new Set(Object.values(arenas).map(a => a.owner).filter(Boolean).concat(['Wilderness']))
   const messages = since(bot, m).map(l => l.trim()).filter(l => l && !ignore.has(l))
-  obs.refusal = [...new Set(messages.map(l => classify(lang, l)))].sort()
+  // `ignoreMessageKeys` (table level) are messages that arrive on a timer, not because of the row
+  // (Medieval Factions' power ticks); one landing inside a row's window is not part of its outcome.
+  const ignored = new Set(ctx.table.ignoreMessageKeys || [])
+  obs.refusal = [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort()
   return { checks, outcome: obs, messages }
 }
 
@@ -500,7 +503,7 @@ async function main () {
     bots[role] = await alive(await joinWithRetry(args, username))
     await sleep(4500)
   }
-  const ctx = { rcon, bots, arenas, lang, say, tp, Y, targetPoint, sleep }
+  const ctx = { rcon, bots, arenas, lang, say, tp, Y, targetPoint, sleep, table }
   await setup.setup(ctx)
 
   const controls = new Map()
