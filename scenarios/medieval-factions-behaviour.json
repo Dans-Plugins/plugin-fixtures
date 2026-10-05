@@ -91,7 +91,13 @@
    "observe": [
     "fireAdjacent"
    ],
-   "item": "flint_and_steel"
+   "item": "flint_and_steel",
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L237",
+    "reviewed": true,
+    "note": "members can build, break and use blocks in their claims"
+   }
   },
   {
    "id": "place-stone-member",
@@ -105,7 +111,13 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "cobblestone"
+   "item": "cobblestone",
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L237",
+    "reviewed": true,
+    "note": "members can build, break and use blocks in their claims"
+   }
   },
   {
    "id": "break-dirt-member",
@@ -118,7 +130,13 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L237",
+    "reviewed": true,
+    "note": "members can build, break and use blocks in their claims"
+   }
   },
   {
    "id": "open-chest-member",
@@ -131,7 +149,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L237",
+    "reviewed": true,
+    "note": "members can build, break and use blocks in their claims"
+   }
   },
   {
    "id": "fire-stone-ally",
@@ -145,7 +169,13 @@
    "observe": [
     "fireAdjacent"
    ],
-   "item": "flint_and_steel"
+   "item": "flint_and_steel",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L239",
+    "reviewed": true,
+    "note": "alliance alone gives no access; alliesCanInteractWithLand is off by default"
+   }
   },
   {
    "id": "place-stone-ally",
@@ -159,7 +189,13 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "cobblestone"
+   "item": "cobblestone",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L239",
+    "reviewed": true,
+    "note": "alliance alone gives no access; alliesCanInteractWithLand is off by default"
+   }
   },
   {
    "id": "break-dirt-ally",
@@ -172,7 +208,13 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L239",
+    "reviewed": true,
+    "note": "alliance alone gives no access; alliesCanInteractWithLand is off by default"
+   }
   },
   {
    "id": "open-chest-ally",
@@ -185,7 +227,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L239",
+    "reviewed": true,
+    "note": "alliance alone gives no access; alliesCanInteractWithLand is off by default"
+   }
   },
   {
    "id": "fire-stone-enemy",
@@ -199,7 +247,13 @@
    "observe": [
     "fireAdjacent"
    ],
-   "item": "flint_and_steel"
+   "item": "flint_and_steel",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L238",
+    "reviewed": true,
+    "note": "non-members are refused"
+   }
   },
   {
    "id": "place-stone-enemy",
@@ -213,7 +267,13 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "cobblestone"
+   "item": "cobblestone",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L238",
+    "reviewed": true,
+    "note": "non-members are refused"
+   }
   },
   {
    "id": "break-dirt-enemy",
@@ -226,7 +286,13 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L238",
+    "reviewed": true,
+    "note": "non-members are refused"
+   }
   },
   {
    "id": "open-chest-enemy",
@@ -239,7 +305,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L238",
+    "reviewed": true,
+    "note": "non-members are refused"
+   }
   },
   {
    "id": "fire-stone-enemyAtWar",
@@ -253,7 +325,13 @@
    "observe": [
     "fireAdjacent"
    ],
-   "item": "flint_and_steel"
+   "item": "flint_and_steel",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L240",
+    "reviewed": true,
+    "note": "war gives no access except ladders and the wartime lists"
+   }
   },
   {
    "id": "place-stone-enemyAtWar",
@@ -267,7 +345,13 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "cobblestone"
+   "item": "cobblestone",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L240",
+    "reviewed": true,
+    "note": "war gives no access except ladders and the wartime lists"
+   }
   },
   {
    "id": "break-dirt-enemyAtWar",
@@ -280,7 +364,13 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L240",
+    "reviewed": true,
+    "note": "war gives no access except ladders and the wartime lists"
+   }
   },
   {
    "id": "open-chest-enemyAtWar",
@@ -293,7 +383,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L240",
+    "reviewed": true,
+    "note": "war gives no access except ladders and the wartime lists"
+   }
   },
   {
    "id": "fire-stone-stranger",
@@ -307,7 +403,13 @@
    "observe": [
     "fireAdjacent"
    ],
-   "item": "flint_and_steel"
+   "item": "flint_and_steel",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L238",
+    "reviewed": true,
+    "note": "factionless players are refused"
+   }
   },
   {
    "id": "place-stone-stranger",
@@ -321,7 +423,13 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "cobblestone"
+   "item": "cobblestone",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L238",
+    "reviewed": true,
+    "note": "factionless players are refused"
+   }
   },
   {
    "id": "break-dirt-stranger",
@@ -334,7 +442,13 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L238",
+    "reviewed": true,
+    "note": "factionless players are refused"
+   }
   },
   {
    "id": "open-chest-stranger",
@@ -347,7 +461,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L238",
+    "reviewed": true,
+    "note": "factionless players are refused"
+   }
   },
   {
    "id": "fire-stone-bypass",
@@ -361,7 +481,13 @@
    "observe": [
     "fireAdjacent"
    ],
-   "item": "flint_and_steel"
+   "item": "flint_and_steel",
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L244",
+    "reviewed": true,
+    "note": "/f bypass can do everything"
+   }
   },
   {
    "id": "place-stone-bypass",
@@ -375,7 +501,13 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "cobblestone"
+   "item": "cobblestone",
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L244",
+    "reviewed": true,
+    "note": "/f bypass can do everything"
+   }
   },
   {
    "id": "break-dirt-bypass",
@@ -388,7 +520,13 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L244",
+    "reviewed": true,
+    "note": "/f bypass can do everything"
+   }
   },
   {
    "id": "open-chest-bypass",
@@ -401,7 +539,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L244",
+    "reviewed": true,
+    "note": "/f bypass can do everything"
+   }
   },
   {
    "id": "bonemeal-grass-enemy",
@@ -415,7 +559,13 @@
    "observe": [
     "plantsGrown"
    ],
-   "item": "bone_meal"
+   "item": "bone_meal",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L241",
+    "reviewed": true,
+    "note": "fire, bone meal, item frames, armour stands, end crystals and bare-hand clicks are refused"
+   }
   },
   {
    "id": "itemframe-place-enemy",
@@ -429,7 +579,13 @@
    "observe": [
     "entitySpawned"
    ],
-   "item": "item_frame"
+   "item": "item_frame",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L241",
+    "reviewed": true,
+    "note": "fire, bone meal, item frames, armour stands, end crystals and bare-hand clicks are refused"
+   }
   },
   {
    "id": "armorstand-place-enemy",
@@ -443,7 +599,13 @@
    "observe": [
     "entitySpawned"
    ],
-   "item": "armor_stand"
+   "item": "armor_stand",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L241",
+    "reviewed": true,
+    "note": "fire, bone meal, item frames, armour stands, end crystals and bare-hand clicks are refused"
+   }
   },
   {
    "id": "endcrystal-place-enemy",
@@ -457,7 +619,13 @@
    "observe": [
     "entitySpawned"
    ],
-   "item": "end_crystal"
+   "item": "end_crystal",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L241",
+    "reviewed": true,
+    "note": "fire, bone meal, item frames, armour stands, end crystals and bare-hand clicks are refused"
+   }
   },
   {
    "id": "waterbucket-enemy",
@@ -487,7 +655,13 @@
    ],
    "item": "snowball",
    "count": 4,
-   "alsoUseItem": true
+   "alsoUseItem": true,
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L242",
+    "reviewed": true,
+    "note": "thrown items still fly; the block is not used"
+   }
   },
   {
    "id": "snowball-last-enemy",
@@ -503,7 +677,13 @@
    ],
    "item": "snowball",
    "count": 1,
-   "alsoUseItem": true
+   "alsoUseItem": true,
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L242",
+    "reviewed": true,
+    "note": "thrown items still fly; the block is not used"
+   }
   },
   {
    "id": "egg-stack-enemy",
@@ -522,7 +702,13 @@
    "alsoUseItem": true,
    "ignoreEntities": [
     "chicken"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L242",
+    "reviewed": true,
+    "note": "thrown items still fly; the block is not used"
+   }
   },
   {
    "id": "xpbottle-enemy",
@@ -538,7 +724,13 @@
    ],
    "item": "experience_bottle",
    "count": 4,
-   "alsoUseItem": true
+   "alsoUseItem": true,
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L242",
+    "reviewed": true,
+    "note": "thrown items still fly; the block is not used"
+   }
   },
   {
    "id": "splashpotion-enemy",
@@ -553,7 +745,13 @@
     "entitySpawned"
    ],
    "item": "splash_potion",
-   "alsoUseItem": true
+   "alsoUseItem": true,
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L242",
+    "reviewed": true,
+    "note": "thrown items still fly; the block is not used"
+   }
   },
   {
    "id": "lingeringpotion-enemy",
@@ -568,7 +766,13 @@
     "entitySpawned"
    ],
    "item": "lingering_potion",
-   "alsoUseItem": true
+   "alsoUseItem": true,
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L242",
+    "reviewed": true,
+    "note": "thrown items still fly; the block is not used"
+   }
   },
   {
    "id": "splashpotion-chest-enemy",
@@ -584,7 +788,13 @@
     "containerOpened"
    ],
    "item": "splash_potion",
-   "alsoUseItem": true
+   "alsoUseItem": true,
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L242",
+    "reviewed": true,
+    "note": "thrown items still fly; the block is not used"
+   }
   },
   {
    "id": "barehand-stone-enemy",
@@ -596,7 +806,13 @@
     "block": "stone"
    },
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L241",
+    "reviewed": true,
+    "note": "fire, bone meal, item frames, armour stands, end crystals and bare-hand clicks are refused"
+   }
   },
   {
    "id": "door-enemy",
@@ -708,7 +924,13 @@
     "fireAdjacent"
    ],
    "item": "flint_and_steel",
-   "sneak": true
+   "sneak": true,
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L348",
+    "reviewed": true,
+    "note": "nonMembersCanInteractWithDoors covers opening and closing only"
+   }
   },
   {
    "id": "fire-stone-wilderness-stranger",
@@ -722,7 +944,13 @@
    "observe": [
     "fireAdjacent"
    ],
-   "item": "flint_and_steel"
+   "item": "flint_and_steel",
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L208-L211",
+    "reviewed": true,
+    "note": "wilderness interaction is not prevented by default"
+   }
   },
   {
    "id": "open-chest-wilderness-stranger",
@@ -735,7 +963,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L208-L211",
+    "reviewed": true,
+    "note": "wilderness interaction is not prevented by default"
+   }
   },
   {
    "id": "fire-stone-wilderness-stranger-locked",
@@ -1181,7 +1415,13 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "ladder"
+   "item": "ladder",
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L288",
+    "reviewed": true,
+    "note": "ladders in enemy territory need a war"
+   }
   },
   {
    "id": "fire-stone-enemyAtWar-wartimefire",
@@ -1233,7 +1473,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L690",
+    "reviewed": true,
+    "note": "an accessor can open the locked block even without land rights"
+   }
   },
   {
    "id": "open-lockedchest-enemy",
@@ -1284,7 +1530,13 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@0c34c05b30af1dfd815ad9feb62dec214849e9f7#L692",
+    "reviewed": true,
+    "note": "/f bypass opens any locked block"
+   }
   },
   {
    "id": "break-lockedchest-member",
