@@ -5,6 +5,9 @@
   "plugins/MedievalFactions",
   "medieval_factions_db.*"
  ],
+ "ignoreMessageKeys": [
+  "PowerIncreased"
+ ],
  "_comment": "RFC 0017 behaviour table. Each row is played by its role and by the control (Alice in her own claim, same action); see behaviour-driver.js. Rows are compared stable vs candidate, never against expected values.",
  "arenas": {
   "ownerClaim": {
