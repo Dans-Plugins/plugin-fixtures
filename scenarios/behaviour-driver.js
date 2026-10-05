@@ -338,7 +338,51 @@ async function entityData (rcon, t) {
 
 // ---- one attempt -------------------------------------------------------------------------
 
+// Player-vs-player rows: `roleName` hits `targetRole` once with a bare hand, and the outcome is
+// whether the victim's health (read over RCON) went down. The victim is healed first and both stand
+// two blocks apart inside the arena, so claim-dependent PvP rules apply to where they stand.
+async function health (rcon, name) {
+  const r = await rcon.cmd(`data get entity ${name} Health`, { quiet: true })
+  const m = r.match(/(-?\d+(?:\.\d+)?)f/)
+  return m ? parseFloat(m[1]) : null
+}
+
+async function attemptAttack (ctx, row, roleName, arenaName, targetRole) {
+  const { rcon, bots, arenas, lang } = ctx
+  const bot = bots[roleName]
+  const victim = bots[targetRole]
+  for (const b of [bot, victim]) {
+    if (b.ended) throw new Error(`${b.username} is no longer connected` + (b.kicked ? ` (kicked: ${b.kicked})` : ''))
+  }
+  const checks = { aimed: false, inPlace: false, serverAlive: false, healthRead: false }
+  const arena = arenas[arenaName]
+  await resetArena(rcon, arena)
+  const T = targetPoint(arena)
+  await rcon.cmd(`clear ${bot.username}`, { quiet: true })
+  await rcon.cmd(`effect give ${victim.username} minecraft:instant_health 1 10 true`, { quiet: true })
+  const victimIn = await tp(rcon, victim, T.x + 0.5, Y, T.z + 0.5, -90)
+  checks.inPlace = victimIn && await tp(rcon, bot, T.x + 2.5, Y, T.z + 0.5, 90)
+  await sleep(800)
+  const target = (bot.players[victim.username] || {}).entity
+  if (target) { await bot.lookAt(target.position.offset(0, 1.5, 0), true); await sleep(250) }
+  checks.aimed = !!target && bot.entity.position.distanceTo(target.position) < 3.2
+  const before = await health(rcon, victim.username)
+  const m = mark(bot)
+  if (target) bot.attack(target)
+  await sleep(500)
+  const after = await health(rcon, victim.username)
+  checks.healthRead = before !== null && after !== null
+  checks.serverAlive = !/<timeout>/.test(await rcon.cmd('list', { quiet: true }))
+  const ignore = new Set(Object.values(arenas).map(a => a.owner).filter(Boolean).concat(['Wilderness']))
+  const messages = since(bot, m).map(l => l.trim()).filter(l => l && !ignore.has(l))
+  const ignored = new Set(ctx.table.ignoreMessageKeys || [])
+  const outcome = { damaged: checks.healthRead && after < before,
+    refusal: [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort() }
+  return { checks, outcome, messages }
+}
+
 async function attempt (ctx, row, roleName, arenaName) {
+  if (row.action === 'attackPlayer') return attemptAttack(ctx, row, roleName, arenaName, row.targetRole)
   const { rcon, bots, arenas, lang } = ctx
   const bot = bots[roleName]
   const arena = arenas[arenaName]
@@ -479,12 +523,19 @@ async function main () {
   loadMineflayer()
   const table = JSON.parse(fs.readFileSync(args.rows, 'utf8'))
   const setup = require(path.resolve(args.setup))
-  const ACTIONS = new Set(['useOnBlock', 'breakBlock', 'useOnEntity'])
+  const ACTIONS = new Set(['useOnBlock', 'breakBlock', 'useOnEntity', 'attackPlayer'])
   for (const r of table.rows) {
     if (!ACTIONS.has(r.action)) throw new Error(`row ${r.id}: unknown action ${r.action}`)
     if (!table.arenas[r.arena]) throw new Error(`row ${r.id}: unknown arena ${r.arena}`)
     if (!setup.roles[r.role]) throw new Error(`row ${r.id}: unknown role ${r.role}`)
     if (!table.configGroups[r.group]) throw new Error(`row ${r.id}: unknown config group ${r.group}`)
+    if (r.action === 'attackPlayer') {
+      if (!setup.roles[r.targetRole]) throw new Error(`row ${r.id}: unknown targetRole ${r.targetRole}`)
+      // A hit that is expected to land, so "no damage" cannot be a bot that failed to swing.
+      if (!r.control || !setup.roles[r.control.role] || !setup.roles[r.control.targetRole]) {
+        throw new Error(`row ${r.id}: an attackPlayer row needs control: {role, targetRole} naming a hit that lands`)
+      }
+    }
   }
   const rows = table.rows.filter(r => r.group === args.group && (!args.only || args.only.has(r.id)))
   console.log(`=== behaviour driver: ${table.plugin}, group ${args.group}, ${rows.length} rows, label ${args.label}, mineflayer ${require('mineflayer/package.json').version} ===`)
@@ -509,11 +560,13 @@ async function main () {
   const controls = new Map()
   const results = []
   for (const row of rows) {
-    const controlKey = JSON.stringify([row.action, row.item, row.count, row.sneak, row.alsoUseItem, row.target, row.observe])
+    const controlKey = JSON.stringify([row.group, row.action, row.item, row.count, row.sneak, row.alsoUseItem, row.target, row.observe, row.targetRole, row.control])
     let control = null
     if (row.control !== false) {
       if (!controls.has(controlKey)) {
-        const c = await attempt(ctx, row, setup.controlRole, setup.controlArena)
+        const c = row.action === 'attackPlayer'
+          ? await attemptAttack(ctx, row, row.control.role, row.arena, row.control.targetRole)
+          : await attempt(ctx, row, setup.controlRole, setup.controlArena)
         controls.set(controlKey, c)
         const failed = Object.entries(c.checks).filter(([, v]) => !v).map(([k]) => k)
         console.log(`  [control ${row.action}/${row.item || 'hand'}] ${JSON.stringify(c.outcome)}` + (failed.length ? `  (control checks failed: ${failed.join(',')})` : ''))

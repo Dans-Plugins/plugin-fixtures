@@ -67,6 +67,15 @@
     "FLINT_AND_STEEL",
     "FIRE"
    ]
+  },
+  "friendlyFire": {
+   "pvp.friendlyFire": true
+  },
+  "pvpNoWar": {
+   "pvp.warRequiredForPlayersOfDifferentFactions": false
+  },
+  "factionlessOff": {
+   "pvp.enabledForFactionlessPlayers": false
   }
  },
  "rows": [
@@ -1115,6 +1124,156 @@
    "observe": [
     "targetChanged"
    ]
+  },
+  {
+   "id": "pvp-member-hits-owner",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "owner",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "owner"
+   }
+  },
+  {
+   "id": "pvp-ally-hits-owner",
+   "group": "default",
+   "role": "ally",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "owner",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "owner"
+   }
+  },
+  {
+   "id": "pvp-enemy-hits-owner",
+   "group": "default",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "owner",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "owner"
+   }
+  },
+  {
+   "id": "pvp-enemyAtWar-hits-owner",
+   "group": "default",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "owner",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "owner"
+   }
+  },
+  {
+   "id": "pvp-stranger-hits-owner",
+   "group": "default",
+   "role": "stranger",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "owner",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "owner"
+   }
+  },
+  {
+   "id": "pvp-owner-hits-stranger",
+   "group": "default",
+   "role": "owner",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "stranger",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "owner"
+   }
+  },
+  {
+   "id": "pvp-member-hits-owner-friendlyfire",
+   "group": "friendlyFire",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "owner",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "owner"
+   }
+  },
+  {
+   "id": "pvp-enemy-hits-owner-nowar",
+   "group": "pvpNoWar",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "owner",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "owner"
+   }
+  },
+  {
+   "id": "pvp-stranger-hits-owner-factionlessoff",
+   "group": "factionlessOff",
+   "role": "stranger",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "owner",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "owner"
+   }
+  },
+  {
+   "id": "pvp-owner-hits-stranger-factionlessoff",
+   "group": "factionlessOff",
+   "role": "owner",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "stranger",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "owner"
+   }
   }
  ]
 }
