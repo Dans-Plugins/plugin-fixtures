@@ -19,6 +19,7 @@ outcome changed. No expected values are needed.
 | Table | Setup | Rows |
 |---|---|---|
 | [`medieval-factions-behaviour.json`](medieval-factions-behaviour.json) | [`medieval-factions-behaviour-setup.js`](medieval-factions-behaviour-setup.js) | 76: core actions for six roles in the owner's claim, world-changing and throw-type items, entities, doors, ladders and wilderness; wartime allowances (at war and not), wilderness place/break prevention, the entity option, fire at war, and a locked chest (member, ally accessor, enemy, stranger, bypass), across seven config groups |
+| [`fiefs-behaviour.json`](fiefs-behaviour.json) | [`fiefs-behaviour-setup.js`](fiefs-behaviour-setup.js) | 22: a fief's land (fief member, faction member in no fief, member of another fief, enemy) and faction land outside any fief; played on top of Medieval Factions, which the gate installs as a dependency |
 
 ```
 node scenarios/behaviour-driver.js --rows scenarios/medieval-factions-behaviour.json \
