@@ -1825,6 +1825,12 @@
    "control": {
     "role": "owner",
     "arena": "claimWild"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L233",
+    "reviewed": true,
+    "note": "the default Member role lacks CLAIM"
    }
   },
   {
@@ -1840,6 +1846,12 @@
    "control": {
     "role": "owner",
     "arena": "claimWild"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L234",
+    "reviewed": true,
+    "note": "factionless players cannot claim"
    }
   },
   {
@@ -1855,6 +1867,12 @@
    "control": {
     "role": "owner",
     "arena": "claimWild"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L235",
+    "reviewed": true,
+    "note": "another faction's land cannot be claimed while it has the power to hold it"
    }
   },
   {
@@ -1870,6 +1888,12 @@
    "control": {
     "role": "owner",
     "arena": "claimWild"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L235",
+    "reviewed": true,
+    "note": "another faction's land cannot be claimed while it has the power to hold it"
    }
   },
   {
@@ -1885,6 +1909,12 @@
    "control": {
     "role": "owner",
     "arena": "claimWild"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L235",
+    "reviewed": true,
+    "note": "no overclaim while the owner has the power to hold its land, even at war"
    }
   },
   {
@@ -1900,6 +1930,12 @@
    "control": {
     "role": "owner",
     "arena": "claimAlpha"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L233",
+    "reviewed": true,
+    "note": "the default Member role lacks UNCLAIM"
    }
   },
   {
@@ -1915,6 +1951,12 @@
    "control": {
     "role": "owner",
     "arena": "claimAlpha"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L236",
+    "reviewed": true,
+    "note": "/f unclaim only removes your own faction's land"
    }
   },
   {
@@ -1930,6 +1972,12 @@
    "control": {
     "role": "owner",
     "arena": "claimAlpha"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L236",
+    "reviewed": true,
+    "note": "/f unclaim only removes your own faction's land"
    }
   },
   {
@@ -1945,6 +1993,12 @@
    "control": {
     "role": "owner",
     "arena": "claimAlpha"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L234",
+    "reviewed": true,
+    "note": "factionless players cannot unclaim"
    }
   },
   {
@@ -1960,6 +2014,12 @@
    "control": {
     "role": "owner",
     "arena": "claimAlpha"
+   },
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L237",
+    "reviewed": true,
+    "note": "/f bypass can unclaim any land"
    }
   }
  ]
