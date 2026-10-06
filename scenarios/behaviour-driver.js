@@ -398,9 +398,17 @@ async function attemptCommand (ctx, row, roleName, arenaName) {
   const checks = { prepared: false, inPlace: false, observed: false, serverAlive: false }
   checks.prepared = setup.prepare ? !!(await setup.prepare(ctx, arena)) : true
   const T = targetPoint(arena)
-  checks.inPlace = await tp(rcon, bot, T.x + 0.5, Y, T.z + 0.5)
-  await sleep(700)
+  checks.inPlace = checks.prepared && await tp(rcon, bot, T.x + 0.5, Y, T.z + 0.5)
   const keys = row.observe.filter(k => k !== 'refusal')
+  // A claim command acts on the chunk the player stands in: sent from the wrong place or onto an
+  // arena in the wrong state, it would change some other arena and every row after it. Not sent.
+  if (!checks.prepared || !checks.inPlace) {
+    const obs = {}
+    for (const k of keys) obs[k] = false
+    obs.refusal = []
+    return { checks, outcome: obs, messages: [] }
+  }
+  await sleep(700)
   const before = {}
   for (const k of keys) before[k] = await setup.observers[k](ctx, arena)
   const wait = (bot.lastChatAt || 0) + 1100 - Date.now()
@@ -583,8 +591,9 @@ async function main () {
       for (const k of r.observe.filter(k => k !== 'refusal')) {
         if (!setup.observers || typeof setup.observers[k] !== 'function') throw new Error(`row ${r.id}: the setup module has no observer ${k}`)
       }
-      // The arena's owner is not a meaningful control for a command: name where it works.
-      if (r.control !== false && (!r.control || !setup.roles[r.control.role] || !table.arenas[r.control.arena])) {
+      // The arena's owner is not a meaningful control for a command: name where it works. Always:
+      // without one, a command that does nothing anywhere would read as "refused".
+      if (!r.control || !setup.roles[r.control.role] || !table.arenas[r.control.arena]) {
         throw new Error(`row ${r.id}: a command row needs control: {role, arena} naming where the command works`)
       }
     }
