@@ -1838,7 +1838,8 @@
     "effect": false,
     "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L233",
     "reviewed": true,
-    "note": "the default Member role lacks CLAIM"
+    "note": "the default Member role lacks CLAIM",
+    "refusal": "CommandFactionClaimNoFactionPermission"
    }
   },
   {
@@ -1859,7 +1860,8 @@
     "effect": false,
     "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L234",
     "reviewed": true,
-    "note": "factionless players cannot claim"
+    "note": "factionless players cannot claim",
+    "refusal": "CommandFactionClaimMustBeInAFaction"
    }
   },
   {
@@ -1880,7 +1882,8 @@
     "effect": false,
     "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L235",
     "reviewed": true,
-    "note": "another faction's land cannot be claimed while it has the power to hold it"
+    "note": "another faction's land cannot be claimed while it has the power to hold it",
+    "refusal": "CommandFactionClaimNoClaimableChunks"
    }
   },
   {
@@ -1901,7 +1904,8 @@
     "effect": false,
     "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L235",
     "reviewed": true,
-    "note": "another faction's land cannot be claimed while it has the power to hold it"
+    "note": "another faction's land cannot be claimed while it has the power to hold it",
+    "refusal": "CommandFactionClaimNoClaimableChunks"
    }
   },
   {
@@ -1922,7 +1926,8 @@
     "effect": false,
     "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L235",
     "reviewed": true,
-    "note": "no overclaim while the owner has the power to hold its land, even at war"
+    "note": "no overclaim while the owner has the power to hold its land, even at war",
+    "refusal": "CommandFactionClaimNoClaimableChunks"
    }
   },
   {
@@ -1943,7 +1948,8 @@
     "effect": false,
     "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L233",
     "reviewed": true,
-    "note": "the default Member role lacks UNCLAIM"
+    "note": "the default Member role lacks UNCLAIM",
+    "refusal": "CommandFactionUnclaimNoFactionPermission"
    }
   },
   {
@@ -1964,7 +1970,8 @@
     "effect": false,
     "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L236",
     "reviewed": true,
-    "note": "/f unclaim only removes your own faction's land"
+    "note": "/f unclaim only removes your own faction's land",
+    "refusal": "CommandFactionUnclaimNoUnclaimableChunks"
    }
   },
   {
@@ -1985,7 +1992,8 @@
     "effect": false,
     "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L236",
     "reviewed": true,
-    "note": "/f unclaim only removes your own faction's land"
+    "note": "/f unclaim only removes your own faction's land",
+    "refusal": "CommandFactionUnclaimNoUnclaimableChunks"
    }
   },
   {
@@ -2006,7 +2014,8 @@
     "effect": false,
     "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L234",
     "reviewed": true,
-    "note": "factionless players cannot unclaim"
+    "note": "factionless players cannot unclaim",
+    "refusal": "CommandFactionUnclaimMustBeInAFaction"
    }
   },
   {
@@ -2027,7 +2036,8 @@
     "effect": true,
     "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L237",
     "reviewed": true,
-    "note": "/f bypass can unclaim any land"
+    "note": "/f bypass can unclaim any land",
+    "refusal": null
    }
   },
   {
@@ -2145,7 +2155,8 @@
     "effect": true,
     "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L235",
     "reviewed": true,
-    "note": "overclaiming works at war once the owner's power is no more than the chunks it keeps"
+    "note": "overclaiming works at war once the owner's power is no more than the chunks it keeps",
+    "refusal": null
    }
   },
   {
@@ -2166,7 +2177,8 @@
     "effect": false,
     "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L235",
     "reviewed": true,
-    "note": "no overclaiming without a war, even when the owner lacks the power"
+    "note": "no overclaiming without a war, even when the owner lacks the power",
+    "refusal": "CommandFactionClaimNoClaimableChunks"
    }
   }
  ]

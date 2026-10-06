@@ -383,7 +383,7 @@ async function attemptAttack (ctx, row, roleName, arenaName, targetRole) {
   const messages = since(bot, m).map(l => l.trim()).filter(l => l && !ignore.has(l))
   const ignored = new Set(ctx.table.ignoreMessageKeys || [])
   const outcome = { damaged: checks.healthRead && after < before,
-    refusal: [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort() }
+    ...splitReplies(ctx.table, [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort()) }
   return { checks, outcome, messages }
 }
 
@@ -437,7 +437,7 @@ async function attemptCommand (ctx, row, roleName, arenaName) {
   checks.observed = allRead
   checks.serverAlive = !/<timeout>/.test(await rcon.cmd('list', { quiet: true }))
   const ignored = new Set(ctx.table.ignoreMessageKeys || [])
-  obs.refusal = [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort()
+  Object.assign(obs, splitReplies(ctx.table, [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort()))
   return { checks, outcome: obs, messages }
 }
 
@@ -551,8 +551,20 @@ async function attempt (ctx, row, roleName, arenaName) {
   // `ignoreMessageKeys` (table level) are messages that arrive on a timer, not because of the row
   // (Medieval Factions' power ticks); one landing inside a row's window is not part of its outcome.
   const ignored = new Set(ctx.table.ignoreMessageKeys || [])
-  obs.refusal = [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort()
+  Object.assign(obs, splitReplies(ctx.table, [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort()))
   return { checks, outcome: obs, messages }
+}
+
+// Reply keys split into refusals and notices. A notice (`informationalMessageKeys`: a success
+// message, an info card) is not a refusal, but it is part of the outcome: it is kept as one string,
+// `notice`, so a success that turns into a refusal changes the outcome, while the gate and the page
+// (which count only `true` and non-empty lists as an effect) do not read a notice as one.
+function splitReplies (table, keys) {
+  const informational = new Set(table.informationalMessageKeys || [])
+  const notice = keys.filter(k => informational.has(k))
+  const out = { refusal: keys.filter(k => !informational.has(k)) }
+  if (notice.length) out.notice = notice.join(',')
+  return out
 }
 
 // Entity data minus the fields that move without anyone touching the entity.

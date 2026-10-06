@@ -91,7 +91,8 @@
     "effect": false,
     "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L45",
     "reviewed": true,
-    "note": "the default Member role gets no permission to mint a new currency"
+    "note": "the default Member role gets no permission to mint a new currency",
+    "refusal": "CurrencyMintNoPermission"
    }
   },
   {
@@ -114,7 +115,8 @@
     "effect": false,
     "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L46",
     "reviewed": true,
-    "note": "only members of the owning faction can mint; no override permission"
+    "note": "only members of the owning faction can mint; no override permission",
+    "refusal": "CurrencyMintNoPermission"
    }
   },
   {
@@ -137,7 +139,8 @@
     "effect": false,
     "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L46",
     "reviewed": true,
-    "note": "only members of the owning faction can mint; no override permission"
+    "note": "only members of the owning faction can mint; no override permission",
+    "refusal": "CurrencyMintNoPermission"
    }
   },
   {
@@ -160,7 +163,8 @@
     "effect": false,
     "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L46",
     "reviewed": true,
-    "note": "only members of the owning faction can mint; no override permission"
+    "note": "only members of the owning faction can mint; no override permission",
+    "refusal": "CurrencyMintNoPermission"
    }
   },
   {
@@ -183,7 +187,8 @@
     "effect": false,
     "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L46",
     "reviewed": true,
-    "note": "only members of the owning faction can mint; no override permission"
+    "note": "only members of the owning faction can mint; no override permission",
+    "refusal": "CurrencyMintNoPermission"
    }
   },
   {
@@ -204,7 +209,8 @@
     "effect": false,
     "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L45",
     "reviewed": true,
-    "note": "the default Member role gets no permission to rename a new currency"
+    "note": "the default Member role gets no permission to rename a new currency",
+    "refusal": "CurrencyRenameNoPermission"
    }
   },
   {
@@ -225,7 +231,8 @@
     "effect": false,
     "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L47",
     "reviewed": true,
-    "note": "only members of the owning faction with the permission can rename"
+    "note": "only members of the owning faction with the permission can rename",
+    "refusal": "CurrencyRenameNoPermission"
    }
   },
   {
@@ -246,7 +253,8 @@
     "effect": false,
     "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L47",
     "reviewed": true,
-    "note": "only members of the owning faction with the permission can rename"
+    "note": "only members of the owning faction with the permission can rename",
+    "refusal": "CurrencyRenameNoPermission"
    }
   },
   {
@@ -267,7 +275,8 @@
     "effect": false,
     "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L47",
     "reviewed": true,
-    "note": "only members of the owning faction with the permission can rename"
+    "note": "only members of the owning faction with the permission can rename",
+    "refusal": "CurrencyRenameNoPermission"
    }
   },
   {
@@ -288,7 +297,8 @@
     "effect": true,
     "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L47",
     "reviewed": true,
-    "note": "currencies.force.rename (operators) can rename any currency"
+    "note": "currencies.force.rename (operators) can rename any currency",
+    "refusal": null
    }
   }
  ]

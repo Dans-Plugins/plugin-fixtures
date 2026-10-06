@@ -98,7 +98,8 @@
     "effect": true,
     "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L29-L31",
     "reviewed": true,
-    "note": "a member votes in their own faction's election, once"
+    "note": "a member votes in their own faction's election, once",
+    "refusal": null
    }
   },
   {
@@ -119,7 +120,8 @@
     "effect": false,
     "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L31",
     "reviewed": true,
-    "note": "a second vote is refused"
+    "note": "a second vote is refused",
+    "refusal": "DemocracyAlreadyVoted"
    }
   },
   {
@@ -140,7 +142,8 @@
     "effect": false,
     "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L29",
     "reviewed": true,
-    "note": "only the player's own faction's election; allies included"
+    "note": "only the player's own faction's election; allies included",
+    "refusal": "DemocracyNoElection"
    }
   },
   {
@@ -161,7 +164,8 @@
     "effect": false,
     "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L29",
     "reviewed": true,
-    "note": "only the player's own faction's election"
+    "note": "only the player's own faction's election",
+    "refusal": "DemocracyNoElection"
    }
   },
   {
@@ -182,7 +186,8 @@
     "effect": false,
     "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L30",
     "reviewed": true,
-    "note": "players in no faction cannot vote"
+    "note": "players in no faction cannot vote",
+    "refusal": "DemocracyNoFaction"
    }
   },
   {
@@ -198,7 +203,8 @@
     "effect": false,
     "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L28",
     "reviewed": true,
-    "note": "starting needs DISBAND, which only the Owner role has by default"
+    "note": "starting needs DISBAND, which only the Owner role has by default",
+    "refusal": "DemocracyStartNotOwner"
    }
   },
   {
@@ -214,7 +220,8 @@
     "effect": false,
     "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L28",
     "reviewed": true,
-    "note": "a player in no faction cannot start an election"
+    "note": "a player in no faction cannot start an election",
+    "refusal": "DemocracyStartNotOwner"
    }
   },
   {
@@ -230,7 +237,8 @@
     "effect": true,
     "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L29",
     "reviewed": true,
-    "note": "a member can run in their own faction's election"
+    "note": "a member can run in their own faction's election",
+    "refusal": null
    }
   },
   {
@@ -246,7 +254,8 @@
     "effect": false,
     "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L29",
     "reviewed": true,
-    "note": "allies cannot run in another faction's election"
+    "note": "allies cannot run in another faction's election",
+    "refusal": "DemocracyNoElection"
    }
   },
   {
@@ -262,7 +271,8 @@
     "effect": false,
     "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L30",
     "reviewed": true,
-    "note": "players in no faction cannot run"
+    "note": "players in no faction cannot run",
+    "refusal": "DemocracyNoFaction"
    }
   }
  ]
