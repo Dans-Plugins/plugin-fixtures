@@ -8,6 +8,16 @@
  "ignoreMessageKeys": [
   "PowerIncreased"
  ],
+ "informationalMessageKeys": [
+  "CommandFactionClaimSuccess",
+  "CommandFactionUnclaimSuccess"
+ ],
+ "ignoreLines": [
+  "Alpha",
+  "Bravo",
+  "Echo",
+  "Whiskey"
+ ],
  "_comment": "RFC 0017 behaviour table. Each row is played by its role and by the control (Alice in her own claim, same action); see behaviour-driver.js. Rows are compared stable vs candidate, never against expected values.",
  "arenas": {
   "ownerClaim": {
@@ -30,6 +40,22 @@
     140
    ],
    "owner": "Alpha"
+  },
+  "claimWild": {
+   "chunk": [
+    146,
+    140
+   ],
+   "owner": null,
+   "claimedBy": null
+  },
+  "claimAlpha": {
+   "chunk": [
+    149,
+    140
+   ],
+   "owner": "Alpha",
+   "claimedBy": "Alpha"
   }
  },
  "configGroups": {
@@ -1784,6 +1810,156 @@
     "source": "Dans-Plugins/Medieval-Factions/CONFIG.md@404a2b4783088e3169bdcdfe3425b39ebccf2c2a#L242-L245",
     "reviewed": true,
     "note": "factionless PvP off"
+   }
+  },
+  {
+   "id": "claim-wild-member",
+   "group": "default",
+   "role": "member",
+   "arena": "claimWild",
+   "action": "command",
+   "command": "/f claim",
+   "observe": [
+    "claimChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "claimWild"
+   }
+  },
+  {
+   "id": "claim-wild-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "claimWild",
+   "action": "command",
+   "command": "/f claim",
+   "observe": [
+    "claimChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "claimWild"
+   }
+  },
+  {
+   "id": "claim-alpha-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "claimAlpha",
+   "action": "command",
+   "command": "/f claim",
+   "observe": [
+    "claimChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "claimWild"
+   }
+  },
+  {
+   "id": "claim-alpha-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "claimAlpha",
+   "action": "command",
+   "command": "/f claim",
+   "observe": [
+    "claimChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "claimWild"
+   }
+  },
+  {
+   "id": "claim-alpha-enemyAtWar",
+   "group": "default",
+   "role": "enemyAtWar",
+   "arena": "claimAlpha",
+   "action": "command",
+   "command": "/f claim",
+   "observe": [
+    "claimChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "claimWild"
+   }
+  },
+  {
+   "id": "unclaim-alpha-member",
+   "group": "default",
+   "role": "member",
+   "arena": "claimAlpha",
+   "action": "command",
+   "command": "/f unclaim",
+   "observe": [
+    "claimChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "claimAlpha"
+   }
+  },
+  {
+   "id": "unclaim-alpha-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "claimAlpha",
+   "action": "command",
+   "command": "/f unclaim",
+   "observe": [
+    "claimChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "claimAlpha"
+   }
+  },
+  {
+   "id": "unclaim-alpha-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "claimAlpha",
+   "action": "command",
+   "command": "/f unclaim",
+   "observe": [
+    "claimChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "claimAlpha"
+   }
+  },
+  {
+   "id": "unclaim-alpha-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "claimAlpha",
+   "action": "command",
+   "command": "/f unclaim",
+   "observe": [
+    "claimChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "claimAlpha"
+   }
+  },
+  {
+   "id": "unclaim-alpha-bypass",
+   "group": "default",
+   "role": "bypass",
+   "arena": "claimAlpha",
+   "action": "command",
+   "command": "/f unclaim",
+   "observe": [
+    "claimChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "claimAlpha"
    }
   }
  ]

@@ -18,6 +18,11 @@
 //
 // Only Ben is an operator: every other role proves what a player can do with the plugin's
 // default permissions.
+//
+// Command rows (claiming): an arena's `claimedBy` (a faction name, or null for wilderness) is the
+// state `prepare` restores before every attempt: the owner of whichever faction holds the chunk
+// unclaims it, then the wanted faction's owner claims it. The `claimChanged` observer reads the
+// chunk's owner with Ben's `/f claim check`.
 
 'use strict'
 
@@ -84,6 +89,50 @@ async function setup (ctx) {
   await sleep(500)
 }
 
+// Who owns the arena's chunk, as Ben reads it from inside: a faction name, 'wilderness', or null
+// when it could not be read (the row is then not checked).
+async function claimOwner (ctx, arena) {
+  const { rcon, bots, say, tp, Y, targetPoint } = ctx
+  const T = targetPoint(arena)
+  if (!(await tp(rcon, bots.bypass, T.x + 4.5, Y, T.z + 4.5))) return null
+  try {
+    const r = await say(bots.bypass, '/f claim check', /currently claimed by|not currently claimed/i, 15000)
+    const m = r.match(/claimed by (.+?)\.?$/i)
+    return /not currently claimed/i.test(r) ? 'wilderness' : (m ? m[1].trim() : null)
+  } catch (e) {
+    return null
+  }
+}
+
+// Each faction's owner, who can always claim and unclaim its land (no force permission needed:
+// `/f claim <faction>` does not exist in 7.0.0).
+const factionOwners = { Alpha: 'owner', Bravo: 'ally', Echo: 'enemy', Whiskey: 'enemyAtWar' }
+
+async function prepare (ctx, arena) {
+  if (!('claimedBy' in arena)) return true
+  const want = arena.claimedBy || 'wilderness'
+  let now = await claimOwner(ctx, arena)
+  if (now === want) return true
+  const { rcon, bots, say, tp, Y, targetPoint } = ctx
+  const T = targetPoint(arena)
+  const as = async (faction, line, re) => {
+    const bot = bots[factionOwners[faction]]
+    if (!bot) throw new Error(`no owner bot for faction ${faction}`)
+    if (!(await tp(rcon, bot, T.x + 0.5, Y, T.z - 3.5))) throw new Error(`${bot.username} could not reach ${arena.name}`)
+    await say(bot, line, re)
+  }
+  try {
+    if (now !== 'wilderness') await as(now, '/f unclaim', /Unclaimed|no chunks here/i)
+    if (arena.claimedBy) await as(arena.claimedBy, '/f claim', /Claimed|aren't any claimable|may not currently claim/i)
+  } catch (e) {
+    console.log(`    prepare ${arena.name}: ${e.message}`)
+    return false
+  }
+  now = await claimOwner(ctx, arena)
+  if (now !== want) console.log(`    prepare ${arena.name}: wanted ${want}, chunk is ${now}`)
+  return now === want
+}
+
 async function waitReply (bot, mark, re, ms) {
   const deadline = Date.now() + ms
   while (Date.now() < deadline) {
@@ -93,4 +142,4 @@ async function waitReply (bot, mark, re, ms) {
   return false
 }
 
-module.exports = { roles, setup, controlRole: 'owner', controlArena: 'ownerClaim' }
+module.exports = { roles, setup, prepare, observers: { claimChanged: claimOwner }, controlRole: 'owner', controlArena: 'ownerClaim' }

@@ -6,6 +6,12 @@
 // current stable jar and on a candidate (each on fresh plugin data), then `--compare` the two
 // outcome files: every row whose outcome differs is reported. No expected values are needed.
 //
+// A `command` row runs a chat command (`command`, e.g. "/f claim") as its role, standing in its
+// arena, and observes what the setup module's `observers` read before and after it (e.g. who
+// owns the chunk). The setup module's `prepare(ctx, arena)` first restores the arena's starting
+// state, because a command changes the world beyond the arena's blocks; its control names the
+// role and arena where the same command is expected to work (`control: {role, arena}`).
+//
 // Every row is paired with a control: the same action by the arena's owner in their own claim.
 // When the control does not change the world either, a bot cannot decide the row and it is
 // recorded as not-checked - never as a pass, a fail or a difference. So is a row whose bot was
@@ -381,8 +387,51 @@ async function attemptAttack (ctx, row, roleName, arenaName, targetRole) {
   return { checks, outcome, messages }
 }
 
+// Command rows: `prepare` restores the arena (a claim is not undone by resetting blocks), the
+// role runs the command from the middle of the arena, and each observation is whether the
+// setup's observer reads something different afterwards. The reply lines are the refusal keys.
+async function attemptCommand (ctx, row, roleName, arenaName) {
+  const { rcon, bots, arenas, lang, setup } = ctx
+  const bot = bots[roleName]
+  const arena = arenas[arenaName]
+  if (bot.ended) throw new Error(`${bot.username} is no longer connected` + (bot.kicked ? ` (kicked: ${bot.kicked})` : ''))
+  const checks = { prepared: false, inPlace: false, observed: false, serverAlive: false }
+  checks.prepared = setup.prepare ? !!(await setup.prepare(ctx, arena)) : true
+  const T = targetPoint(arena)
+  checks.inPlace = await tp(rcon, bot, T.x + 0.5, Y, T.z + 0.5)
+  await sleep(700)
+  const keys = row.observe.filter(k => k !== 'refusal')
+  const before = {}
+  for (const k of keys) before[k] = await setup.observers[k](ctx, arena)
+  const wait = (bot.lastChatAt || 0) + 1100 - Date.now()
+  if (wait > 0) await sleep(wait)
+  bot.lastChatAt = Date.now()
+  const m = mark(bot)
+  bot.chat(row.command)
+  // A command answers from an async task: wait for the first reply line, then for stragglers.
+  await waitFor(() => since(bot, m).some(l => l.trim()), 8000)
+  await sleep(1200)
+  // A chunk that changes hands under the bot shows it the new owner's name (the territory notice),
+  // so every faction the table names is ignored here, not only the arenas' owners.
+  const ignore = new Set(Object.values(arenas).map(a => a.owner).filter(Boolean).concat(['Wilderness'], ctx.table.ignoreLines || []))
+  const messages = since(bot, m).map(l => l.trim()).filter(l => l && !ignore.has(l))
+  const obs = {}
+  let allRead = true
+  for (const k of keys) {
+    const after = await setup.observers[k](ctx, arena)
+    if (before[k] === null || before[k] === undefined || after === null || after === undefined) allRead = false
+    obs[k] = before[k] !== after
+  }
+  checks.observed = allRead
+  checks.serverAlive = !/<timeout>/.test(await rcon.cmd('list', { quiet: true }))
+  const ignored = new Set(ctx.table.ignoreMessageKeys || [])
+  obs.refusal = [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort()
+  return { checks, outcome: obs, messages }
+}
+
 async function attempt (ctx, row, roleName, arenaName) {
   if (row.action === 'attackPlayer') return attemptAttack(ctx, row, roleName, arenaName, row.targetRole)
+  if (row.action === 'command') return attemptCommand(ctx, row, roleName, arenaName)
   const { rcon, bots, arenas, lang } = ctx
   const bot = bots[roleName]
   const arena = arenas[arenaName]
@@ -523,12 +572,22 @@ async function main () {
   loadMineflayer()
   const table = JSON.parse(fs.readFileSync(args.rows, 'utf8'))
   const setup = require(path.resolve(args.setup))
-  const ACTIONS = new Set(['useOnBlock', 'breakBlock', 'useOnEntity', 'attackPlayer'])
+  const ACTIONS = new Set(['useOnBlock', 'breakBlock', 'useOnEntity', 'attackPlayer', 'command'])
   for (const r of table.rows) {
     if (!ACTIONS.has(r.action)) throw new Error(`row ${r.id}: unknown action ${r.action}`)
     if (!table.arenas[r.arena]) throw new Error(`row ${r.id}: unknown arena ${r.arena}`)
     if (!setup.roles[r.role]) throw new Error(`row ${r.id}: unknown role ${r.role}`)
     if (!table.configGroups[r.group]) throw new Error(`row ${r.id}: unknown config group ${r.group}`)
+    if (r.action === 'command') {
+      if (typeof r.command !== 'string' || !r.command.startsWith('/')) throw new Error(`row ${r.id}: a command row needs command: "/..."`)
+      for (const k of r.observe.filter(k => k !== 'refusal')) {
+        if (!setup.observers || typeof setup.observers[k] !== 'function') throw new Error(`row ${r.id}: the setup module has no observer ${k}`)
+      }
+      // The arena's owner is not a meaningful control for a command: name where it works.
+      if (r.control !== false && (!r.control || !setup.roles[r.control.role] || !table.arenas[r.control.arena])) {
+        throw new Error(`row ${r.id}: a command row needs control: {role, arena} naming where the command works`)
+      }
+    }
     if (r.action === 'attackPlayer') {
       if (!setup.roles[r.targetRole]) throw new Error(`row ${r.id}: unknown targetRole ${r.targetRole}`)
       // A hit that is expected to land, so "no damage" cannot be a bot that failed to swing.
@@ -554,19 +613,21 @@ async function main () {
     bots[role] = await alive(await joinWithRetry(args, username))
     await sleep(4500)
   }
-  const ctx = { rcon, bots, arenas, lang, say, tp, Y, targetPoint, sleep, table }
+  const ctx = { rcon, bots, arenas, lang, say, tp, Y, targetPoint, sleep, table, setup }
   await setup.setup(ctx)
 
   const controls = new Map()
   const results = []
   for (const row of rows) {
-    const controlKey = JSON.stringify([row.group, row.action, row.item, row.count, row.sneak, row.alsoUseItem, row.target, row.observe, row.targetRole, row.control])
+    const controlKey = JSON.stringify([row.group, row.action, row.item, row.count, row.sneak, row.alsoUseItem, row.target, row.observe, row.targetRole, row.control, row.command])
     let control = null
     if (row.control !== false) {
       if (!controls.has(controlKey)) {
         const c = row.action === 'attackPlayer'
           ? await attemptAttack(ctx, row, row.control.role, row.arena, row.control.targetRole)
-          : await attempt(ctx, row, setup.controlRole, setup.controlArena)
+          : row.action === 'command'
+            ? await attemptCommand(ctx, row, row.control.role, row.control.arena)
+            : await attempt(ctx, row, setup.controlRole, setup.controlArena)
         controls.set(controlKey, c)
         const failed = Object.entries(c.checks).filter(([, v]) => !v).map(([k]) => k)
         console.log(`  [control ${row.action}/${row.item || 'hand'}] ${JSON.stringify(c.outcome)}` + (failed.length ? `  (control checks failed: ${failed.join(',')})` : ''))
