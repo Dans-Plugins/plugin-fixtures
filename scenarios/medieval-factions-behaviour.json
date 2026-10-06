@@ -102,6 +102,14 @@
   },
   "factionlessOff": {
    "pvp.enabledForFactionlessPlayers": false
+  },
+  "alliesLand": {
+   "factions.defaults.flags.alliesCanInteractWithLand": true
+  },
+  "overclaim": {
+   "players.initialPower": 1,
+   "players.maxPower": 1,
+   "factions.limitLand": false
   }
  },
  "rows": [
@@ -2020,6 +2028,145 @@
     "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L237",
     "reviewed": true,
     "note": "/f bypass can unclaim any land"
+   }
+  },
+  {
+   "id": "fire-stone-ally-allieslandflag",
+   "group": "alliesLand",
+   "role": "ally",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel",
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@7a30e7ccb47bfae051a0bb53cb4ed7a65a3f1537#L56-L60",
+    "reviewed": true,
+    "note": "with alliesCanInteractWithLand (default from config) allies can build"
+   }
+  },
+  {
+   "id": "place-stone-ally-allieslandflag",
+   "group": "alliesLand",
+   "role": "ally",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone",
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@7a30e7ccb47bfae051a0bb53cb4ed7a65a3f1537#L56-L60",
+    "reviewed": true,
+    "note": "with alliesCanInteractWithLand allies can build"
+   }
+  },
+  {
+   "id": "break-dirt-ally-allieslandflag",
+   "group": "alliesLand",
+   "role": "ally",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@7a30e7ccb47bfae051a0bb53cb4ed7a65a3f1537#L56-L60",
+    "reviewed": true,
+    "note": "with alliesCanInteractWithLand allies can break blocks"
+   }
+  },
+  {
+   "id": "open-chest-ally-allieslandflag",
+   "group": "alliesLand",
+   "role": "ally",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@7a30e7ccb47bfae051a0bb53cb4ed7a65a3f1537#L56-L60",
+    "reviewed": true,
+    "note": "with alliesCanInteractWithLand allies can interact in the territory"
+   }
+  },
+  {
+   "id": "door-ally-allieslandflag",
+   "group": "alliesLand",
+   "role": "ally",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "oak_door"
+   },
+   "observe": [
+    "doorOpened"
+   ],
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@7a30e7ccb47bfae051a0bb53cb4ed7a65a3f1537#L56-L60",
+    "reviewed": true,
+    "note": "with alliesCanInteractWithLand allies can interact in the territory"
+   }
+  },
+  {
+   "id": "claim-alpha-enemyAtWar-overclaim",
+   "group": "overclaim",
+   "role": "enemyAtWar",
+   "arena": "claimAlpha",
+   "action": "command",
+   "command": "/f claim",
+   "observe": [
+    "claimChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "claimWild"
+   },
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L235",
+    "reviewed": true,
+    "note": "overclaiming works at war once the owner's power is no more than the chunks it keeps"
+   }
+  },
+  {
+   "id": "claim-alpha-enemy-overclaim",
+   "group": "overclaim",
+   "role": "enemy",
+   "arena": "claimAlpha",
+   "action": "command",
+   "command": "/f claim",
+   "observe": [
+    "claimChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "claimWild"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@7b24cd199b0488ac6bf70849e0593b5a9c3ab0ce#L235",
+    "reviewed": true,
+    "note": "no overclaiming without a war, even when the owner lacks the power"
    }
   }
  ]
