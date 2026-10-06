@@ -408,9 +408,13 @@ async function attemptCommand (ctx, row, roleName, arenaName) {
     obs.refusal = []
     return { checks, outcome: obs, messages: [] }
   }
+  // A command that consumes something (minting spends the currency's raw item) gets the row's item.
+  await rcon.cmd(`clear ${bot.username}`, { quiet: true })
+  if (row.item) await rcon.cmd(`give ${bot.username} minecraft:${row.item} ${row.count || 1}`, { quiet: true })
   await sleep(700)
+  // Observers get the acting role too: some state is the player's own (the coins they hold).
   const before = {}
-  for (const k of keys) before[k] = await setup.observers[k](ctx, arena)
+  for (const k of keys) before[k] = await setup.observers[k](ctx, arena, roleName)
   const wait = (bot.lastChatAt || 0) + 1100 - Date.now()
   if (wait > 0) await sleep(wait)
   bot.lastChatAt = Date.now()
@@ -426,7 +430,7 @@ async function attemptCommand (ctx, row, roleName, arenaName) {
   const obs = {}
   let allRead = true
   for (const k of keys) {
-    const after = await setup.observers[k](ctx, arena)
+    const after = await setup.observers[k](ctx, arena, roleName)
     if (before[k] === null || before[k] === undefined || after === null || after === undefined) allRead = false
     obs[k] = before[k] !== after
   }
@@ -608,7 +612,9 @@ async function main () {
   const rows = table.rows.filter(r => r.group === args.group && (!args.only || args.only.has(r.id)))
   console.log(`=== behaviour driver: ${table.plugin}, group ${args.group}, ${rows.length} rows, label ${args.label}, mineflayer ${require('mineflayer/package.json').version} ===`)
 
-  const lang = loadLang(args.lang)
+  // A plugin without a lang file (Currencies) names its fixed messages in the table instead:
+  // `messagePatterns: [{key, pattern}]`, matched before the lang file's entries.
+  const lang = (table.messagePatterns || []).map(p => ({ key: p.key, re: new RegExp(p.pattern), len: Infinity })).concat(loadLang(args.lang))
   const rcon = new Rcon(args.host, args.rconPort, args.rconPassword)
   await rcon.connect()
   const arenas = {}
