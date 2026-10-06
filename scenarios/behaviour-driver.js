@@ -595,10 +595,13 @@ async function main () {
       for (const k of r.observe.filter(k => k !== 'refusal')) {
         if (!setup.observers || typeof setup.observers[k] !== 'function') throw new Error(`row ${r.id}: the setup module has no observer ${k}`)
       }
-      // The arena's owner is not a meaningful control for a command: name where it works. Always:
-      // without one, a command that does nothing anywhere would read as "refused".
-      if (!r.control || !setup.roles[r.control.role] || !table.arenas[r.control.arena]) {
-        throw new Error(`row ${r.id}: a command row needs control: {role, arena} naming where the command works`)
+      // The arena's owner is not a meaningful control for a command: name where it works. A row that
+      // observes world state always needs one: without it, a command that does nothing anywhere would
+      // read as "refused". A message-only row (no observers) reads its outcome from the reply alone,
+      // which a control cannot vouch for, so it may say `control: false`.
+      const messageOnly = r.observe.every(k => k === 'refusal')
+      if (!(messageOnly && r.control === false) && (!r.control || !setup.roles[r.control.role] || !table.arenas[r.control.arena])) {
+        throw new Error(`row ${r.id}: a command row needs control: {role, arena} naming where the command works (or control: false when it observes only the reply)`)
       }
     }
     if (r.action === 'attackPlayer') {

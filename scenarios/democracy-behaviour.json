@@ -1,0 +1,209 @@
+{
+ "plugin": "Democracy",
+ "minecraftVersion": "26.1",
+ "dataPaths": [
+  "plugins/Democracy",
+  "plugins/MedievalFactions",
+  "medieval_factions_db.*"
+ ],
+ "ignoreMessageKeys": [
+  "PowerIncreased"
+ ],
+ "informationalMessageKeys": [
+  "DemocracyStarted",
+  "DemocracyNowCandidate",
+  "DemocracyVoteCast",
+  "DemocracyInfo"
+ ],
+ "messagePatterns": [
+  {
+   "key": "DemocracyStartNotOwner",
+   "pattern": "^You must be the owner of a faction to start an election\\.$"
+  },
+  {
+   "key": "DemocracyElectionInProgress",
+   "pattern": "^An election is already in progress\\.$"
+  },
+  {
+   "key": "DemocracyStarted",
+   "pattern": "^Election has been started\\.$"
+  },
+  {
+   "key": "DemocracyNoFaction",
+   "pattern": "^You must be in a faction to (run in|vote in|drop out of|view) .*$"
+  },
+  {
+   "key": "DemocracyNoElection",
+   "pattern": "^There is no election currently in progress in your faction\\.$"
+  },
+  {
+   "key": "DemocracyAlreadyCandidate",
+   "pattern": "^You are already a candidate in this election\\.$"
+  },
+  {
+   "key": "DemocracyNowCandidate",
+   "pattern": "^You are now a candidate in the election\\.$"
+  },
+  {
+   "key": "DemocracyAlreadyVoted",
+   "pattern": "^You have already voted in this election\\.$"
+  },
+  {
+   "key": "DemocracyNotCandidate",
+   "pattern": "^That player is not a candidate in this election\\.$"
+  },
+  {
+   "key": "DemocracyVoteCast",
+   "pattern": "^Your vote for .+ has been cast\\.$"
+  },
+  {
+   "key": "DemocracyInfo",
+   "pattern": "^(=== Election Info ===|Started by: .*|.+: \\d+ vote\\(s\\))$"
+  }
+ ],
+ "ignoreLines": [
+  "Alpha",
+  "Bravo",
+  "Echo"
+ ],
+ "_comment": "RFC 0017 behaviour table for Democracy, played on top of Medieval Factions (installed by the gate as a dependency). Alpha's election (started by Alice, who runs in it) is the only one; rows run in order. Vote rows are compared against a control (Alice voting); start/run rows observe only the reply.",
+ "arenas": {
+  "hall": {
+   "chunk": [
+    140,
+    140
+   ],
+   "owner": null
+  }
+ },
+ "configGroups": {
+  "default": {}
+ },
+ "rows": [
+  {
+   "id": "vote-member",
+   "group": "default",
+   "role": "member",
+   "arena": "hall",
+   "action": "command",
+   "command": "/d vote Alice",
+   "observe": [
+    "voteTally"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   }
+  },
+  {
+   "id": "vote-member-again",
+   "group": "default",
+   "role": "member",
+   "arena": "hall",
+   "action": "command",
+   "command": "/d vote Alice",
+   "observe": [
+    "voteTally"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   }
+  },
+  {
+   "id": "vote-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "hall",
+   "action": "command",
+   "command": "/d vote Alice",
+   "observe": [
+    "voteTally"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   }
+  },
+  {
+   "id": "vote-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "hall",
+   "action": "command",
+   "command": "/d vote Alice",
+   "observe": [
+    "voteTally"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   }
+  },
+  {
+   "id": "vote-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "hall",
+   "action": "command",
+   "command": "/d vote Alice",
+   "observe": [
+    "voteTally"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   }
+  },
+  {
+   "id": "start-member",
+   "group": "default",
+   "role": "member",
+   "arena": "hall",
+   "action": "command",
+   "command": "/d start",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "start-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "hall",
+   "action": "command",
+   "command": "/d start",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "run-member",
+   "group": "default",
+   "role": "member",
+   "arena": "hall",
+   "action": "command",
+   "command": "/d run",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "run-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "hall",
+   "action": "command",
+   "command": "/d run",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "run-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "hall",
+   "action": "command",
+   "command": "/d run",
+   "observe": [],
+   "control": false
+  }
+ ]
+}
