@@ -93,6 +93,12 @@
    "control": {
     "role": "owner",
     "arena": "hall"
+   },
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L29-L31",
+    "reviewed": true,
+    "note": "a member votes in their own faction's election, once"
    }
   },
   {
@@ -108,6 +114,12 @@
    "control": {
     "role": "owner",
     "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L31",
+    "reviewed": true,
+    "note": "a second vote is refused"
    }
   },
   {
@@ -123,6 +135,12 @@
    "control": {
     "role": "owner",
     "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L29",
+    "reviewed": true,
+    "note": "only the player's own faction's election; allies included"
    }
   },
   {
@@ -138,6 +156,12 @@
    "control": {
     "role": "owner",
     "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L29",
+    "reviewed": true,
+    "note": "only the player's own faction's election"
    }
   },
   {
@@ -153,6 +177,12 @@
    "control": {
     "role": "owner",
     "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L30",
+    "reviewed": true,
+    "note": "players in no faction cannot vote"
    }
   },
   {
@@ -163,7 +193,13 @@
    "action": "command",
    "command": "/d start",
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L28",
+    "reviewed": true,
+    "note": "starting needs DISBAND, which only the Owner role has by default"
+   }
   },
   {
    "id": "start-stranger",
@@ -173,7 +209,13 @@
    "action": "command",
    "command": "/d start",
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L28",
+    "reviewed": true,
+    "note": "a player in no faction cannot start an election"
+   }
   },
   {
    "id": "run-member",
@@ -183,7 +225,13 @@
    "action": "command",
    "command": "/d run",
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L29",
+    "reviewed": true,
+    "note": "a member can run in their own faction's election"
+   }
   },
   {
    "id": "run-ally",
@@ -193,7 +241,13 @@
    "action": "command",
    "command": "/d run",
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L29",
+    "reviewed": true,
+    "note": "allies cannot run in another faction's election"
+   }
   },
   {
    "id": "run-stranger",
@@ -203,7 +257,13 @@
    "action": "command",
    "command": "/d run",
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Democracy/USER_GUIDE.md@d090df6788addd42b7480b89c79f14f731cf5b59#L30",
+    "reviewed": true,
+    "note": "players in no faction cannot run"
+   }
   }
  ]
 }
