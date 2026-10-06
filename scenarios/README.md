@@ -30,11 +30,13 @@ node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit
 ```
 
 - `dataPaths` (server-root-relative globs) names the plugin's data, which the release-gates behaviour gate deletes before every pass so each jar starts fresh. Medieval Factions keeps its H2 database at the server root, outside its plugin folder.
-- Actions: `useOnBlock`, `breakBlock`, `useOnEntity`, and `attackPlayer` (the row's role hits `targetRole` once; outcome `damaged`, read from the victim's health over RCON; such a row must name a `control: {role, targetRole}` hit that lands, and the server must allow PvP).
+- Actions: `useOnBlock`, `breakBlock`, `useOnEntity`, `attackPlayer` (the row's role hits `targetRole` once; outcome `damaged`, read from the victim's health over RCON; such a row must name a `control: {role, targetRole}` hit that lands, and the server must allow PvP), and `command` (the row's role sends `command`, e.g. `"/f claim"`, from the middle of its arena; see below).
+- A `command` row's observations come from the setup module: `observers[name](ctx, arena)` reads some state (Medieval Factions: `claimChanged` reads the chunk's owner), and the outcome is whether it differs after the command. Before every attempt the setup module's optional `prepare(ctx, arena)` restores the arena's starting state (an arena's `claimedBy`), because a command changes more than the arena's blocks; if that fails, or the bot cannot be placed, the command is not sent and the row is `not-checked`. A command row must name its control, `control: {role, arena}`, where the command is expected to work (`/f claim` by the owner on unclaimed land). Table-level `ignoreLines` are chat lines to drop (territory notices naming a faction), and `informationalMessageKeys` are replies that are not refusals (a claim's success message).
 - `expect` (Stephenson-Software RFC 0019) records what the docs promise for a row: `{effect, refusal?, source, reviewed, note?}`, with `source` the doc line pinned to a commit (`Dans-Plugins/Medieval-Factions/CONFIG.md@<sha>#L<a>-L<b>`). The behaviour gate (release-gates v22+) checks every reviewed one on both jars. The driver ignores the field. A reviewed expectation needs a source; where the docs are silent, add the sentence to the docs first.
 - The driver never restarts the server. The harness applies a row group's `configGroups` entry
   to `config.yml` and restarts between groups.
-- Every row is paired with a control: the same action by the owner in their own claim. When the
+- Every row is paired with a control: the same action by the owner in their own claim (by the
+  named role, for `attackPlayer` and `command` rows). When the
   control does not change the world either, the bot cannot decide the row and it is recorded as
   `not-checked`, as is a row whose bot was not aiming at the target, did not reach its position,
   did not hold the item server-side, or whose server stopped answering. A `not-checked` row is
