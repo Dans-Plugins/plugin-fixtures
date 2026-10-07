@@ -383,7 +383,7 @@ async function attemptAttack (ctx, row, roleName, arenaName, targetRole) {
   const messages = since(bot, m).map(l => l.trim()).filter(l => l && !ignore.has(l))
   const ignored = new Set(ctx.table.ignoreMessageKeys || [])
   const outcome = { damaged: checks.healthRead && after < before,
-    refusal: [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort() }
+    ...splitReplies(ctx.table, [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort()) }
   return { checks, outcome, messages }
 }
 
@@ -408,9 +408,13 @@ async function attemptCommand (ctx, row, roleName, arenaName) {
     obs.refusal = []
     return { checks, outcome: obs, messages: [] }
   }
+  // A command that consumes something (minting spends the currency's raw item) gets the row's item.
+  await rcon.cmd(`clear ${bot.username}`, { quiet: true })
+  if (row.item) await rcon.cmd(`give ${bot.username} minecraft:${row.item} ${row.count || 1}`, { quiet: true })
   await sleep(700)
+  // Observers get the acting role too: some state is the player's own (the coins they hold).
   const before = {}
-  for (const k of keys) before[k] = await setup.observers[k](ctx, arena)
+  for (const k of keys) before[k] = await setup.observers[k](ctx, arena, roleName)
   const wait = (bot.lastChatAt || 0) + 1100 - Date.now()
   if (wait > 0) await sleep(wait)
   bot.lastChatAt = Date.now()
@@ -426,14 +430,14 @@ async function attemptCommand (ctx, row, roleName, arenaName) {
   const obs = {}
   let allRead = true
   for (const k of keys) {
-    const after = await setup.observers[k](ctx, arena)
+    const after = await setup.observers[k](ctx, arena, roleName)
     if (before[k] === null || before[k] === undefined || after === null || after === undefined) allRead = false
     obs[k] = before[k] !== after
   }
   checks.observed = allRead
   checks.serverAlive = !/<timeout>/.test(await rcon.cmd('list', { quiet: true }))
   const ignored = new Set(ctx.table.ignoreMessageKeys || [])
-  obs.refusal = [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort()
+  Object.assign(obs, splitReplies(ctx.table, [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort()))
   return { checks, outcome: obs, messages }
 }
 
@@ -547,8 +551,20 @@ async function attempt (ctx, row, roleName, arenaName) {
   // `ignoreMessageKeys` (table level) are messages that arrive on a timer, not because of the row
   // (Medieval Factions' power ticks); one landing inside a row's window is not part of its outcome.
   const ignored = new Set(ctx.table.ignoreMessageKeys || [])
-  obs.refusal = [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort()
+  Object.assign(obs, splitReplies(ctx.table, [...new Set(messages.map(l => classify(lang, l)).filter(k => !ignored.has(k)))].sort()))
   return { checks, outcome: obs, messages }
+}
+
+// Reply keys split into refusals and notices. A notice (`informationalMessageKeys`: a success
+// message, an info card) is not a refusal, but it is part of the outcome: it is kept as one string,
+// `notice`, so a success that turns into a refusal changes the outcome, while the gate and the page
+// (which count only `true` and non-empty lists as an effect) do not read a notice as one.
+function splitReplies (table, keys) {
+  const informational = new Set(table.informationalMessageKeys || [])
+  const notice = keys.filter(k => informational.has(k))
+  const out = { refusal: keys.filter(k => !informational.has(k)) }
+  if (notice.length) out.notice = notice.join(',')
+  return out
 }
 
 // Entity data minus the fields that move without anyone touching the entity.
@@ -591,10 +607,13 @@ async function main () {
       for (const k of r.observe.filter(k => k !== 'refusal')) {
         if (!setup.observers || typeof setup.observers[k] !== 'function') throw new Error(`row ${r.id}: the setup module has no observer ${k}`)
       }
-      // The arena's owner is not a meaningful control for a command: name where it works. Always:
-      // without one, a command that does nothing anywhere would read as "refused".
-      if (!r.control || !setup.roles[r.control.role] || !table.arenas[r.control.arena]) {
-        throw new Error(`row ${r.id}: a command row needs control: {role, arena} naming where the command works`)
+      // The arena's owner is not a meaningful control for a command: name where it works. A row that
+      // observes world state always needs one: without it, a command that does nothing anywhere would
+      // read as "refused". A message-only row (no observers) reads its outcome from the reply alone,
+      // which a control cannot vouch for, so it may say `control: false`.
+      const messageOnly = r.observe.every(k => k === 'refusal')
+      if (!(messageOnly && r.control === false) && (!r.control || !setup.roles[r.control.role] || !table.arenas[r.control.arena])) {
+        throw new Error(`row ${r.id}: a command row needs control: {role, arena} naming where the command works (or control: false when it observes only the reply)`)
       }
     }
     if (r.action === 'attackPlayer') {
@@ -608,7 +627,9 @@ async function main () {
   const rows = table.rows.filter(r => r.group === args.group && (!args.only || args.only.has(r.id)))
   console.log(`=== behaviour driver: ${table.plugin}, group ${args.group}, ${rows.length} rows, label ${args.label}, mineflayer ${require('mineflayer/package.json').version} ===`)
 
-  const lang = loadLang(args.lang)
+  // A plugin without a lang file (Currencies) names its fixed messages in the table instead:
+  // `messagePatterns: [{key, pattern}]`, matched before the lang file's entries.
+  const lang = (table.messagePatterns || []).map(p => ({ key: p.key, re: new RegExp(p.pattern), len: Infinity })).concat(loadLang(args.lang))
   const rcon = new Rcon(args.host, args.rconPort, args.rconPassword)
   await rcon.connect()
   const arenas = {}

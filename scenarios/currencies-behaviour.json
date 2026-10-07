@@ -1,0 +1,305 @@
+{
+ "plugin": "Currencies",
+ "minecraftVersion": "26.1",
+ "dataPaths": [
+  "plugins/Currencies",
+  "plugins/MedievalFactions",
+  "medieval_factions_db.*"
+ ],
+ "ignoreMessageKeys": [
+  "PowerIncreased"
+ ],
+ "informationalMessageKeys": [
+  "CurrencyMinted",
+  "CurrencyRenamed",
+  "CurrencyInfo"
+ ],
+ "messagePatterns": [
+  {
+   "key": "CurrencyMinted",
+   "pattern": "^Minted \\d+ x .+\\.$"
+  },
+  {
+   "key": "CurrencyMintNoPermission",
+   "pattern": "^Your role in this faction does not give you permission to mint this currency\\.$"
+  },
+  {
+   "key": "CurrencyMintNoPower",
+   "pattern": "^You need at least .* power to mint .*$"
+  },
+  {
+   "key": "CurrencyMintNoItems",
+   "pattern": "^You need at least \\d+ x .* to mint .*$"
+  },
+  {
+   "key": "CurrencyRenamed",
+   "pattern": "^Currency name changed from .+ to .+\\.$"
+  },
+  {
+   "key": "CurrencyRenameNoPermission",
+   "pattern": "^Your role in this faction does not give you permission to change the name of this currency\\.$"
+  },
+  {
+   "key": "CurrencyNotFound",
+   "pattern": "^There is no currency by that name\\.$"
+  },
+  {
+   "key": "CurrencyNameTaken",
+   "pattern": "^There is already a currency with that name\\.$"
+  },
+  {
+   "key": "CurrencyInfo",
+   "pattern": "^(=== .+ ===|Description:.*|Faction: .*|Item: .*|Minted: .*|Change name|Change description|Retire)$"
+  }
+ ],
+ "ignoreLines": [
+  "Alpha",
+  "Bravo",
+  "Echo"
+ ],
+ "_comment": "RFC 0017 behaviour table for Currencies, played on top of Medieval Factions (installed by the gate as a dependency). Rows are command rows: each is played by its role and by the control (Alice, who created AlphaCoin, running the same command).",
+ "arenas": {
+  "hall": {
+   "chunk": [
+    140,
+    140
+   ],
+   "owner": null
+  }
+ },
+ "configGroups": {
+  "default": {}
+ },
+ "rows": [
+  {
+   "id": "mint-member",
+   "group": "default",
+   "role": "member",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency mint AlphaCoin 1",
+   "item": "gold_nugget",
+   "count": 1,
+   "observe": [
+    "coinsGained"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L45",
+    "reviewed": true,
+    "note": "the default Member role gets no permission to mint a new currency",
+    "refusal": "CurrencyMintNoPermission"
+   }
+  },
+  {
+   "id": "mint-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency mint AlphaCoin 1",
+   "item": "gold_nugget",
+   "count": 1,
+   "observe": [
+    "coinsGained"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L46",
+    "reviewed": true,
+    "note": "only members of the owning faction can mint; no override permission",
+    "refusal": "CurrencyMintNoPermission"
+   }
+  },
+  {
+   "id": "mint-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency mint AlphaCoin 1",
+   "item": "gold_nugget",
+   "count": 1,
+   "observe": [
+    "coinsGained"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L46",
+    "reviewed": true,
+    "note": "only members of the owning faction can mint; no override permission",
+    "refusal": "CurrencyMintNoPermission"
+   }
+  },
+  {
+   "id": "mint-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency mint AlphaCoin 1",
+   "item": "gold_nugget",
+   "count": 1,
+   "observe": [
+    "coinsGained"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L46",
+    "reviewed": true,
+    "note": "only members of the owning faction can mint; no override permission",
+    "refusal": "CurrencyMintNoPermission"
+   }
+  },
+  {
+   "id": "mint-bypass",
+   "group": "default",
+   "role": "bypass",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency mint AlphaCoin 1",
+   "item": "gold_nugget",
+   "count": 1,
+   "observe": [
+    "coinsGained"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L46",
+    "reviewed": true,
+    "note": "only members of the owning faction can mint; no override permission",
+    "refusal": "CurrencyMintNoPermission"
+   }
+  },
+  {
+   "id": "rename-member",
+   "group": "default",
+   "role": "member",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency rename AlphaCoin AlphaMark",
+   "observe": [
+    "currencyRenamed"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L45",
+    "reviewed": true,
+    "note": "the default Member role gets no permission to rename a new currency",
+    "refusal": "CurrencyRenameNoPermission"
+   }
+  },
+  {
+   "id": "rename-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency rename AlphaCoin AlphaMark",
+   "observe": [
+    "currencyRenamed"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L47",
+    "reviewed": true,
+    "note": "only members of the owning faction with the permission can rename",
+    "refusal": "CurrencyRenameNoPermission"
+   }
+  },
+  {
+   "id": "rename-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency rename AlphaCoin AlphaMark",
+   "observe": [
+    "currencyRenamed"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L47",
+    "reviewed": true,
+    "note": "only members of the owning faction with the permission can rename",
+    "refusal": "CurrencyRenameNoPermission"
+   }
+  },
+  {
+   "id": "rename-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency rename AlphaCoin AlphaMark",
+   "observe": [
+    "currencyRenamed"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L47",
+    "reviewed": true,
+    "note": "only members of the owning faction with the permission can rename",
+    "refusal": "CurrencyRenameNoPermission"
+   }
+  },
+  {
+   "id": "rename-bypass",
+   "group": "default",
+   "role": "bypass",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency rename AlphaCoin AlphaMark",
+   "observe": [
+    "currencyRenamed"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   },
+   "expect": {
+    "effect": true,
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@605696708bc704b354b7d1fb3a1cd3058261674f#L47",
+    "reviewed": true,
+    "note": "currencies.force.rename (operators) can rename any currency",
+    "refusal": null
+   }
+  }
+ ]
+}
