@@ -10,13 +10,29 @@
  ],
  "informationalMessageKeys": [
   "CommandFactionClaimSuccess",
-  "CommandFactionUnclaimSuccess"
+  "CommandFactionUnclaimSuccess",
+  "CommandFactionSetHomeSuccessful",
+  "CommandFactionLawAddSuccess",
+  "CommandFactionInviteSuccess",
+  "CommandFactionInfoAlliesTitle",
+  "CommandFactionInfoEnemiesTitle",
+  "CommandFactionInfoInvite",
+  "CommandFactionInfoInvitesTitle",
+  "CommandFactionInfoMembersTitle",
+  "CommandFactionInfoNoPrefix"
  ],
  "ignoreLines": [
   "Alpha",
   "Bravo",
   "Echo",
-  "Whiskey"
+  "Whiskey",
+  "=== Alpha ===",
+  "Description:",
+  "Owner:",
+  "Member:",
+  "Alice",
+  "Mia",
+  "Sam"
  ],
  "_comment": "RFC 0017 behaviour table. Each row is played by its role and by the control (Alice in her own claim, same action); see behaviour-driver.js. Rows are compared stable vs candidate, never against expected values.",
  "arenas": {
@@ -2180,6 +2196,146 @@
     "note": "no overclaiming without a war, even when the owner lacks the power",
     "refusal": "CommandFactionClaimNoClaimableChunks"
    }
+  },
+  {
+   "id": "manage-lawadd-owner",
+   "group": "default",
+   "role": "owner",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f law add Keep the peace",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "manage-sethome-owner",
+   "group": "default",
+   "role": "owner",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f sethome",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "manage-sethome-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f sethome",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "manage-invite-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f invite Sam",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "manage-declarewar-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f declarewar Echo",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "manage-ally-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f ally Echo",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "manage-lawadd-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f law add Keep the peace",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "manage-flagset-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f flag set alliesCanInteractWithLand true",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "manage-rename-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f set name Beta",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "manage-rolesetpermission-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f role setpermission Member CLAIM allow",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "manage-vassalize-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f vassalize Echo",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "manage-kick-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f kick Alice",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "manage-unclaimall-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f unclaimall",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "manage-disband-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f disband",
+   "observe": [],
+   "control": false
   }
  ]
 }
