@@ -6,6 +6,31 @@
   "plugins/MedievalFactions",
   "medieval_factions_db.*"
  ],
+ "ignoreMessageKeys": [
+  "PowerIncreased"
+ ],
+ "messagePatterns": [
+  {
+   "key": "PowerIncreased",
+   "pattern": "^You feel stronger\\. Your power has increased by .*$"
+  },
+  {
+   "key": "FiefLandRefused",
+   "pattern": "^This land belongs to the fief .+\\. Only its members may do that here\\.$"
+  },
+  {
+   "key": "CannotInteractWithBlockInFactionTerritory",
+   "pattern": "^You cannot interact with blocks in .+ territory\\.$"
+  },
+  {
+   "key": "CannotBreakBlockInFactionTerritory",
+   "pattern": "^You cannot break blocks in .+ territory\\.$"
+  },
+  {
+   "key": "CannotPlaceBlockInFactionTerritory",
+   "pattern": "^You cannot place blocks in .+ territory\\.$"
+  }
+ ],
  "_comment": "RFC 0017 behaviour table for Fiefs, played on top of Medieval Factions (installed by the gate as a dependency). Each row is played by its role and by the control (Alice in her own fief's claim).",
  "arenas": {
   "fiefArena": {
