@@ -126,6 +126,9 @@
    "players.initialPower": 1,
    "players.maxPower": 1,
    "factions.limitLand": false
+  },
+  "duel": {
+   "duels.duration": "PT30M"
   }
  },
  "rows": [
@@ -2336,6 +2339,66 @@
    "command": "/f disband",
    "observe": [],
    "control": false
+  },
+  {
+   "id": "pvp-member-hits-owner-duel",
+   "group": "duel",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "owner",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "stranger"
+   }
+  },
+  {
+   "id": "pvp-owner-hits-member-duel",
+   "group": "duel",
+   "role": "owner",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "member",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "stranger"
+   }
+  },
+  {
+   "id": "pvp-enemyAtWar-hits-owner-duel",
+   "group": "duel",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "owner",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "stranger"
+   }
+  },
+  {
+   "id": "pvp-owner-hits-stranger-duel",
+   "group": "duel",
+   "role": "owner",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "stranger",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "stranger"
+   }
   }
  ]
 }

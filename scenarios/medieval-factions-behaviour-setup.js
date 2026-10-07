@@ -83,6 +83,13 @@ async function setup (ctx) {
     await say(bots.owner, `/accessors add ${L.x} ${L.y} ${L.z} ${roles.ally}`, /Allowed|already|access/i)
   }
 
+  // The `duel` group: Alice (owner) and Mia (member, same faction) are in a duel for the whole pass
+  // (the group sets duels.duration to 30 minutes).
+  if (ctx.group === 'duel') {
+    await say(bots.owner, `/duel challenge ${roles.member}`, /You have challenged|already invited|already in an active duel/i)
+    await say(bots.member, `/duel accept ${roles.owner}`, /the duel has begun|already in an active duel/i)
+  }
+
   // Bypass: read the toggle's reply and toggle again if it switched it off.
   const b = await say(bots.bypass, '/f bypass', /Bypass (enabled|disabled)/i)
   if (/disabled/i.test(b)) await say(bots.bypass, '/f bypass', /Bypass enabled/i)

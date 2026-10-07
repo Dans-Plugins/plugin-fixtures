@@ -643,7 +643,8 @@ async function main () {
     bots[role] = await alive(await joinWithRetry(args, username))
     await sleep(4500)
   }
-  const ctx = { rcon, bots, arenas, lang, say, tp, Y, targetPoint, sleep, table, setup }
+  // `group` lets a setup module prepare state that a config file cannot hold (a duel in progress).
+  const ctx = { rcon, bots, arenas, lang, say, tp, Y, targetPoint, sleep, table, setup, group: args.group }
   await setup.setup(ctx)
 
   const controls = new Map()
