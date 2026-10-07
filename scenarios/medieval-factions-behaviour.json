@@ -2353,6 +2353,13 @@
    "control": {
     "role": "enemyAtWar",
     "targetRole": "stranger"
+   },
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@a6782f1bf07201e8cb9c84e53da59d0f9b440ecb#L890",
+    "reviewed": true,
+    "note": "duelists hurt each other even in the same faction"
    }
   },
   {
@@ -2368,6 +2375,13 @@
    "control": {
     "role": "enemyAtWar",
     "targetRole": "stranger"
+   },
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@a6782f1bf07201e8cb9c84e53da59d0f9b440ecb#L890",
+    "reviewed": true,
+    "note": "duelists hurt each other even in the same faction"
    }
   },
   {
@@ -2383,6 +2397,13 @@
    "control": {
     "role": "enemyAtWar",
     "targetRole": "stranger"
+   },
+   "expect": {
+    "effect": false,
+    "refusal": "CannotAttackPlayerDuringDuel",
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@a6782f1bf07201e8cb9c84e53da59d0f9b440ecb#L891",
+    "reviewed": true,
+    "note": "nobody else can hit a duelist, and is told so"
    }
   },
   {
@@ -2398,6 +2419,13 @@
    "control": {
     "role": "enemyAtWar",
     "targetRole": "stranger"
+   },
+   "expect": {
+    "effect": false,
+    "refusal": "CannotAttackPlayerDuringDuel",
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@a6782f1bf07201e8cb9c84e53da59d0f9b440ecb#L891",
+    "reviewed": true,
+    "note": "a duelist cannot hit anyone else, and is told so"
    }
   }
  ]
