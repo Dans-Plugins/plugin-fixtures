@@ -126,6 +126,9 @@
    "players.initialPower": 1,
    "players.maxPower": 1,
    "factions.limitLand": false
+  },
+  "duel": {
+   "duels.duration": "PT30M"
   }
  },
  "rows": [
@@ -2336,6 +2339,94 @@
    "command": "/f disband",
    "observe": [],
    "control": false
+  },
+  {
+   "id": "pvp-member-hits-owner-duel",
+   "group": "duel",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "owner",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "stranger"
+   },
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@a6782f1bf07201e8cb9c84e53da59d0f9b440ecb#L890",
+    "reviewed": true,
+    "note": "duelists hurt each other even in the same faction"
+   }
+  },
+  {
+   "id": "pvp-owner-hits-member-duel",
+   "group": "duel",
+   "role": "owner",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "member",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "stranger"
+   },
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@a6782f1bf07201e8cb9c84e53da59d0f9b440ecb#L890",
+    "reviewed": true,
+    "note": "duelists hurt each other even in the same faction"
+   }
+  },
+  {
+   "id": "pvp-enemyAtWar-hits-owner-duel",
+   "group": "duel",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "owner",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "stranger"
+   },
+   "expect": {
+    "effect": false,
+    "refusal": "CannotAttackPlayerDuringDuel",
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@a6782f1bf07201e8cb9c84e53da59d0f9b440ecb#L891",
+    "reviewed": true,
+    "note": "nobody else can hit a duelist, and is told so"
+   }
+  },
+  {
+   "id": "pvp-owner-hits-stranger-duel",
+   "group": "duel",
+   "role": "owner",
+   "arena": "ownerClaim",
+   "action": "attackPlayer",
+   "targetRole": "stranger",
+   "observe": [
+    "damaged"
+   ],
+   "control": {
+    "role": "enemyAtWar",
+    "targetRole": "stranger"
+   },
+   "expect": {
+    "effect": false,
+    "refusal": "CannotAttackPlayerDuringDuel",
+    "source": "Dans-Plugins/Medieval-Factions/USER_GUIDE.md@a6782f1bf07201e8cb9c84e53da59d0f9b440ecb#L891",
+    "reviewed": true,
+    "note": "a duelist cannot hit anyone else, and is told so"
+   }
   }
  ]
 }
