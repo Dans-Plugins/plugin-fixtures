@@ -79,6 +79,14 @@
     140
    ],
    "owner": "Echo"
+  },
+  "gateArena": {
+   "chunk": [
+    155,
+    140
+   ],
+   "owner": "Alpha",
+   "keepBlocks": true
   }
  },
  "configGroups": {
@@ -143,7 +151,8 @@
   },
   "liegeLand": {
    "factions.defaults.flags.liegeChainCanInteractWithLand": true
-  }
+  },
+  "gate": {}
  },
  "rows": [
   {
@@ -2684,6 +2693,114 @@
     "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L100-L104",
     "reviewed": true,
     "note": "with liegeChainCanInteractWithLand, the liege's members can modify the vassal's land"
+   }
+  },
+  {
+   "id": "gate-lever-member",
+   "group": "gate",
+   "role": "member",
+   "arena": "gateArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "lever",
+    "placed": false
+   },
+   "observe": [
+    "gateOpened"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "gateArena"
+   }
+  },
+  {
+   "id": "gate-lever-ally",
+   "group": "gate",
+   "role": "ally",
+   "arena": "gateArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "lever",
+    "placed": false
+   },
+   "observe": [
+    "gateOpened"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "gateArena"
+   }
+  },
+  {
+   "id": "gate-lever-enemy",
+   "group": "gate",
+   "role": "enemy",
+   "arena": "gateArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "lever",
+    "placed": false
+   },
+   "observe": [
+    "gateOpened"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "gateArena"
+   }
+  },
+  {
+   "id": "gate-lever-enemyAtWar",
+   "group": "gate",
+   "role": "enemyAtWar",
+   "arena": "gateArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "lever",
+    "placed": false
+   },
+   "observe": [
+    "gateOpened"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "gateArena"
+   }
+  },
+  {
+   "id": "gate-lever-stranger",
+   "group": "gate",
+   "role": "stranger",
+   "arena": "gateArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "lever",
+    "placed": false
+   },
+   "observe": [
+    "gateOpened"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "gateArena"
+   }
+  },
+  {
+   "id": "gate-lever-bypass",
+   "group": "gate",
+   "role": "bypass",
+   "arena": "gateArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "lever",
+    "placed": false
+   },
+   "observe": [
+    "gateOpened"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "gateArena"
    }
   }
  ]
