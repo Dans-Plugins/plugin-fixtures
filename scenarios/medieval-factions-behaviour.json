@@ -152,7 +152,10 @@
   "liegeLand": {
    "factions.defaults.flags.liegeChainCanInteractWithLand": true
   },
-  "gate": {}
+  "gate": {},
+  "wartimeDestruction": {
+   "pvp.enableWartimeBlockDestruction": true
+  }
  },
  "rows": [
   {
@@ -2802,6 +2805,99 @@
     "role": "owner",
     "arena": "gateArena"
    }
+  },
+  {
+   "id": "fire-stone-enemyAtWar-wartimedestruction",
+   "group": "wartimeDestruction",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel"
+  },
+  {
+   "id": "place-stone-enemyAtWar-wartimedestruction",
+   "group": "wartimeDestruction",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "break-dirt-enemyAtWar-wartimedestruction",
+   "group": "wartimeDestruction",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "open-chest-enemyAtWar-wartimedestruction",
+   "group": "wartimeDestruction",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "door-enemyAtWar-wartimedestruction",
+   "group": "wartimeDestruction",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "oak_door"
+   },
+   "observe": [
+    "doorOpened"
+   ]
+  },
+  {
+   "id": "break-dirt-enemy-wartimedestruction",
+   "group": "wartimeDestruction",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "open-chest-enemy-wartimedestruction",
+   "group": "wartimeDestruction",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
   }
  ]
 }
