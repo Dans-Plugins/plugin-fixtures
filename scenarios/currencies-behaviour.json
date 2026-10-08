@@ -12,7 +12,9 @@
  "informationalMessageKeys": [
   "CurrencyMinted",
   "CurrencyRenamed",
-  "CurrencyInfo"
+  "CurrencyInfo",
+  "CurrencyDescribed",
+  "CurrencyCreated"
  ],
  "messagePatterns": [
   {
@@ -50,6 +52,34 @@
   {
    "key": "CurrencyInfo",
    "pattern": "^(=== .+ ===|Description:.*|Faction: .*|Item: .*|Minted: .*|Change name|Change description|Retire)$"
+  },
+  {
+   "key": "CurrencyDescribed",
+   "pattern": "^Currency description updated\\.$"
+  },
+  {
+   "key": "CurrencyDescribeNoPermission",
+   "pattern": "^Your role in this faction does not give you permission to change the description of this currency\\.$"
+  },
+  {
+   "key": "CurrencyCreated",
+   "pattern": "^Currency created\\.$"
+  },
+  {
+   "key": "CurrencyCreateNoFaction",
+   "pattern": "^You must be in a faction to create a currency\\.$"
+  },
+  {
+   "key": "CurrencyCreateNoPermission",
+   "pattern": "^Your role in this faction does not give you permission to create currencies\\.$"
+  },
+  {
+   "key": "CurrencyRetireNoPermission",
+   "pattern": "^Your role in this faction does not give you permission to retire this currency\\.$"
+  },
+  {
+   "key": "CurrencyRetired",
+   "pattern": "^Currency retired\\.$"
   }
  ],
  "ignoreLines": [
@@ -300,6 +330,167 @@
     "note": "currencies.force.rename (operators) can rename any currency",
     "refusal": null
    }
+  },
+  {
+   "id": "describe-member",
+   "group": "default",
+   "role": "member",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency set description AlphaCoin Shiny",
+   "observe": [
+    "descriptionChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   }
+  },
+  {
+   "id": "describe-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency set description AlphaCoin Shiny",
+   "observe": [
+    "descriptionChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   }
+  },
+  {
+   "id": "describe-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency set description AlphaCoin Shiny",
+   "observe": [
+    "descriptionChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   }
+  },
+  {
+   "id": "describe-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency set description AlphaCoin Shiny",
+   "observe": [
+    "descriptionChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   }
+  },
+  {
+   "id": "describe-bypass",
+   "group": "default",
+   "role": "bypass",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency set description AlphaCoin Shiny",
+   "observe": [
+    "descriptionChanged"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "hall"
+   }
+  },
+  {
+   "id": "create-owner",
+   "group": "default",
+   "role": "owner",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency create SecondCoin --no-rename",
+   "item": "iron_nugget",
+   "count": 1,
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "create-member",
+   "group": "default",
+   "role": "member",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency create MemberCoin --no-rename",
+   "item": "copper_ingot",
+   "count": 1,
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "create-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency create MemberCoin --no-rename",
+   "item": "copper_ingot",
+   "count": 1,
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "retire-member",
+   "group": "default",
+   "role": "member",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency retire AlphaCoin confirm",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "retire-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency retire AlphaCoin confirm",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "retire-enemy",
+   "group": "default",
+   "role": "enemy",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency retire AlphaCoin confirm",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "retire-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency retire AlphaCoin confirm",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "retire-bypass",
+   "group": "default",
+   "role": "bypass",
+   "arena": "hall",
+   "action": "command",
+   "command": "/currency retire AlphaCoin confirm",
+   "observe": [],
+   "control": false
   }
  ]
 }
