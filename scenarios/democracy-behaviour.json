@@ -292,7 +292,14 @@
    "action": "command",
    "command": "/d dropout",
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Democracy/USER_GUIDE.md@7ca6ae3984ec57e34695c708a97a409befec4972#L33",
+    "reviewed": true,
+    "note": "a candidate can drop out"
+   }
   },
   {
    "id": "dropout-ally",
@@ -302,7 +309,14 @@
    "action": "command",
    "command": "/d dropout",
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": false,
+    "refusal": "DemocracyNotRunning",
+    "source": "Dans-Plugins/Democracy/USER_GUIDE.md@7ca6ae3984ec57e34695c708a97a409befec4972#L33",
+    "reviewed": true,
+    "note": "a player who is not running is told so"
+   }
   },
   {
    "id": "dropout-stranger",
@@ -312,7 +326,14 @@
    "action": "command",
    "command": "/d dropout",
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": false,
+    "refusal": "DemocracyNoFaction",
+    "source": "Dans-Plugins/Democracy/USER_GUIDE.md@7ca6ae3984ec57e34695c708a97a409befec4972#L33",
+    "reviewed": true,
+    "note": "a player in no faction is refused"
+   }
   }
  ]
 }

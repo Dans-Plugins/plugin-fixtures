@@ -344,6 +344,13 @@
    "control": {
     "role": "owner",
     "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "refusal": "CurrencyDescribeNoPermission",
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@fed1d269f0fd4d56542c5b6681e2192a95f1de2c#L48",
+    "reviewed": true,
+    "note": "only the owning faction's permitted roles can describe"
    }
   },
   {
@@ -359,6 +366,13 @@
    "control": {
     "role": "owner",
     "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "refusal": "CurrencyDescribeNoPermission",
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@fed1d269f0fd4d56542c5b6681e2192a95f1de2c#L48",
+    "reviewed": true,
+    "note": "only the owning faction's permitted roles can describe"
    }
   },
   {
@@ -374,6 +388,13 @@
    "control": {
     "role": "owner",
     "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "refusal": "CurrencyDescribeNoPermission",
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@fed1d269f0fd4d56542c5b6681e2192a95f1de2c#L48",
+    "reviewed": true,
+    "note": "only the owning faction's permitted roles can describe"
    }
   },
   {
@@ -389,6 +410,13 @@
    "control": {
     "role": "owner",
     "arena": "hall"
+   },
+   "expect": {
+    "effect": false,
+    "refusal": "CurrencyDescribeNoPermission",
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@fed1d269f0fd4d56542c5b6681e2192a95f1de2c#L48",
+    "reviewed": true,
+    "note": "only the owning faction's permitted roles can describe"
    }
   },
   {
@@ -404,6 +432,13 @@
    "control": {
     "role": "owner",
     "arena": "hall"
+   },
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@fed1d269f0fd4d56542c5b6681e2192a95f1de2c#L48",
+    "reviewed": true,
+    "note": "currencies.force.desc describes any currency"
    }
   },
   {
@@ -416,7 +451,14 @@
    "item": "iron_nugget",
    "count": 1,
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@fed1d269f0fd4d56542c5b6681e2192a95f1de2c#L44",
+    "reviewed": true,
+    "note": "the owner has CREATE_CURRENCY"
+   }
   },
   {
    "id": "create-member",
@@ -428,7 +470,14 @@
    "item": "copper_ingot",
    "count": 1,
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": false,
+    "refusal": "CurrencyCreateNoPermission",
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@fed1d269f0fd4d56542c5b6681e2192a95f1de2c#L50",
+    "reviewed": true,
+    "note": "a member without CREATE_CURRENCY cannot create"
+   }
   },
   {
    "id": "create-stranger",
@@ -440,7 +489,14 @@
    "item": "copper_ingot",
    "count": 1,
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": false,
+    "refusal": "CurrencyCreateNoFaction",
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@fed1d269f0fd4d56542c5b6681e2192a95f1de2c#L50",
+    "reviewed": true,
+    "note": "players in no faction cannot create"
+   }
   },
   {
    "id": "retire-member",
@@ -450,7 +506,14 @@
    "action": "command",
    "command": "/currency retire AlphaCoin confirm",
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": false,
+    "refusal": "CurrencyRetireNoPermission",
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@fed1d269f0fd4d56542c5b6681e2192a95f1de2c#L49",
+    "reviewed": true,
+    "note": "no one outside the owning faction's permitted roles can retire; no override"
+   }
   },
   {
    "id": "retire-ally",
@@ -460,7 +523,14 @@
    "action": "command",
    "command": "/currency retire AlphaCoin confirm",
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": false,
+    "refusal": "CurrencyRetireNoPermission",
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@fed1d269f0fd4d56542c5b6681e2192a95f1de2c#L49",
+    "reviewed": true,
+    "note": "no one outside the owning faction's permitted roles can retire; no override"
+   }
   },
   {
    "id": "retire-enemy",
@@ -470,7 +540,14 @@
    "action": "command",
    "command": "/currency retire AlphaCoin confirm",
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": false,
+    "refusal": "CurrencyRetireNoPermission",
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@fed1d269f0fd4d56542c5b6681e2192a95f1de2c#L49",
+    "reviewed": true,
+    "note": "no one outside the owning faction's permitted roles can retire; no override"
+   }
   },
   {
    "id": "retire-stranger",
@@ -480,7 +557,14 @@
    "action": "command",
    "command": "/currency retire AlphaCoin confirm",
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": false,
+    "refusal": "CurrencyRetireNoPermission",
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@fed1d269f0fd4d56542c5b6681e2192a95f1de2c#L49",
+    "reviewed": true,
+    "note": "no one outside the owning faction's permitted roles can retire; no override"
+   }
   },
   {
    "id": "retire-bypass",
@@ -490,7 +574,14 @@
    "action": "command",
    "command": "/currency retire AlphaCoin confirm",
    "observe": [],
-   "control": false
+   "control": false,
+   "expect": {
+    "effect": false,
+    "refusal": "CurrencyRetireNoPermission",
+    "source": "Dans-Plugins/Currencies/USER_GUIDE.md@fed1d269f0fd4d56542c5b6681e2192a95f1de2c#L49",
+    "reviewed": true,
+    "note": "no one outside the owning faction's permitted roles can retire; no override"
+   }
   }
  ]
 }
