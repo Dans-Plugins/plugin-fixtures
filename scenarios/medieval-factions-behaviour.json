@@ -2453,7 +2453,14 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "refusal": "CannotInteractWithBlockInFactionTerritory",
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L78-L83",
+    "reviewed": true,
+    "note": "vassalageTreeCanInteractWithLand defaults to false: vassals are outsiders in the liege's land"
+   }
   },
   {
    "id": "place-stone-vassal-vassal",
@@ -2467,7 +2474,14 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "cobblestone"
+   "item": "cobblestone",
+   "expect": {
+    "effect": false,
+    "refusal": "CannotInteractWithBlockInFactionTerritory",
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L78-L83",
+    "reviewed": true,
+    "note": "vassalageTreeCanInteractWithLand defaults to false: vassals are outsiders in the liege's land"
+   }
   },
   {
    "id": "open-chest-vassal-vassal",
@@ -2480,7 +2494,14 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "refusal": "CannotInteractWithBlockInFactionTerritory",
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L78-L83",
+    "reviewed": true,
+    "note": "vassalageTreeCanInteractWithLand defaults to false: vassals are outsiders in the liege's land"
+   }
   },
   {
    "id": "break-dirt-vassal-vassalland",
@@ -2493,7 +2514,14 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L78-L82",
+    "reviewed": true,
+    "note": "with vassalageTreeCanInteractWithLand, vassals can build and break in the liege's land"
+   }
   },
   {
    "id": "place-stone-vassal-vassalland",
@@ -2507,7 +2535,14 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "cobblestone"
+   "item": "cobblestone",
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L78-L82",
+    "reviewed": true,
+    "note": "with vassalageTreeCanInteractWithLand, vassals can build and break in the liege's land"
+   }
   },
   {
    "id": "open-chest-vassal-vassalland",
@@ -2520,7 +2555,14 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L78-L82",
+    "reviewed": true,
+    "note": "with vassalageTreeCanInteractWithLand, vassals can build and break in the liege's land"
+   }
   },
   {
    "id": "break-dirt-liege-vassal",
@@ -2533,7 +2575,14 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "refusal": "CannotInteractWithBlockInFactionTerritory",
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L100-L105",
+    "reviewed": true,
+    "note": "liegeChainCanInteractWithLand defaults to false: the liege must respect the vassal's land"
+   }
   },
   {
    "id": "place-stone-liege-vassal",
@@ -2547,7 +2596,14 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "cobblestone"
+   "item": "cobblestone",
+   "expect": {
+    "effect": false,
+    "refusal": "CannotInteractWithBlockInFactionTerritory",
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L100-L105",
+    "reviewed": true,
+    "note": "liegeChainCanInteractWithLand defaults to false: the liege must respect the vassal's land"
+   }
   },
   {
    "id": "open-chest-liege-vassal",
@@ -2560,7 +2616,14 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": false,
+    "refusal": "CannotInteractWithBlockInFactionTerritory",
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L100-L105",
+    "reviewed": true,
+    "note": "liegeChainCanInteractWithLand defaults to false: the liege must respect the vassal's land"
+   }
   },
   {
    "id": "break-dirt-liege-liegeland",
@@ -2573,7 +2636,14 @@
    },
    "observe": [
     "targetChanged"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L100-L104",
+    "reviewed": true,
+    "note": "with liegeChainCanInteractWithLand, the liege's members can modify the vassal's land"
+   }
   },
   {
    "id": "place-stone-liege-liegeland",
@@ -2587,7 +2657,14 @@
    "observe": [
     "adjacentChanged"
    ],
-   "item": "cobblestone"
+   "item": "cobblestone",
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L100-L104",
+    "reviewed": true,
+    "note": "with liegeChainCanInteractWithLand, the liege's members can modify the vassal's land"
+   }
   },
   {
    "id": "open-chest-liege-liegeland",
@@ -2600,7 +2677,14 @@
    },
    "observe": [
     "containerOpened"
-   ]
+   ],
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L100-L104",
+    "reviewed": true,
+    "note": "with liegeChainCanInteractWithLand, the liege's members can modify the vassal's land"
+   }
   }
  ]
 }
