@@ -462,6 +462,14 @@ async function attempt (ctx, row, roleName, arenaName) {
   if (bot.ended) throw new Error(`${bot.username} is no longer connected` + (bot.kicked ? ` (kicked: ${bot.kicked})` : ''))
   const checks = { aimed: false, inPlace: false, serverAlive: false }
   if (ctx.setup.prepare) checks.prepared = !!(await ctx.setup.prepare(ctx, arena))
+  // An arena that could not be restored (a gate that did not close) must not be clicked: the click
+  // would change a structure later rows rely on. The row is not-checked.
+  if (checks.prepared === false) {
+    const obs = {}
+    for (const k of row.observe) if (k !== 'refusal') obs[k] = false
+    obs.refusal = []
+    return { checks, outcome: obs, messages: [] }
+  }
   await resetArena(rcon, arena)
   const t = await placeTarget(rcon, arena, row.target)
   // Observations the setup module reads (a gate's state), compared before and after the click.
