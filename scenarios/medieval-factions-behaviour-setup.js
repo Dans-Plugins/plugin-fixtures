@@ -83,6 +83,19 @@ async function setup (ctx) {
     await say(bots.owner, `/accessors add ${L.x} ${L.y} ${L.z} ${roles.ally}`, /Allowed|already|access/i)
   }
 
+  // Vassal groups: Echo (the enemy role's faction) swears fealty to Alpha, so Alice is the liege's
+  // owner and Eve the vassal's. In `liegeLand` Eve also claims the vassalClaim arena for Echo, so
+  // the liege can be tried on the vassal's land.
+  if (['vassal', 'vassalLand', 'liegeLand'].includes(ctx.group)) {
+    await say(bots.owner, '/f vassalize Echo', /Successfully sent vassalization request|already requested|already pending/i)
+    await say(bots.enemy, '/f swearfealty Alpha', /Successfully swore fealty|already a vassal of that faction/i)
+    const V = targetPoint(arenas.vassalClaim)
+    if (!(await tp(rcon, bots.enemy, V.x + 0.5, Y, V.z - 3.5))) throw new Error('enemy could not reach vassalClaim')
+    await say(bots.enemy, '/f claim', /Claimed|aren't any claimable|already/i)
+    const held = await say(bots.enemy, '/f claim check', /Echo|Wilderness|claim/i)
+    if (!/Echo/.test(held)) throw new Error(`vassalClaim is not Echo's: ${held}`)
+  }
+
   // The `duel` group: Alice (owner) and Mia (member, same faction) are in a duel for the whole pass
   // (the group sets duels.duration to 30 minutes).
   if (ctx.group === 'duel') {

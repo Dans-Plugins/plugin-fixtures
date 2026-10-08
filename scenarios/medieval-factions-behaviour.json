@@ -72,6 +72,13 @@
    ],
    "owner": "Alpha",
    "claimedBy": "Alpha"
+  },
+  "vassalClaim": {
+   "chunk": [
+    152,
+    140
+   ],
+   "owner": "Echo"
   }
  },
  "configGroups": {
@@ -129,6 +136,13 @@
   },
   "duel": {
    "duels.duration": "PT30M"
+  },
+  "vassal": {},
+  "vassalLand": {
+   "factions.defaults.flags.vassalageTreeCanInteractWithLand": true
+  },
+  "liegeLand": {
+   "factions.defaults.flags.liegeChainCanInteractWithLand": true
   }
  },
  "rows": [
@@ -2427,6 +2441,166 @@
     "reviewed": true,
     "note": "a duelist cannot hit anyone else, and is told so"
    }
+  },
+  {
+   "id": "break-dirt-vassal-vassal",
+   "group": "vassal",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "place-stone-vassal-vassal",
+   "group": "vassal",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "open-chest-vassal-vassal",
+   "group": "vassal",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "break-dirt-vassal-vassalland",
+   "group": "vassalLand",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "place-stone-vassal-vassalland",
+   "group": "vassalLand",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "open-chest-vassal-vassalland",
+   "group": "vassalLand",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "break-dirt-liege-vassal",
+   "group": "vassal",
+   "role": "owner",
+   "arena": "vassalClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "place-stone-liege-vassal",
+   "group": "vassal",
+   "role": "owner",
+   "arena": "vassalClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "open-chest-liege-vassal",
+   "group": "vassal",
+   "role": "owner",
+   "arena": "vassalClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "break-dirt-liege-liegeland",
+   "group": "liegeLand",
+   "role": "owner",
+   "arena": "vassalClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "place-stone-liege-liegeland",
+   "group": "liegeLand",
+   "role": "owner",
+   "arena": "vassalClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "open-chest-liege-liegeland",
+   "group": "liegeLand",
+   "role": "owner",
+   "arena": "vassalClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
   }
  ]
 }
