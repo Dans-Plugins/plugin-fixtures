@@ -13,7 +13,8 @@
   "DemocracyStarted",
   "DemocracyNowCandidate",
   "DemocracyVoteCast",
-  "DemocracyInfo"
+  "DemocracyInfo",
+  "DemocracyDroppedOut"
  ],
  "messagePatterns": [
   {
@@ -59,6 +60,14 @@
   {
    "key": "DemocracyInfo",
    "pattern": "^(=== Election Info ===|Started by: .*|.+: \\d+ vote\\(s\\))$"
+  },
+  {
+   "key": "DemocracyNotRunning",
+   "pattern": "^You are not currently a candidate in an election\\.$"
+  },
+  {
+   "key": "DemocracyDroppedOut",
+   "pattern": "^You have dropped out of the election\\.$"
   }
  ],
  "ignoreLines": [
@@ -274,6 +283,36 @@
     "note": "players in no faction cannot run",
     "refusal": "DemocracyNoFaction"
    }
+  },
+  {
+   "id": "dropout-member",
+   "group": "default",
+   "role": "member",
+   "arena": "hall",
+   "action": "command",
+   "command": "/d dropout",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "dropout-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "hall",
+   "action": "command",
+   "command": "/d dropout",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "dropout-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "hall",
+   "action": "command",
+   "command": "/d dropout",
+   "observe": [],
+   "control": false
   }
  ]
 }
