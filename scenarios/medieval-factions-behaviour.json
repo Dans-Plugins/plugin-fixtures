@@ -19,7 +19,18 @@
   "CommandFactionInfoInvite",
   "CommandFactionInfoInvitesTitle",
   "CommandFactionInfoMembersTitle",
-  "CommandFactionInfoNoPrefix"
+  "CommandFactionInfoNoPrefix",
+  "CommandFactionHomeSuccess",
+  "CommandFactionLawListTitle",
+  "CommandFactionLawListLaw",
+  "Teleporting",
+  "LawListEntry"
+ ],
+ "messagePatterns": [
+  {
+   "key": "LawListEntry",
+   "pattern": "^(?:[\u2716\u270e] ?)*\\d+\\. .+$"
+  }
  ],
  "ignoreLines": [
   "Alpha",
@@ -2898,6 +2909,56 @@
    "observe": [
     "containerOpened"
    ]
+  },
+  {
+   "id": "home-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f home",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "home-ally",
+   "group": "default",
+   "role": "ally",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f home",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "home-stranger",
+   "group": "default",
+   "role": "stranger",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f home",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "lawlist-member",
+   "group": "default",
+   "role": "member",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f law list",
+   "observe": [],
+   "control": false
+  },
+  {
+   "id": "lawlist-owner",
+   "group": "default",
+   "role": "owner",
+   "arena": "ownerClaim",
+   "action": "command",
+   "command": "/f law list",
+   "observe": [],
+   "control": false
   }
  ]
 }

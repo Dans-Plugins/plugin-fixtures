@@ -47,6 +47,9 @@ async function setup (ctx) {
   await say(bots.owner, '/f claim', /Claimed|aren't any claimable|already/i)
   const owner = await say(bots.owner, '/f claim check', /Alpha|Wilderness|claim/i)
   if (!/Alpha/.test(owner)) throw new Error(`ownerClaim arena is not Alpha's: ${owner}`)
+  // Alpha's home, in its claim. Set here, not by a row: the gate cuts a group into shards of up
+  // to 15 rows, each on its own server with its own setup, so no row may rely on an earlier row.
+  await say(bots.owner, '/f sethome', /Faction home set|home/i)
 
   // The wilderness arena must really be unclaimed (harness rule 3).
   const W = targetPoint(arenas.wilderness)
