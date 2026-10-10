@@ -50,6 +50,10 @@ async function setup (ctx) {
   if (!(await tp(rcon, bots.owner, F.x + 0.5, Y, F.z - 3.5))) throw new Error('owner could not reach factionArena')
   const none = await say(bots.owner, '/fi checkclaim', /claimed by|not claimed/i)
   if (!/not claimed by a fief/i.test(none)) throw new Error(`factionArena should belong to no fief: ${none}`)
+
+  // `renamed`: North's owner renames North after it has claimed the fiefArena (Fiefs#221: the land
+  // must stay North's, now under the new name).
+  if (ctx.group === 'renamed') await say(bots.owner, '/fi rename "Northern"', /Fief renamed|name is taken/i)
   await sleep(500)
 }
 
