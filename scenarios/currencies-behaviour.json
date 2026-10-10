@@ -14,7 +14,8 @@
   "CurrencyRenamed",
   "CurrencyInfo",
   "CurrencyDescribed",
-  "CurrencyCreated"
+  "CurrencyCreated",
+  "CurrencyRetired"
  ],
  "messagePatterns": [
   {
