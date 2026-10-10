@@ -83,12 +83,30 @@ async function setup (ctx) {
     await say(bots.owner, `/accessors add ${L.x} ${L.y} ${L.z} ${roles.ally}`, /Allowed|already|access/i)
   }
 
+  // Vassal groups: Echo (the enemy role's faction) swears fealty to Alpha, so Alice is the liege's
+  // owner and Eve the vassal's. In `liegeLand` Eve also claims the vassalClaim arena for Echo, so
+  // the liege can be tried on the vassal's land.
+  if (['vassal', 'vassalLand', 'liegeLand'].includes(ctx.group)) {
+    await say(bots.owner, '/f vassalize Echo', /Successfully sent vassalization request|already requested|already pending/i)
+    await say(bots.enemy, '/f swearfealty Alpha', /Successfully swore fealty|already a vassal of that faction/i)
+    const V = targetPoint(arenas.vassalClaim)
+    if (!(await tp(rcon, bots.enemy, V.x + 0.5, Y, V.z - 3.5))) throw new Error('enemy could not reach vassalClaim')
+    await say(bots.enemy, '/f claim', /Claimed|aren't any claimable|already/i)
+    const held = await say(bots.enemy, '/f claim check', /Echo|Wilderness|claim/i)
+    if (!/Echo/.test(held)) throw new Error(`vassalClaim is not Echo's: ${held}`)
+  }
+
   // The `duel` group: Alice (owner) and Mia (member, same faction) are in a duel for the whole pass
   // (the group sets duels.duration to 30 minutes).
   if (ctx.group === 'duel') {
     await say(bots.owner, `/duel challenge ${roles.member}`, /You have challenged|already invited|already in an active duel/i)
     await say(bots.member, `/duel accept ${roles.owner}`, /the duel has begun|already in an active duel/i)
   }
+
+  // The `gate` group: Alice claims gateArena and makes a gate of a 1x4 oak-plank column (4 tall: MF measures height as maxY - minY, see Medieval-Factions issue on gate height), three
+  // blocks north of the target point, with a floor lever on the target point as its trigger. Gate
+  // rows flip that lever; `gateOpened` reads whether the column starts to open.
+  if (ctx.group === 'gate') await buildGate(ctx)
 
   // Bypass: read the toggle's reply and toggle again if it switched it off.
   const b = await say(bots.bypass, '/f bypass', /Bypass (enabled|disabled)/i)
@@ -111,11 +129,73 @@ async function claimOwner (ctx, arena) {
   }
 }
 
+function gateBlocks (ctx, arena) {
+  const T = ctx.targetPoint(arena)
+  return { lever: T, bottom: T.offset(0, 0, 3), top: T.offset(0, 3, 3) }
+}
+
+async function buildGate (ctx) {
+  const { rcon, bots, arenas, say, tp, Y, targetPoint, sleep } = ctx
+  const arena = arenas.gateArena
+  const T = targetPoint(arena)
+  const g = gateBlocks(ctx, arena)
+  if (!(await tp(rcon, bots.owner, T.x + 0.5, Y, T.z - 3.5))) throw new Error('owner could not reach gateArena')
+  await say(bots.owner, '/f claim', /Claimed|aren't any claimable|already/i)
+  const held = await say(bots.owner, '/f claim check', /Alpha|Wilderness|claim/i)
+  if (!/Alpha/.test(held)) throw new Error(`gateArena is not Alpha's: ${held}`)
+  await rcon.cmd(`fill ${g.bottom.x} ${g.bottom.y} ${g.bottom.z} ${g.top.x} ${g.top.y} ${g.top.z} minecraft:oak_planks`, { quiet: true })
+  await rcon.cmd(`setblock ${g.lever.x} ${g.lever.y} ${g.lever.z} minecraft:lever[face=floor,powered=false]`, { quiet: true })
+  if (!(await tp(rcon, bots.owner, T.x + 2.5, Y, T.z + 1.5, 90))) throw new Error('owner could not reach the gate')
+  await sleep(600)
+  const click = async (pos, re, what) => {
+    await bots.owner.lookAt(pos.offset(0.5, 0.5, 0.5), true)
+    await sleep(300)
+    const m = bots.owner.log.length
+    bots.owner.activateBlock(bots.owner.blockAt(pos)).catch(() => {})
+    if (!(await waitReply(bots.owner, m, re, 15000))) {
+      throw new Error(`gate creation: no ${re} after selecting the ${what}; received ${JSON.stringify(bots.owner.log.slice(m))}`)
+    }
+    await sleep(1200)
+  }
+  await say(bots.owner, '/gate create', /select the first corner|already creating a gate/i)
+  await click(g.bottom, /select the second corner/i, 'first corner')
+  await click(g.top, /select the trigger/i, 'second corner')
+  await click(g.lever, /Gate created/i, 'trigger')
+  if ((await gateOpened(ctx, arena)) !== 'closed') throw new Error('the gate is not closed after creation')
+}
+
+// 'open' when the gate's bottom block turns to air within 4 s (a powered trigger opens a gate on
+// the next one-second poll, lowest layer first), 'closed' when it stays, null when unreadable.
+async function gateOpened (ctx, arena) {
+  if (!arena.keepBlocks) return null
+  const b = gateBlocks(ctx, arena).bottom
+  for (let i = 0; i < 16; i++) {
+    const r = await ctx.rcon.cmd(`execute if block ${b.x} ${b.y} ${b.z} minecraft:oak_planks`, { quiet: true })
+    if (/<timeout>/.test(r)) return null
+    if (!/passed/i.test(r)) return 'open'
+    await ctx.sleep(250)
+  }
+  return 'closed'
+}
+
 // Each faction's owner, who can always claim and unclaim its land (no force permission needed:
 // `/f claim <faction>` does not exist in 7.0.0).
 const factionOwners = { Alpha: 'owner', Bravo: 'ally', Echo: 'enemy', Whiskey: 'enemyAtWar' }
 
 async function prepare (ctx, arena) {
+  // A gate arena: switch the lever off and wait for the gate to close again (all three blocks).
+  if (arena.keepBlocks && ctx.group === 'gate') {
+    const g = gateBlocks(ctx, arena)
+    await ctx.rcon.cmd(`setblock ${g.lever.x} ${g.lever.y} ${g.lever.z} minecraft:lever[face=floor,powered=false]`, { quiet: true })
+    for (let i = 0; i < 40; i++) {
+      const top = await ctx.rcon.cmd(`execute if block ${g.top.x} ${g.top.y} ${g.top.z} minecraft:oak_planks`, { quiet: true })
+      const low = await ctx.rcon.cmd(`execute if block ${g.bottom.x} ${g.bottom.y} ${g.bottom.z} minecraft:oak_planks`, { quiet: true })
+      if (/passed/i.test(top) && /passed/i.test(low)) return true
+      await ctx.sleep(500)
+    }
+    console.log('    prepare gateArena: the gate did not close')
+    return false
+  }
   if (!('claimedBy' in arena)) return true
   const want = arena.claimedBy || 'wilderness'
   let now = await claimOwner(ctx, arena)
@@ -149,4 +229,4 @@ async function waitReply (bot, mark, re, ms) {
   return false
 }
 
-module.exports = { roles, setup, prepare, observers: { claimChanged: claimOwner }, controlRole: 'owner', controlArena: 'ownerClaim' }
+module.exports = { roles, setup, prepare, observers: { claimChanged: claimOwner, gateOpened }, controlRole: 'owner', controlArena: 'ownerClaim' }

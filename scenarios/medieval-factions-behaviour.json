@@ -72,6 +72,21 @@
    ],
    "owner": "Alpha",
    "claimedBy": "Alpha"
+  },
+  "vassalClaim": {
+   "chunk": [
+    152,
+    140
+   ],
+   "owner": "Echo"
+  },
+  "gateArena": {
+   "chunk": [
+    155,
+    140
+   ],
+   "owner": "Alpha",
+   "keepBlocks": true
   }
  },
  "configGroups": {
@@ -129,6 +144,17 @@
   },
   "duel": {
    "duels.duration": "PT30M"
+  },
+  "vassal": {},
+  "vassalLand": {
+   "factions.defaults.flags.vassalageTreeCanInteractWithLand": true
+  },
+  "liegeLand": {
+   "factions.defaults.flags.liegeChainCanInteractWithLand": true
+  },
+  "gate": {},
+  "wartimeDestruction": {
+   "pvp.enableWartimeBlockDestruction": true
   }
  },
  "rows": [
@@ -2427,6 +2453,451 @@
     "reviewed": true,
     "note": "a duelist cannot hit anyone else, and is told so"
    }
+  },
+  {
+   "id": "break-dirt-vassal-vassal",
+   "group": "vassal",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ],
+   "expect": {
+    "effect": false,
+    "refusal": "CannotInteractWithBlockInFactionTerritory",
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L78-L83",
+    "reviewed": true,
+    "note": "vassalageTreeCanInteractWithLand defaults to false: vassals are outsiders in the liege's land"
+   }
+  },
+  {
+   "id": "place-stone-vassal-vassal",
+   "group": "vassal",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone",
+   "expect": {
+    "effect": false,
+    "refusal": "CannotInteractWithBlockInFactionTerritory",
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L78-L83",
+    "reviewed": true,
+    "note": "vassalageTreeCanInteractWithLand defaults to false: vassals are outsiders in the liege's land"
+   }
+  },
+  {
+   "id": "open-chest-vassal-vassal",
+   "group": "vassal",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ],
+   "expect": {
+    "effect": false,
+    "refusal": "CannotInteractWithBlockInFactionTerritory",
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L78-L83",
+    "reviewed": true,
+    "note": "vassalageTreeCanInteractWithLand defaults to false: vassals are outsiders in the liege's land"
+   }
+  },
+  {
+   "id": "break-dirt-vassal-vassalland",
+   "group": "vassalLand",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ],
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L78-L82",
+    "reviewed": true,
+    "note": "with vassalageTreeCanInteractWithLand, vassals can build and break in the liege's land"
+   }
+  },
+  {
+   "id": "place-stone-vassal-vassalland",
+   "group": "vassalLand",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone",
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L78-L82",
+    "reviewed": true,
+    "note": "with vassalageTreeCanInteractWithLand, vassals can build and break in the liege's land"
+   }
+  },
+  {
+   "id": "open-chest-vassal-vassalland",
+   "group": "vassalLand",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ],
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L78-L82",
+    "reviewed": true,
+    "note": "with vassalageTreeCanInteractWithLand, vassals can build and break in the liege's land"
+   }
+  },
+  {
+   "id": "break-dirt-liege-vassal",
+   "group": "vassal",
+   "role": "owner",
+   "arena": "vassalClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ],
+   "expect": {
+    "effect": false,
+    "refusal": "CannotInteractWithBlockInFactionTerritory",
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L100-L105",
+    "reviewed": true,
+    "note": "liegeChainCanInteractWithLand defaults to false: the liege must respect the vassal's land"
+   }
+  },
+  {
+   "id": "place-stone-liege-vassal",
+   "group": "vassal",
+   "role": "owner",
+   "arena": "vassalClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone",
+   "expect": {
+    "effect": false,
+    "refusal": "CannotInteractWithBlockInFactionTerritory",
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L100-L105",
+    "reviewed": true,
+    "note": "liegeChainCanInteractWithLand defaults to false: the liege must respect the vassal's land"
+   }
+  },
+  {
+   "id": "open-chest-liege-vassal",
+   "group": "vassal",
+   "role": "owner",
+   "arena": "vassalClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ],
+   "expect": {
+    "effect": false,
+    "refusal": "CannotInteractWithBlockInFactionTerritory",
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L100-L105",
+    "reviewed": true,
+    "note": "liegeChainCanInteractWithLand defaults to false: the liege must respect the vassal's land"
+   }
+  },
+  {
+   "id": "break-dirt-liege-liegeland",
+   "group": "liegeLand",
+   "role": "owner",
+   "arena": "vassalClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ],
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L100-L104",
+    "reviewed": true,
+    "note": "with liegeChainCanInteractWithLand, the liege's members can modify the vassal's land"
+   }
+  },
+  {
+   "id": "place-stone-liege-liegeland",
+   "group": "liegeLand",
+   "role": "owner",
+   "arena": "vassalClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone",
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L100-L104",
+    "reviewed": true,
+    "note": "with liegeChainCanInteractWithLand, the liege's members can modify the vassal's land"
+   }
+  },
+  {
+   "id": "open-chest-liege-liegeland",
+   "group": "liegeLand",
+   "role": "owner",
+   "arena": "vassalClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ],
+   "expect": {
+    "effect": true,
+    "refusal": null,
+    "source": "Dans-Plugins/Medieval-Factions/FACTION_FLAGS.md@13fcc71056b3674b96a5316f14b5a67c45eac51c#L100-L104",
+    "reviewed": true,
+    "note": "with liegeChainCanInteractWithLand, the liege's members can modify the vassal's land"
+   }
+  },
+  {
+   "id": "gate-lever-member",
+   "group": "gate",
+   "role": "member",
+   "arena": "gateArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "lever",
+    "placed": false
+   },
+   "observe": [
+    "gateOpened"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "gateArena"
+   }
+  },
+  {
+   "id": "gate-lever-ally",
+   "group": "gate",
+   "role": "ally",
+   "arena": "gateArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "lever",
+    "placed": false
+   },
+   "observe": [
+    "gateOpened"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "gateArena"
+   }
+  },
+  {
+   "id": "gate-lever-enemy",
+   "group": "gate",
+   "role": "enemy",
+   "arena": "gateArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "lever",
+    "placed": false
+   },
+   "observe": [
+    "gateOpened"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "gateArena"
+   }
+  },
+  {
+   "id": "gate-lever-enemyAtWar",
+   "group": "gate",
+   "role": "enemyAtWar",
+   "arena": "gateArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "lever",
+    "placed": false
+   },
+   "observe": [
+    "gateOpened"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "gateArena"
+   }
+  },
+  {
+   "id": "gate-lever-stranger",
+   "group": "gate",
+   "role": "stranger",
+   "arena": "gateArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "lever",
+    "placed": false
+   },
+   "observe": [
+    "gateOpened"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "gateArena"
+   }
+  },
+  {
+   "id": "gate-lever-bypass",
+   "group": "gate",
+   "role": "bypass",
+   "arena": "gateArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "lever",
+    "placed": false
+   },
+   "observe": [
+    "gateOpened"
+   ],
+   "control": {
+    "role": "owner",
+    "arena": "gateArena"
+   }
+  },
+  {
+   "id": "fire-stone-enemyAtWar-wartimedestruction",
+   "group": "wartimeDestruction",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "fireAdjacent"
+   ],
+   "item": "flint_and_steel"
+  },
+  {
+   "id": "place-stone-enemyAtWar-wartimedestruction",
+   "group": "wartimeDestruction",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "break-dirt-enemyAtWar-wartimedestruction",
+   "group": "wartimeDestruction",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "open-chest-enemyAtWar-wartimedestruction",
+   "group": "wartimeDestruction",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "door-enemyAtWar-wartimedestruction",
+   "group": "wartimeDestruction",
+   "role": "enemyAtWar",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "oak_door"
+   },
+   "observe": [
+    "doorOpened"
+   ]
+  },
+  {
+   "id": "break-dirt-enemy-wartimedestruction",
+   "group": "wartimeDestruction",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "open-chest-enemy-wartimedestruction",
+   "group": "wartimeDestruction",
+   "role": "enemy",
+   "arena": "ownerClaim",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
   }
  ]
 }

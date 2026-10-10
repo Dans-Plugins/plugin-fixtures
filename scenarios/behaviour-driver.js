@@ -282,6 +282,12 @@ async function buildArena (rcon, arena) {
 async function resetArena (rcon, arena, { verbose = false } = {}) {
   const b = arenaBox(arena)
   const q = { quiet: !verbose }
+  // An arena with `keepBlocks` holds a structure the setup module builds once (a gate and its
+  // trigger) that a wipe would destroy; its rows rely on `prepare` to restore its state instead.
+  if (arena.keepBlocks && !verbose) {
+    await rcon.cmd(`kill @e[type=!player,x=${b.x0},y=${Y - 2},z=${b.z0},dx=15,dy=10,dz=15]`, q)
+    return
+  }
   const floor = await rcon.cmd(`fill ${b.x0} ${Y - 1} ${b.z0} ${b.x1} ${Y - 1} ${b.z1} minecraft:stone`, q)
   if (/not loaded|No blocks|<timeout>/i.test(floor) && !/filled/i.test(floor) && verbose) throw new Error(`arena ${arena.name} floor fill failed: ${floor.trim()}`)
   await rcon.cmd(`fill ${b.x0} ${Y} ${b.z0} ${b.x1} ${Y + 5} ${b.z1} minecraft:air`, q)
@@ -306,6 +312,10 @@ const blockIs = async (rcon, p, id) => /passed/i.test(await rcon.cmd(`execute if
 // Place the row's target and return how to aim at it.
 async function placeTarget (rcon, arena, target) {
   const T = targetPoint(arena)
+  // `placed: false`: the block is already there (built by the setup module); aim at it as it is.
+  if (target.block && target.placed === false) {
+    return { kind: 'block', pos: T, id: `minecraft:${target.block}`, aim: T.offset(0.5, 0.25, 0.5), face: new Vec3(0, 1, 0) }
+  }
   if (target.block) {
     const id = target.block
     if (/door$/.test(id)) {
@@ -451,8 +461,21 @@ async function attempt (ctx, row, roleName, arenaName) {
   // "nothing happened"; stop the run instead.
   if (bot.ended) throw new Error(`${bot.username} is no longer connected` + (bot.kicked ? ` (kicked: ${bot.kicked})` : ''))
   const checks = { aimed: false, inPlace: false, serverAlive: false }
+  if (ctx.setup.prepare) checks.prepared = !!(await ctx.setup.prepare(ctx, arena))
+  // An arena that could not be restored (a gate that did not close) must not be clicked: the click
+  // would change a structure later rows rely on. The row is not-checked.
+  if (checks.prepared === false) {
+    const obs = {}
+    for (const k of row.observe) if (k !== 'refusal') obs[k] = false
+    obs.refusal = []
+    return { checks, outcome: obs, messages: [] }
+  }
   await resetArena(rcon, arena)
   const t = await placeTarget(rcon, arena, row.target)
+  // Observations the setup module reads (a gate's state), compared before and after the click.
+  const setupKeys = row.observe.filter(k => ctx.setup.observers && ctx.setup.observers[k])
+  const setupBefore = {}
+  for (const k of setupKeys) setupBefore[k] = await ctx.setup.observers[k](ctx, arena, roleName)
   const T = targetPoint(arena)
 
   // Harness rule 3: the target's chunk must belong to whoever the arena says.
@@ -479,7 +502,11 @@ async function attempt (ctx, row, roleName, arenaName) {
     await bot.lookAt(t.aim, true)
     await sleep(300)
     const c = bot.blockAtCursor(5)
-    checks.aimed = !!c && (c.position.equals(t.pos) || (t.isDoor && c.position.equals(t.pos.offset(0, 1, 0))))
+    // A floor lever (a `placed: false` target) is too thin for the cursor ray, which passes over it
+    // to the floor next to it; the click itself is addressed to the lever (activateBlock below), so
+    // looking within a block and a half of it counts as aimed.
+    checks.aimed = !!c && (c.position.equals(t.pos) || (t.isDoor && c.position.equals(t.pos.offset(0, 1, 0))) ||
+      (row.target.placed === false && c.position.distanceTo(t.pos) <= 1.5))
   } else {
     entity = bot.nearestEntity(e => e.name === t.type && e.position.distanceTo(t.pos) < 2)
     if (entity) { await bot.lookAt(entity.position.offset(0, entity.height / 2, 0), true); await sleep(300) }
@@ -542,6 +569,11 @@ async function attempt (ctx, row, roleName, arenaName) {
   // time in eight), which would otherwise differ between identical runs.
   if (want.has('entitySpawned')) obs.entitySpawned = [...spawned].filter(n => !(row.ignoreEntities || []).includes(n)).sort()
   if (want.has('containerOpened')) obs.containerOpened = windows > 0
+  for (const k of setupKeys) {
+    const after = await ctx.setup.observers[k](ctx, arena, roleName)
+    if (setupBefore[k] === null || setupBefore[k] === undefined || after === null || after === undefined) checks.observed = false
+    obs[k] = setupBefore[k] !== after
+  }
   if (want.has('entityChanged') && t.kind === 'entity') {
     const after = await entityData(rcon, t)
     obs.entityChanged = stripNbt(before) !== stripNbt(after)
@@ -658,7 +690,9 @@ async function main () {
           ? await attemptAttack(ctx, row, row.control.role, row.arena, row.control.targetRole)
           : row.action === 'command'
             ? await attemptCommand(ctx, row, row.control.role, row.control.arena)
-            : await attempt(ctx, row, setup.controlRole, setup.controlArena)
+            : (row.control && row.control.arena)
+                ? await attempt(ctx, row, row.control.role, row.control.arena)
+                : await attempt(ctx, row, setup.controlRole, setup.controlArena)
         controls.set(controlKey, c)
         const failed = Object.entries(c.checks).filter(([, v]) => !v).map(([k]) => k)
         console.log(`  [control ${row.action}/${row.item || 'hand'}] ${JSON.stringify(c.outcome)}` + (failed.length ? `  (control checks failed: ${failed.join(',')})` : ''))
