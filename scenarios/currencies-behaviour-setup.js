@@ -14,6 +14,11 @@
 //   coinsGained      whether the acting player holds a minted coin (an item carrying the
 //                    currency's data tag; the raw nuggets the row gives carry none)
 //   currencyRenamed  whether a currency named AlphaCoin exists, read with Ben's /currency info
+//   descriptionChanged  AlphaCoin's description line, read with Ben's /currency info; `prepare`
+//                    sets it back to "Reset" (currencies.force.desc) before every attempt
+//
+// Retire and create rows observe only the reply (a retired currency cannot be restored, so no row
+// may expect a retire to work; they come last in the table).
 
 'use strict'
 
@@ -63,6 +68,24 @@ async function currencyRenamed (ctx) {
   return n === null ? null : n
 }
 
+// The "Description: ..." line of /currency info AlphaCoin, or null when it could not be read.
+async function currencyDescription (ctx) {
+  const bot = ctx.bots.bypass
+  const wait = (bot.lastChatAt || 0) + 1100 - Date.now()
+  if (wait > 0) await ctx.sleep(wait)
+  bot.lastChatAt = Date.now()
+  const m = bot.log.length
+  bot.chat(`/currency info ${CURRENCY}`)
+  const deadline = Date.now() + 15000
+  while (Date.now() < deadline) {
+    const line = bot.log.slice(m).map(l => l.trim()).find(l => /^Description:/.test(l))
+    if (line) return line
+    if (bot.log.slice(m).some(l => /no currency by that name/i.test(l))) return null
+    await ctx.sleep(100)
+  }
+  return null
+}
+
 async function coinsGained (ctx, arena, role) {
   const name = roles[role]
   const r = await ctx.rcon.cmd(`execute if items entity @a[name=${name},limit=1] container.* *[minecraft:custom_data]`, { quiet: true })
@@ -71,14 +94,25 @@ async function coinsGained (ctx, arena, role) {
 }
 
 async function prepare (ctx) {
-  if ((await currencyName(ctx)) === CURRENCY) return true
+  if ((await currencyName(ctx)) === CURRENCY) return resetDescription(ctx)
   try {
     await ctx.say(ctx.bots.bypass, `/currency rename ${RENAMED} ${CURRENCY}`, /name changed|no currency by that name|already a currency/i)
   } catch (e) {
     console.log(`    prepare: ${e.message}`)
     return false
   }
-  return (await currencyName(ctx)) === CURRENCY
+  return (await currencyName(ctx)) === CURRENCY && resetDescription(ctx)
 }
 
-module.exports = { roles, setup, prepare, observers: { coinsGained, currencyRenamed }, controlRole: 'owner', controlArena: 'hall' }
+async function resetDescription (ctx) {
+  if ((await currencyDescription(ctx)) === 'Description: Reset') return true
+  try {
+    await ctx.say(ctx.bots.bypass, `/currency set description ${CURRENCY} Reset`, /description updated|no currency by that name/i)
+  } catch (e) {
+    console.log(`    prepare: ${e.message}`)
+    return false
+  }
+  return (await currencyDescription(ctx)) === 'Description: Reset'
+}
+
+module.exports = { roles, setup, prepare, observers: { coinsGained, currencyRenamed, descriptionChanged: currencyDescription }, controlRole: 'owner', controlArena: 'hall' }
