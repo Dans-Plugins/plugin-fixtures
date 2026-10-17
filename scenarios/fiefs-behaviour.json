@@ -78,7 +78,9 @@
  },
  "configGroups": {
   "default": {},
-  "renamed": {}
+  "renamed": {},
+  "southFlagOff": {},
+  "northFlagOff": {}
  },
  "rows": [
   {
@@ -633,6 +635,86 @@
    "command": "/fi disband",
    "observe": [],
    "control": false
+  },
+  {
+   "id": "break-dirt-fief-otherFief-southflagoff",
+   "group": "southFlagOff",
+   "role": "otherFief",
+   "arena": "fiefArena",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "place-stone-fief-otherFief-southflagoff",
+   "group": "southFlagOff",
+   "role": "otherFief",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "open-chest-fief-otherFief-southflagoff",
+   "group": "southFlagOff",
+   "role": "otherFief",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
+  },
+  {
+   "id": "break-dirt-fief-otherFief-northflagoff",
+   "group": "northFlagOff",
+   "role": "otherFief",
+   "arena": "fiefArena",
+   "action": "breakBlock",
+   "target": {
+    "block": "dirt"
+   },
+   "observe": [
+    "targetChanged"
+   ]
+  },
+  {
+   "id": "place-stone-fief-otherFief-northflagoff",
+   "group": "northFlagOff",
+   "role": "otherFief",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "stone"
+   },
+   "observe": [
+    "adjacentChanged"
+   ],
+   "item": "cobblestone"
+  },
+  {
+   "id": "open-chest-fief-otherFief-northflagoff",
+   "group": "northFlagOff",
+   "role": "otherFief",
+   "arena": "fiefArena",
+   "action": "useOnBlock",
+   "target": {
+    "block": "chest"
+   },
+   "observe": [
+    "containerOpened"
+   ]
   }
  ]
 }
