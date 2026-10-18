@@ -13,6 +13,10 @@ scenarios/<plugin-slug>.js      the script that produces the fixture (console co
                                 and a mineflayer bot where a real player is required)
 scenarios/<plugin-slug>-real.md the provenance and anonymisation note of a real-world fixture
                                 (below), which takes the place of a script
+scenarios/behaviour-driver.js   plays a behaviour table and compares two runs' outcomes
+scenarios/<plugin-slug>-behaviour.json, -behaviour-setup.js
+                                a plugin's behaviour table and the setup that prepares its roles
+                                (see scenarios/README.md)
 fixtures/<slug>-<version>/      the manifest of each published fixture, for review — the archives
                                 themselves are release assets (below)
 schema/manifest.schema.json     the manifest format every fixture asset must carry
