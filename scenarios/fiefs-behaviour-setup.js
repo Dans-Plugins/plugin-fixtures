@@ -6,7 +6,8 @@
 //                         and the fiefArena for North
 //   fiefMember     Finn   in Alpha, invited into North
 //   factionMember  Mia    in Alpha, in no fief
-//   otherFief      Fay    in Alpha, owns fief "South" (claimedLandProtected: true, the default)
+//   otherFief      Fay    in Alpha, owns fief "South" (claimedLandProtected: true, the default,
+//                         except in the southFlagOff group)
 //   enemy          Eve    creates faction Echo; no relationship to Alpha
 //
 // No role is an operator.
@@ -51,6 +52,11 @@ async function setup (ctx) {
   const none = await say(bots.owner, '/fi checkclaim', /claimed by|not claimed/i)
   if (!/not claimed by a fief/i.test(none)) throw new Error(`factionArena should belong to no fief: ${none}`)
 
+  // Fief flags live in Fiefs' saved data, not in config.yml, so a group that needs one is prepared
+  // here: `southFlagOff` and `northFlagOff` turn `claimedLandProtected` off for South (whose owner
+  // is the otherFief role) or for North (the fiefArena's holder, owned by the owner role).
+  const flagOff = { southFlagOff: 'otherFief', northFlagOff: 'owner' }[ctx.group]
+  if (flagOff) await say(bots[flagOff], '/fi flags set claimedLandProtected false', /Boolean set/i)
   // `renamed`: North's owner renames North after it has claimed the fiefArena (Fiefs#221: the land
   // must stay North's, now under the new name).
   if (ctx.group === 'renamed') await say(bots.owner, '/fi rename "Northern"', /Fief renamed|name is taken/i)
