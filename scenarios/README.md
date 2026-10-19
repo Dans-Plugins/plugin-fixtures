@@ -27,13 +27,17 @@ outcome changed. No expected values are needed.
 node scenarios/behaviour-driver.js --rows scenarios/medieval-factions-behaviour.json \
      --setup scenarios/medieval-factions-behaviour-setup.js --group default \
      --port 25565 --rcon-port 25575 --rcon-password <pw> [--lang lang_en_US.properties] \
-     --label stable --json-out stable.json
+     [--only <id>,<id>] [--mc-version 26.1] --label stable --json-out stable.json
 node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit 1 when a row changed
 ```
+
+- `--only` plays just the listed row ids of the group. `--mc-version` defaults to auto-detection,
+  as in a scenario. `--host` defaults to `localhost`.
 
 - `dataPaths` (server-root-relative globs) names the plugin's data, which the release-gates behaviour gate deletes before every pass so each jar starts fresh. Medieval Factions keeps its H2 database at the server root, outside its plugin folder.
 - Actions: `useOnBlock`, `breakBlock`, `useOnEntity`, `attackPlayer` (the row's role hits `targetRole` once; outcome `damaged`, read from the victim's health over RCON; such a row must name a `control: {role, targetRole}` hit that lands, and the server must allow PvP), and `command` (the row's role sends `command`, e.g. `"/f claim"`, from the middle of its arena, after its inventory is cleared and given `item` × `count` when the row names one; see below).
 - A `command` row's observations come from the setup module: `observers[name](ctx, arena, role)` reads some state (the acting role is passed for state that is the player's own, such as coins held) (Medieval Factions: `claimChanged` reads the chunk's owner), and the outcome is whether it differs after the command. Before every attempt the setup module's optional `prepare(ctx, arena)` restores the arena's starting state (an arena's `claimedBy`), because a command changes more than the arena's blocks; if that fails, or the bot cannot be placed, the command is not sent and the row is `not-checked`. A command row must name its control, `control: {role, arena}`, where the command is expected to work (`/f claim` by the owner on unclaimed land); only a message-only row (`observe: []`, whose outcome is the reply: took effect when no refusal key came back) may say `control: false`. Table-level `ignoreLines` are chat lines to drop (territory notices naming a faction), and `informationalMessageKeys` are replies that are not refusals (a claim's success message).
+- Table-level `ignoreMessageKeys` are lang keys of messages that arrive on a timer rather than because of the row (Medieval Factions' power ticks); one that lands inside a row's window is left out of that row's outcome, for every action.
 - `expect` (Stephenson-Software RFC 0019) records what the docs promise for a row: `{effect, refusal?, source, reviewed, note?}`, with `source` the doc line pinned to a commit (`Dans-Plugins/Medieval-Factions/CONFIG.md@<sha>#L<a>-L<b>`). The behaviour gate (release-gates v22+) checks every reviewed one on both jars. The driver ignores the field. A reviewed expectation needs a source; where the docs are silent, add the sentence to the docs first.
 - The driver never restarts the server. The harness applies a row group's `configGroups` entry
   to `config.yml` and restarts between groups. The setup module receives the group as
