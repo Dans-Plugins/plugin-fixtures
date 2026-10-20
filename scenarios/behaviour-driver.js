@@ -20,7 +20,8 @@
 // Usage:
 //   node behaviour-driver.js --rows <table.json> --setup <setup.js> --group <config group> \
 //        --host localhost --port 25565 --rcon-port 25575 --rcon-password <pw> \
-//        [--lang lang_en_US.properties] [--only id,id] [--label stable] [--json-out out.json]
+//        [--lang lang_en_US.properties] [--only id,id] [--mc-version 26.1] [--label stable] \
+//        [--json-out out.json]
 //   node behaviour-driver.js --compare stable.json candidate.json
 //
 // The server must already run the jar under test with the group's config applied: the driver
