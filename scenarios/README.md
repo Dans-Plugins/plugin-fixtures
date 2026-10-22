@@ -33,6 +33,11 @@ node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit
 
 - `--only` plays just the listed row ids of the group. `--mc-version` defaults to auto-detection,
   as in a scenario. `--host` defaults to `localhost`.
+- `mineflayer` (with `minecraft-data` and `vec3`) must resolve from the driver's directory or
+  `NODE_PATH`. A run that finishes exits 0 whatever its rows' outcomes; a table that does not
+  validate (an unknown action, arena, role or config group, or a `command` or `attackPlayer` row
+  without its control) or a run that fails exits 2. `--compare` exits 1 only when a row is
+  `changed`; rows that are only `message-changed` or `not-compared` exit 0.
 
 - `dataPaths` (server-root-relative globs) names the plugin's data, which the release-gates behaviour gate deletes before every pass so each jar starts fresh. Medieval Factions keeps its H2 database at the server root, outside its plugin folder.
 - A setup module exports `roles` (role name → bot username; one bot joins per role),
@@ -42,7 +47,7 @@ node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit
   rows: before a block row the driver runs `prepare` and leaves the row `not-checked` when it
   fails, and a block row's `observe` may name an observer (Medieval Factions' `gateOpened`).
 - Actions: `useOnBlock`, `breakBlock`, `useOnEntity`, `attackPlayer` (the row's role hits `targetRole` once; outcome `damaged`, read from the victim's health over RCON; such a row must name a `control: {role, targetRole}` hit that lands, and the server must allow PvP), and `command` (the row's role sends `command`, e.g. `"/f claim"`, from the middle of its arena, after its inventory is cleared and given `item` × `count` when the row names one; see below).
-- A `command` row's observations come from the setup module: `observers[name](ctx, arena, role)` reads some state (the acting role is passed for state that is the player's own, such as coins held) (Medieval Factions: `claimChanged` reads the chunk's owner), and the outcome is whether it differs after the command. Before every attempt the setup module's optional `prepare(ctx, arena)` restores the arena's starting state (an arena's `claimedBy`), because a command changes more than the arena's blocks; if that fails, or the bot cannot be placed, the command is not sent and the row is `not-checked`. A command row must name its control, `control: {role, arena}`, where the command is expected to work (`/f claim` by the owner on unclaimed land); only a message-only row (`observe: []`, whose outcome is the reply: took effect when no refusal key came back) may say `control: false`. Table-level `ignoreLines` are chat lines to drop (territory notices naming a faction), and `informationalMessageKeys` are replies that are not refusals (a claim's success message).
+- A `command` row's observations come from the setup module: `observers[name](ctx, arena, role)` reads some state (the acting role is passed for state that is the player's own, such as coins held) (Medieval Factions: `claimChanged` reads the chunk's owner), and the outcome is whether it differs after the command. Before every attempt the setup module's optional `prepare(ctx, arena)` restores the arena's starting state (an arena's `claimedBy`), because a command changes more than the arena's blocks; if that fails, or the bot cannot be placed, the command is not sent and the row is `not-checked`. A command row must name its control, `control: {role, arena}`, where the command is expected to work (`/f claim` by the owner on unclaimed land); only a message-only row (`observe: []`, whose outcome is the reply: took effect when no refusal key came back) may say `control: false`. Table-level `ignoreLines` are chat lines to drop (territory notices naming a faction), and `informationalMessageKeys` are replies that are not refusals (a claim's success message). Such a reply is still part of the outcome, kept apart from `refusal` as one string, `notice`, so a success that turns into a refusal is reported as `changed`.
 - Table-level `ignoreMessageKeys` are the message keys (lang file or `messagePatterns`) of messages that arrive on a timer rather than because of the row (Medieval Factions' power ticks); one that lands inside a row's window is left out of that row's outcome, for every action.
 - `expect` (Stephenson-Software RFC 0019) records what the docs promise for a row: `{effect, refusal?, source, reviewed, note?}`, with `source` the doc line pinned to a commit (`Dans-Plugins/Medieval-Factions/CONFIG.md@<sha>#L<a>-L<b>`). The behaviour gate (release-gates v22+) checks every reviewed one on both jars. The driver ignores the field. A reviewed expectation needs a source; where the docs are silent, add the sentence to the docs first.
 - The driver never restarts the server. The harness applies a row group's `configGroups` entry
@@ -62,7 +67,9 @@ node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit
   messages are mapped to lang keys with `--lang` (a plugin without a lang file lists its fixed
   messages in the table as `messagePatterns: [{key, pattern}]`, regular expressions matched before
   the lang file), so a reworded message is reported as
-  `message-changed` rather than `changed`.
+  `message-changed` rather than `changed`. A row's `ignoreEntities` lists entities vanilla spawns
+  at random as a by-product, which are left out of its `entitySpawned` set (Medieval Factions'
+  thrown eggs hatch a `chicken` one time in eight).
 
 ## Running a scenario
 
