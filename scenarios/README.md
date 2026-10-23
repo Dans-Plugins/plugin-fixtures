@@ -35,8 +35,9 @@ node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit
   as in a scenario. `--host` defaults to `localhost`.
 - `mineflayer` (with `minecraft-data` and `vec3`) must resolve from the driver's directory or
   `NODE_PATH`. A run that finishes exits 0 whatever its rows' outcomes; a table that does not
-  validate (an unknown action, arena, role or config group, or a `command` or `attackPlayer` row
-  without its control) or a run that fails exits 2. `--compare` exits 1 only when a row is
+  validate (an unknown action, arena, role or config group; a `command` row whose `command` does
+  not start with `/`, that observes an observer the setup module lacks, or that has no control; an
+  `attackPlayer` row with an unknown `targetRole` or no control) or a run that fails exits 2. `--compare` exits 1 only when a row is
   `changed`; rows that are only `message-changed` or `not-compared` exit 0.
 
 - `dataPaths` (server-root-relative globs) names the plugin's data, which the release-gates behaviour gate deletes before every pass so each jar starts fresh. Medieval Factions keeps its H2 database at the server root, outside its plugin folder.
