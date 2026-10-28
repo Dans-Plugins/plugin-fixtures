@@ -31,8 +31,11 @@ node scenarios/behaviour-driver.js --rows scenarios/medieval-factions-behaviour.
 node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit 1 when a row changed
 ```
 
-- `--only` plays just the listed row ids of the group. `--mc-version` defaults to auto-detection,
-  as in a scenario. `--host` defaults to `localhost`.
+- Only `--rows` and `--setup` are required (or `--compare a b` on its own). `--group` defaults
+  to `default`, and only rows whose `group` equals it are played. `--only` plays just the listed
+  row ids of that group. `--label` (written into the outcome file and the `--compare` table)
+  defaults to `run`. `--mc-version` defaults to auto-detection, as in a scenario. `--host`
+  defaults to `localhost`.
 - `mineflayer` (with `minecraft-data` and `vec3`) must resolve from the driver's directory or
   `NODE_PATH`. A run that finishes exits 0 whatever its rows' outcomes; a table that does not
   validate (an unknown action, arena, role or config group; a `command` row whose `command` does
