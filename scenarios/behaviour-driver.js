@@ -12,7 +12,10 @@
 // state, because a command changes the world beyond the arena's blocks; its control names the
 // role and arena where the same command is expected to work (`control: {role, arena}`).
 //
-// Every row is paired with a control: the same action by the arena's owner in their own claim.
+// Every row is paired with a control: the same action by the setup module's `controlRole` in its
+// `controlArena` (the owner in their own claim), or by the row's own `control` when it names one
+// (`{role, arena}`; `{role, targetRole}` for an `attackPlayer` row). A row whose outcome is only
+// the reply may say `control: false` and is played without one.
 // When the control does not change the world either, a bot cannot decide the row and it is
 // recorded as not-checked - never as a pass, a fail or a difference. So is a row whose bot was
 // not aiming at the target, did not stand where it was sent, or whose server stopped answering.
