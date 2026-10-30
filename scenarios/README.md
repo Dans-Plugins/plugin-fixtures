@@ -35,7 +35,9 @@ node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit
   to `default`, and only rows whose `group` equals it are played. `--only` plays just the listed
   row ids of that group. `--label` (written into the outcome file and the `--compare` table)
   defaults to `run`. `--mc-version` defaults to auto-detection, as in a scenario. `--host`
-  defaults to `localhost`.
+  defaults to `localhost`, `--port` to `25565`, `--rcon-port` to `25575` and
+  `--rcon-password` to `minecraft`. `--help` prints the driver's top-level `//` comment lines
+  and exits; any other unknown argument is an error (exit 2).
 - `mineflayer` (with `minecraft-data` and `vec3`) must resolve from the driver's directory or
   `NODE_PATH`. A run that finishes exits 0 whatever its rows' outcomes; a table that does not
   validate (an unknown action, arena, role or config group; a `command` row whose `command` does
