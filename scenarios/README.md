@@ -39,7 +39,8 @@ node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit
   `--rcon-password` to `minecraft`. `--help` prints the driver's top-level `//` comment lines
   and exits; any other unknown argument is an error (exit 2).
 - `mineflayer` (with `minecraft-data` and `vec3`) must resolve from the driver's directory or
-  `NODE_PATH`. A run that finishes exits 0 whatever its rows' outcomes; a table that does not
+  `NODE_PATH`; `--compare` reads only the two outcome files and needs neither mineflayer nor a
+  server. A run that finishes exits 0 whatever its rows' outcomes; a table that does not
   validate (an unknown action, arena, role or config group; a `command` row whose `command` does
   not start with `/`, that observes an observer the setup module lacks, or that has no control; an
   `attackPlayer` row with an unknown `targetRole` or no control) or a run that fails exits 2.
@@ -108,7 +109,8 @@ node scenarios/<slug>.js --host localhost --port 25565 --rcon-port 25575 \
   the log must have no plugin `ERROR`/`SEVERE` lines. Without it the step passes as
   "not checked".
 - `--help` prints the script's top-level `//` comment lines, starting with its header, and exits.
-- `--mc-version` defaults to auto-detection. A server whose protocol the installed mineflayer
+- `--mc-version` defaults to auto-detection; `--mc-version auto` (or `false`) asks for it
+  explicitly, in a scenario and in the behaviour driver alike. A server whose protocol the installed mineflayer
   does not know is reported in one line (`server-version` step) instead of failing inside the
   handshake.
 
