@@ -110,9 +110,9 @@ node scenarios/<slug>.js --host localhost --port 25565 --rcon-port 25575 \
   "not checked".
 - `--help` prints the script's top-level `//` comment lines, starting with its header, and exits.
 - `--mc-version` defaults to auto-detection; `--mc-version auto` (or `false`) asks for it
-  explicitly, in a scenario and in the behaviour driver alike. A server whose protocol the installed mineflayer
-  does not know is reported in one line (`server-version` step) instead of failing inside the
-  handshake.
+  explicitly, in a scenario and in the behaviour driver alike. A server whose protocol the
+  installed mineflayer does not know is reported in one line (`server-version` step) instead of
+  failing inside the handshake.
 
 ## Lessons carried over from the Medieval Factions bot harness
 
