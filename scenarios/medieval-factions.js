@@ -23,7 +23,8 @@
 //        --rcon-password <pw> --bots 2 [--server-log docker:<container>|<file>] \
 //        [--mc-version 26.1] [--json-out expected.json]
 //
-// Requires `mineflayer` (and its `minecraft-data`) resolvable from this file's directory.
+// Requires `mineflayer` (which brings `minecraft-data`, `minecraft-protocol` and `vec3`)
+// resolvable from this file's directory.
 // --mc-version defaults to auto-detection (mineflayer `version: false`); a server whose
 // protocol the installed mineflayer does not know is reported as such and fails the run.
 
