@@ -90,8 +90,9 @@ node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit
   health could not be read (`attackPlayer`), or whose server stopped answering. Only `true` or a
   non-empty list counts as changing the world, never a reply or a `notice`, so a block, entity
   or command row with `observe: []` that has a control is always `not-checked`
-  (`controlNoEffect`): such a row needs `control: false`. A `not-checked` row is never compared. Rows alike in everything but role and
-  arena share one control attempt, played for the first of them.
+  (`controlNoEffect`): such a row needs `control: false`. A `not-checked` row is never compared.
+  Rows alike in everything but role and arena share one control attempt, played for the first of
+  them.
 - Outcomes are booleans or sets (never counts, which vary between identical runs), and refusal
   messages are mapped to lang keys with `--lang` (a plugin without a lang file lists its fixed
   messages in the table as `messagePatterns: [{key, pattern}]`, regular expressions matched before
