@@ -47,12 +47,16 @@ node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit
   `attackPlayer` row with an unknown `targetRole` or no control) or a run that fails exits 2.
   `--compare` exits 1 only when a row is `changed`; rows that are only `message-changed` or
   `not-compared` exit 0. It walks the first file's rows: a row missing from the second file is
-  `not-compared`, and a row only in the second file is not reported.
+  `not-compared`, and a row only in the second file is not reported. An outcome file it cannot
+  read exits 2.
 - The outcome file holds `label`, `plugin`, `group`, `mineflayer`, `finishedAt` and `rows`, one
   per row played: `id`, `role`, `arena`, `status` (`observed` or `not-checked`), `why` (on a
   `not-checked` row, the failed checks, plus `controlHarness` or `controlNoEffect` for its
   control), `checks`, `outcome` and `messages` (the reply lines). A run that fails writes none.
 
+- A table holds `plugin` (copied into the outcome file), `arenas`, `configGroups` and `rows`, and
+  every row names `id`, `group`, `role`, `arena`, `action` and `observe`. `_comment` is a note for
+  people; the keys below say what else a table or a row may hold.
 - `dataPaths` (server-root-relative globs) names the plugin's data, which the release-gates behaviour gate deletes before every pass so each jar starts fresh. Medieval Factions keeps its H2 database at the server root, outside its plugin folder.
 - A setup module exports `roles` (role name → bot username; one bot joins per role),
   `setup(ctx)` (run once after the bots join and the arenas are built), and `controlRole` and
@@ -62,13 +66,13 @@ node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit
   `not-checked` when it fails, and a block row's `observe` may name an observer (Medieval
   Factions' `gateOpened`). `ctx` holds `rcon`, `bots` (by role), `arenas` (by name), `lang`, `say`,
   `tp`, `Y`, `targetPoint`, `sleep`, `table`, `setup` and `group`.
-- Actions: `useOnBlock`, `breakBlock`, `useOnEntity`, `attackPlayer` (the row's role hits `targetRole` once; outcome `damaged`, read from the victim's health over RCON; such a row must name a `control: {role, targetRole}` hit that lands, played in the row's own arena, and the server must allow PvP; its `observe` is not read), and `command` (the row's role sends `command`, e.g. `"/f claim"`, from the middle of its arena, after its inventory is cleared and given `item` × `count` when the row names one; see below).
+- Actions: `useOnBlock`, `breakBlock`, `useOnEntity`, `attackPlayer` (the row's role hits `targetRole` once with a bare hand: its inventory is cleared and a row's `item` is ignored; outcome `damaged`, read from the victim's health over RCON; such a row must name a `control: {role, targetRole}` hit that lands, played in the row's own arena, and the server must allow PvP; its `observe` is not read), and `command` (the row's role sends `command`, e.g. `"/f claim"`, from the middle of its arena, after its inventory is cleared and given `item` × `count` when the row names one; see below).
 - `arenas` maps a name to `{chunk: [x, z], owner}`, and the driver force-loads and builds each one. Before every attempt except a `command` row's it wipes the arena back to a stone floor. `owner` is the faction name the chunk shows a player (`null` for none); the driver only drops that name from replies as a territory notice, and the setup module does the claiming. `keepBlocks: true` keeps the blocks between attempts, for a structure the setup module builds once, so its rows rely on `prepare` to restore it (entities are still removed). The driver ignores any other field, which is the setup module's own (Medieval Factions' `claimedBy`, below).
 - A block or entity row (`useOnBlock`, `breakBlock`, `useOnEntity`) names a `target`, placed in the middle of the arena: `{block}` (a door gets both halves), `{block, placed: false}` for a block the setup module already built, `{floor}` to replace the floor block there (`grass_patch` lays 3×3 of grass), or `{entity}` to summon one (an `item_frame` hangs on a stone block). The role's inventory is cleared and given the row's `item` × `count` (`count` defaults to 1). `sneak: true` holds sneak through the action, and `alsoUseItem: true` on a `useOnBlock` row uses the held item as well as clicking, so a throwable is thrown.
 - A block or entity row's `observe` lists what is read afterwards: `targetChanged` (the block is no longer the target), `doorOpened`, `adjacentChanged` (the block on the clicked face is no longer air), `fireAdjacent` (fire beside or above the target), `plantsGrown` (more of a `grass_patch`'s 3×3 is covered than before), `entitySpawned` (the entity types that appeared within 8 blocks, except items, experience orbs, players and `ignoreEntities`), `containerOpened`, `entityChanged` (the entity's data, minus the fields that move on their own), or the name of a setup module observer.
 - A `command` row's observations come from the setup module: `observers[name](ctx, arena, role)` reads some state (the acting role is passed for state that is the player's own, such as coins held) (Medieval Factions: `claimChanged` reads the chunk's owner), and the outcome is whether it differs after the command. Before every attempt the setup module's optional `prepare(ctx, arena)` restores the arena's starting state (an arena's `claimedBy`), because a command changes more than the arena's blocks; if that fails, or the bot cannot be placed, the command is not sent and the row is `not-checked`. A command row must name its control, `control: {role, arena}`, where the command is expected to work (`/f claim` by the owner on unclaimed land); only a message-only row (`observe: []`, whose outcome is the reply: took effect when no refusal key came back) may say `control: false`. Table-level `ignoreLines` are whole chat lines a `command` row drops (territory notices naming a faction, the fixed lines of a Medieval Factions faction info card), and `informationalMessageKeys` are replies that are not refusals, for every action (a claim's success message). Such a reply is still part of the outcome, kept apart from `refusal` as one string, `notice`, so a success that turns into a refusal is reported as `changed`.
 - Table-level `ignoreMessageKeys` are the message keys (lang file or `messagePatterns`) of messages that arrive on a timer rather than because of the row (Medieval Factions' power ticks); one that lands inside a row's window is left out of that row's outcome, for every action.
-- `expect` (Stephenson-Software RFC 0019) records what the docs promise for a row: `{effect, refusal?, source, reviewed, note?}`, with `source` the doc line pinned to a commit (`Dans-Plugins/Medieval-Factions/CONFIG.md@<sha>#L<a>-L<b>`). The behaviour gate (release-gates v22+) checks every reviewed one on both jars. The driver ignores the field. A reviewed expectation needs a source; where the docs are silent, add the sentence to the docs first.
+- `expect` (Stephenson-Software RFC 0019) records what the docs promise for a row: `{effect, refusal?, source, reviewed, note?}`, with `source` the doc line pinned to a commit (for example `Dans-Plugins/Medieval-Factions/CONFIG.md@<sha>#L<a>-L<b>`). The behaviour gate (release-gates v22+) checks every reviewed one on both jars. The driver ignores the field. A reviewed expectation needs a source; where the docs are silent, add the sentence to the docs first.
 - The driver never restarts the server. The harness applies a row group's `configGroups` entry
   (dotted `config.yml` keys and their values, `{}` for the defaults) to `config.yml` and restarts
   between groups. The setup module receives the group as
@@ -82,8 +86,11 @@ node scenarios/behaviour-driver.js --compare stable.json candidate.json   # exit
   control does not change the world either, or fails one of the checks below, the bot cannot
   decide the row and it is recorded as `not-checked`, as is a row whose bot was not aiming at the
   target, did not reach its position, or did not hold the item server-side, whose target entity's
-  data changed before the action, whose setup module observer could not be read, or whose server
-  stopped answering. A `not-checked` row is never compared. Rows alike in everything but role and
+  data changed before the action, whose setup module observer could not be read, whose victim's
+  health could not be read (`attackPlayer`), or whose server stopped answering. Only `true` or a
+  non-empty list counts as changing the world, never a reply or a `notice`, so a block, entity
+  or command row with `observe: []` that has a control is always `not-checked`
+  (`controlNoEffect`): such a row needs `control: false`. A `not-checked` row is never compared. Rows alike in everything but role and
   arena share one control attempt, played for the first of them.
 - Outcomes are booleans or sets (never counts, which vary between identical runs), and refusal
   messages are mapped to lang keys with `--lang` (a plugin without a lang file lists its fixed
@@ -128,10 +135,14 @@ node scenarios/<slug>.js --host localhost --port 25565 --rcon-port 25575 \
   the log must have no plugin `ERROR`/`SEVERE` lines. Without it the step passes as
   "not checked".
 - `--help` prints the script's top-level `//` comment lines, starting with its header, and exits.
+  `medieval-factions.js` loads mineflayer before it reads its arguments, so its `--help` needs
+  mineflayer to resolve too; the behaviour driver's does not.
 - `--mc-version` defaults to auto-detection; `--mc-version auto` (or `false`) asks for it
-  explicitly, in a scenario and in the behaviour driver alike. A server whose protocol the
-  installed mineflayer does not know is reported in one line (`server-version` step) instead of
-  failing inside the handshake.
+  explicitly, in a scenario and in the behaviour driver alike. Under auto-detection, a server
+  whose protocol the installed mineflayer does not know is reported in one line
+  (`medieval-factions.js`'s `server-version` step) instead of failing inside the handshake; with
+  an explicit version that step passes and the bots join as that version. The behaviour driver
+  has no such step.
 
 ## Lessons carried over from the Medieval Factions bot harness
 

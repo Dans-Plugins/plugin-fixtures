@@ -53,6 +53,8 @@ A manifest:
 
 `minecraft` pins the server version the fixture was recorded on. Testing a fixture on a different server version conflates a plugin upgrade with a server upgrade; bumping the server version is its own event and its own re-record.
 
+`paths` lists what the archive holds, as paths inside the server directory. Two optional fields are left out of the example: `kind`, which is `recorded` (the default) or `real-world` (below), and `description`, one line on the fixture for people. The schema allows no other fields.
+
 ## Real-world fixtures
 
 A scripted scenario proves the shapes it was written to create. A **real-world fixture**
@@ -75,7 +77,7 @@ Current real-world fixtures:
 
 | Tag | Note | What it holds |
 |---|---|---|
-| `medieval-factions/5.8.1-real` | [scenarios/medieval-factions-real.md](scenarios/medieval-factions-real.md) | nine months of a live Medieval Factions server: 38 players, 14 factions, 2,628 claims, 69 relationships, 11 locks, 1 gate, 1 duel invite, no duels |
+| `medieval-factions/5.8.1-real` | [scenarios/medieval-factions-real.md](scenarios/medieval-factions-real.md) | nine months of a live Medieval Factions server: 38 players, 14 factions, 2,628 claims, 69 relationships, 11 locks, 1 gate, 1 duel invite, no duels — its manifest pins Minecraft **26.2** |
 
 ## Writing a scenario
 
