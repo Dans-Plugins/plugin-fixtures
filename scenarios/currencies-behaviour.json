@@ -88,7 +88,7 @@
   "Bravo",
   "Echo"
  ],
- "_comment": "RFC 0017 behaviour table for Currencies, played on top of Medieval Factions (installed by the gate as a dependency). Rows are command rows: each is played by its role and by the control (Alice, who created AlphaCoin, running the same command).",
+ "_comment": "RFC 0017 behaviour table for Currencies, played on top of Medieval Factions (installed by the gate as a dependency). Rows are command rows: each is played by its role and by the control (Alice, who created AlphaCoin, running the same command), except rows that observe only the reply, which say control: false and are played without one.",
  "arenas": {
   "hall": {
    "chunk": [

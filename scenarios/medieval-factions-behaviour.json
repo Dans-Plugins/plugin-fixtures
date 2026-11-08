@@ -45,7 +45,7 @@
   "Mia",
   "Sam"
  ],
- "_comment": "RFC 0017 behaviour table. Each row is played by its role and by the control (Alice in her own claim, same action); see behaviour-driver.js. Rows are compared stable vs candidate, never against expected values.",
+ "_comment": "RFC 0017 behaviour table. Each row is played by its role and by its control (Alice in her own claim, same action, unless the row names its own control); a row that observes only the reply may say control: false and is played without one. See behaviour-driver.js. Rows are compared stable vs candidate, and the behaviour gate also checks each row's reviewed expect (Stephenson-Software RFC 0019) on both jars.",
  "arenas": {
   "ownerClaim": {
    "chunk": [
