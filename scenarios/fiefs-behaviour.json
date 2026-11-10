@@ -59,7 +59,7 @@
    "pattern": "^Unclaimed\\.$"
   }
  ],
- "_comment": "RFC 0017 behaviour table for Fiefs, played on top of Medieval Factions (installed by the gate as a dependency). Each row is played by its role and by the control (Alice in her own fief's claim).",
+ "_comment": "RFC 0017 behaviour table for Fiefs, played on top of Medieval Factions (installed by the gate as a dependency). Each block and entity row is played by its role and by the control (Alice in her own fief's claim). Command rows observe only the reply, say control: false, and are played without one.",
  "arenas": {
   "fiefArena": {
    "chunk": [
