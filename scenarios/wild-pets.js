@@ -353,7 +353,12 @@ async function main () {
   })
 
   await step('alice-stay', async () => {
+    // wp.stay is not declared in plugin.yml (1.11.9), so Bukkit gives it to ops only; Alice is
+    // made an op for this one command and the scenario records only what the command stores.
+    await rcon.cmd('op Alice')
+    await sleep(500)
     await chatCmd(alice, '/wp stay', /Biscuit is now staying\./)
+    await rcon.cmd('deop Alice')
     return 'Biscuit is now staying.'
   })
 
