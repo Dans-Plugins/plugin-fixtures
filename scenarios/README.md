@@ -7,6 +7,7 @@ which records where the data came from and how it was anonymised.
 | Script | Plugin | What it creates |
 |---|---|---|
 | [`medieval-factions.js`](medieval-factions.js) | Medieval Factions | two bots: factions Alpha and Bravo, 3 + 2 claims made by walking, a mutual alliance, both descriptions, a chest Alice places and locks (Bob is refused at it), a lever-triggered gate that is opened and closed |
+| [`wild-pets.js`](wild-pets.js) | Wild Pets | two bots: Alice tames a cow (renamed Biscuit, set staying, locked), Bob tames a chicken (default name); read back with `/wp list` and `/wp info`. Expects `pets: 2`, `pet records: 2` (count lines printed from the release after 1.11.9) |
 
 ## Behaviour tables (T4, Stephenson-Software RFC 0017)
 
