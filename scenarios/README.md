@@ -124,9 +124,10 @@ node scenarios/<slug>.js --host localhost --port 25565 --rcon-port 25575 \
   from the script's directory; the workflow installs pinned versions beside a copy of the script.
 - The server must be in offline mode (bots join under any name) and must not make the bots
   operators — the scenario proves what a player can do with the plugin's default permissions.
-  The one exception is `wild-pets.js`'s `alice-stay` step: Wild Pets 1.11.9 does not declare
-  `wp.stay` in its plugin.yml, so Bukkit grants it to operators only, and the script runs
-  `op Alice` over RCON for that one `/wp stay` and `deop Alice` right after.
+  The one exception is `wild-pets.js`'s `alice-stay` step, which runs `op Alice` over RCON for
+  that one `/wp stay` and `deop Alice` right after; the script's comment gives the reason
+  (Wild Pets 1.11.9 does not declare `wp.stay` in its plugin.yml, so Bukkit grants it to
+  operators only).
 - Exit code 0 means every step verified; anything else means a step failed, and the output
   says which and what was received instead.
 - When every step verified, the last stdout line is `SCENARIO_EXPECTED {json}`: the count per
@@ -146,9 +147,9 @@ node scenarios/<slug>.js --host localhost --port 25565 --rcon-port 25575 \
 - `--mc-version` defaults to auto-detection; `--mc-version auto` (or `false`) asks for it
   explicitly, in a scenario and in the behaviour driver alike. Under auto-detection, a server
   whose protocol the installed mineflayer does not know is reported in one line
-  (the `server-version` step of `medieval-factions.js` and `wild-pets.js`) instead of failing inside the handshake; with
-  an explicit version that step passes and the bots join as that version. The behaviour driver
-  has no such step.
+  (the `server-version` step of `medieval-factions.js` and `wild-pets.js`) instead of failing
+  inside the handshake; with an explicit version that step passes and the bots join as that
+  version. The behaviour driver has no such step.
 
 ## Lessons carried over from the Medieval Factions bot harness
 
