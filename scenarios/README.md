@@ -118,11 +118,16 @@ node scenarios/<slug>.js --host localhost --port 25565 --rcon-port 25575 \
 
 - Every flag is optional: `--host` defaults to `localhost`, `--port` to `25565`, `--rcon-port` to
   `25575`, `--rcon-password` to `minecraft` and `--bots` to `2`. Fewer than 2 bots, or an unknown
-  argument, is an error; `medieval-factions.js` plays Alice and Bob whatever the count.
+  argument, is an error; `medieval-factions.js` and `wild-pets.js` play Alice and Bob whatever
+  the count.
 - `mineflayer` (which brings `minecraft-data`, `minecraft-protocol` and `vec3`) must resolve
   from the script's directory; the workflow installs pinned versions beside a copy of the script.
 - The server must be in offline mode (bots join under any name) and must not make the bots
   operators — the scenario proves what a player can do with the plugin's default permissions.
+  The one exception is `wild-pets.js`'s `alice-stay` step, which runs `op Alice` over RCON for
+  that one `/wp stay` and `deop Alice` right after; the script's comment gives the reason
+  (Wild Pets 1.11.9 does not declare `wp.stay` in its plugin.yml, so Bukkit grants it to
+  operators only).
 - Exit code 0 means every step verified; anything else means a step failed, and the output
   says which and what was received instead.
 - When every step verified, the last stdout line is `SCENARIO_EXPECTED {json}`: the count per
@@ -137,14 +142,14 @@ node scenarios/<slug>.js --host localhost --port 25565 --rcon-port 25575 \
   the log must have no plugin `ERROR`/`SEVERE` lines. Without it the step passes as
   "not checked".
 - `--help` prints the script's top-level `//` comment lines, starting with its header, and exits.
-  `medieval-factions.js` loads mineflayer before it reads its arguments, so its `--help` needs
-  mineflayer to resolve too; the behaviour driver's does not.
+  `medieval-factions.js` and `wild-pets.js` load mineflayer before they read their arguments,
+  so their `--help` needs mineflayer to resolve too; the behaviour driver's does not.
 - `--mc-version` defaults to auto-detection; `--mc-version auto` (or `false`) asks for it
   explicitly, in a scenario and in the behaviour driver alike. Under auto-detection, a server
   whose protocol the installed mineflayer does not know is reported in one line
-  (`medieval-factions.js`'s `server-version` step) instead of failing inside the handshake; with
-  an explicit version that step passes and the bots join as that version. The behaviour driver
-  has no such step.
+  (the `server-version` step of `medieval-factions.js` and `wild-pets.js`) instead of failing
+  inside the handshake; with an explicit version that step passes and the bots join as that
+  version. The behaviour driver has no such step.
 
 ## Lessons carried over from the Medieval Factions bot harness
 
